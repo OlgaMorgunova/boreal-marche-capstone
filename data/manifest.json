@@ -1,0 +1,9 @@
+{
+  "dataset": "UCI Online Retail II",
+  "source": "UCI Machine Learning Repository",
+  "doi": "10.24432/C5CG6D",
+  "license": "CC BY 4.0",
+  "source_file": "online_retail_II.xlsx",
+  "sha256": "CALCULATED_VALUE",
+  "date_range": "2009-12-01 to 2011-12-09"
+}
