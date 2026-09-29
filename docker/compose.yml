@@ -3,5 +3,9 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
+    image: boreal-api:local
     ports:
       - "8000:8000"
+    environment:
+      GIT_SHA: ${GIT_SHA:-local}
+    # D4 adds: Streamlit frontend, Postgres prediction log, Ollama local LLM, MLflow server.

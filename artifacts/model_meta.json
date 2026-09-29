@@ -1,0 +1,106 @@
+{
+  "model_version": "0.3.0+xgboost",
+  "registry": {
+    "name": "boreal-retention",
+    "version": 3,
+    "alias": "challenger"
+  },
+  "trained_at": "2026-09-29T23:10:11+00:00",
+  "n_train_rows": 12277,
+  "n_calibration_rows": 2658,
+  "train_cutoffs": [
+    "2010-06-01",
+    "2010-09-01",
+    "2010-12-01",
+    "2011-03-01"
+  ],
+  "calibration_cutoffs": [
+    "2011-06-01"
+  ],
+  "feature_names": [
+    "recency_days",
+    "tenure_days",
+    "tenure_censored",
+    "orders_30d",
+    "orders_90d",
+    "orders_180d",
+    "orders_lifetime",
+    "active_months_180d",
+    "revenue_30d",
+    "revenue_90d",
+    "revenue_180d",
+    "revenue_lifetime",
+    "aov_180d",
+    "max_order_value_180d",
+    "mean_unit_price_180d",
+    "mean_gap_days",
+    "std_gap_days",
+    "overdue_ratio",
+    "orders_trend",
+    "revenue_trend",
+    "lines_per_order_180d",
+    "units_per_line_180d",
+    "distinct_skus_180d",
+    "sku_repeat_rate_180d",
+    "share_seasonal",
+    "share_kitchen",
+    "share_home_decor",
+    "share_bags_wrap",
+    "share_lighting",
+    "category_entropy_180d",
+    "cancel_lines_180d",
+    "cancel_rate_180d",
+    "weekend_share_180d",
+    "mean_order_hour_180d",
+    "outlier_line_share_180d",
+    "region",
+    "season_q"
+  ],
+  "estimator": "xgboost",
+  "hyperparameters": {
+    "n_estimators": 800,
+    "learning_rate": 0.007432916587066947,
+    "max_depth": 4,
+    "min_child_weight": 1.6794734505748938,
+    "subsample": 0.5340310550187946,
+    "colsample_bytree": 0.6824152098999173,
+    "reg_lambda": 1.7044584694732545,
+    "reg_alpha": 0.5502442267998549,
+    "gamma": 3.8333695334557767
+  },
+  "calibration_method": "sigmoid",
+  "decision_threshold": 0.53,
+  "decision_rule": "contact (send coupon) if calibrated P(return) <= threshold",
+  "validation_metrics_calibrated": {
+    "pr_auc": 0.8090817107098067,
+    "roc_auc": 0.7877259036144579,
+    "brier": 0.186107269176348,
+    "recall_top_decile": 0.1927710843373494,
+    "precision_top_decile": 0.9624060150375939,
+    "pr_auc_lapse": 0.7517096635663719
+  },
+  "test_metrics": null,
+  "library_versions": {
+    "python": "3.11.16",
+    "scikit-learn": "1.7.2",
+    "xgboost": "3.2.0",
+    "lightgbm": "4.7.0",
+    "pandas": "2.3.3",
+    "numpy": "2.2.6",
+    "joblib": "1.6.0",
+    "mlflow": "2.22.5"
+  },
+  "git_commit": "a803635a95302521a822367dddea6c36f28f354e-dirty",
+  "mlflow_run_id": "8b2c7d272eef4760b3078dd15dace21f",
+  "raw_sha256": "bcbe73b35f5b7babf197fb0cb983a11f5d9ff929078d4aa53d171b1f2df2e980",
+  "promotion": {
+    "checks": {
+      "beats_best_baseline_by_0.05_pr_auc": true,
+      "calibrated_brier_not_worse_than_raw": true,
+      "ece_at_most_0.05": true,
+      "beats_current_champion_by_0.005": false
+    },
+    "promote": false,
+    "best_baseline_pr_auc": 0.6167017688601416
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "generated_at": "2026-09-29T23:10:25+00:00",
+  "model": "xgboost",
+  "label_window_leak": {
+    "clean": {
+      "pr_auc": 0.8069875034014,
+      "roc_auc": 0.782410657668267,
+      "brier": 0.18973550569397524,
+      "recall_top_decile": 0.19352409638554216,
+      "precision_top_decile": 0.9661654135338346,
+      "pr_auc_lapse": 0.739156355576984
+    },
+    "leaky": {
+      "pr_auc": 1.0,
+      "roc_auc": 1.0,
+      "brier": 2.1976842706886408e-08,
+      "recall_top_decile": 0.16926272066458983,
+      "precision_top_decile": 1.0,
+      "pr_auc_lapse": 1.0
+    }
+  },
+  "split_leak": {
+    "row_kfold": {
+      "pr_auc_mean": 0.7773886673077783,
+      "pr_auc_std": 0.007794162293861445,
+      "roc_auc_mean": 0.7793421556940439,
+      "roc_auc_std": 0.004966719428124698,
+      "brier_mean": 0.18959109314474715,
+      "brier_std": 0.0020265227787592327,
+      "recall_top_decile_mean": 0.19660580424105423,
+      "recall_top_decile_std": 0.0054660810937300144,
+      "precision_top_decile_mean": 0.9284552845528455,
+      "precision_top_decile_std": 0.025965397435237892,
+      "pr_auc_lapse_mean": 0.7713480558759825,
+      "pr_auc_lapse_std": 0.007639935025771018,
+      "fit_seconds_mean": 0.3199859000276774,
+      "fit_seconds_std": 0.00308002408232342
+    },
+    "grouped_kfold": {
+      "pr_auc_mean": 0.7760441684817789,
+      "pr_auc_std": 0.012853555707846005,
+      "roc_auc_mean": 0.7775179857767055,
+      "roc_auc_std": 0.005597918052906203,
+      "brier_mean": 0.19027420692757702,
+      "brier_std": 0.002151011458411825,
+      "recall_top_decile_mean": 0.19518653447149187,
+      "recall_top_decile_std": 0.00478188425384078,
+      "precision_top_decile_mean": 0.9240861962547408,
+      "precision_top_decile_std": 0.029863379407050264,
+      "pr_auc_lapse_mean": 0.7682972920972202,
+      "pr_auc_lapse_std": 0.01222856852085262,
+      "fit_seconds_mean": 0.3247317600529641,
+      "fit_seconds_std": 0.011415935749381352
+    },
+    "temporal_validation": {
+      "pr_auc": 0.8069875034014,
+      "roc_auc": 0.782410657668267,
+      "brier": 0.18973550569397524,
+      "recall_top_decile": 0.19352409638554216,
+      "precision_top_decile": 0.9661654135338346,
+      "pr_auc_lapse": 0.739156355576984
+    },
+    "share_of_val_rows_whose_customer_is_in_train_fold_rowkfold": [
+      0.891,
+      0.882,
+      0.898,
+      0.896,
+      0.889
+    ]
+  },
+  "netting_leak": [
+    {
+      "cutoff": "2010-06-01",
+      "pre_cutoff_lines_that_netting_would_touch": 2018,
+      "customers_affected": 315
+    },
+    {
+      "cutoff": "2010-09-01",
+      "pre_cutoff_lines_that_netting_would_touch": 1966,
+      "customers_affected": 344
+    },
+    {
+      "cutoff": "2010-12-01",
+      "pre_cutoff_lines_that_netting_would_touch": 2379,
+      "customers_affected": 323
+    },
+    {
+      "cutoff": "2011-03-01",
+      "pre_cutoff_lines_that_netting_would_touch": 1624,
+      "customers_affected": 300
+    },
+    {
+      "cutoff": "2011-06-01",
+      "pre_cutoff_lines_that_netting_would_touch": 1613,
+      "customers_affected": 292
+    },
+    {
+      "cutoff": "2011-09-01",
+      "pre_cutoff_lines_that_netting_would_touch": 2298,
+      "customers_affected": 285
+    }
+  ]
+}
