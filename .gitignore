@@ -5,27 +5,48 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.coverage
+*.egg-info/
+coverage.xml
+htmlcov/
 
 # Environment / secrets
 .env
 .env.*
 !.env.example
 
-# Data
+# Data — raw data is DVC-tracked, never committed (assignment §3.1, §8.5)
 data/raw/*
-data/processed/*
 !data/raw/.gitkeep
+!data/raw/*.dvc
+data/processed/*
 !data/processed/.gitkeep
+data/bronze/
+data/silver/
+data/gold/
+# Copies of the UCI workbook outside data/raw must never be committed either
+/online_retail_II.xlsx
+doc/*.xlsx
+*.zip
 
-# Local artifacts
+# MLflow (local tracking server state)
 mlruns/
+mlflow.db
+mlartifacts/
+
+# Artifacts: the champion model, its sidecar and rules.json are committed (small, needed by the
+# API image and the golden test); challengers are reproducible and stay local.
+artifacts/model_*.joblib
+artifacts/model_meta_*.json
+
+# Reports: PDFs are build outputs of `make reports`, kept for submission
+reports/_build/
+reports/977_*.html
+
+# Misc
 *.db
 *.sqlite
 .DS_Store
-
-# Notebooks
 .ipynb_checkpoints/
-
-# IDE
 .vscode/
 .idea/

@@ -1,24 +1,6 @@
-from pathlib import Path
-from urllib.request import urlretrieve
+"""Thin wrapper kept for backwards compatibility: acquire + verify + bronze. Prefer `make data`."""
 
-
-DATA_DIR = Path("data/raw")
-DATA_DIR.mkdir(parents=True, exist_ok=True)
-
-URL = (
-    "https://archive.ics.uci.edu/static/public/502/online+retail+ii.zip"
-)
-
-OUTPUT = DATA_DIR / "online_retail_II.zip"
-
-
-def main() -> None:
-    print(f"Downloading dataset from:\n{URL}")
-
-    urlretrieve(URL, OUTPUT)
-
-    print(f"Saved to: {OUTPUT}")
-
+from boreal_marche.data.ingest import run
 
 if __name__ == "__main__":
-    main()
+    run()

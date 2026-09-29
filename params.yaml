@@ -1,0 +1,112 @@
+# Boréal Marché — single source of truth for pipeline parameters.
+# Every window, threshold, cost assumption and seed used by src/ is declared here,
+# never inside a notebook cell. Changing a value here changes the pipeline.
+
+seed: 42
+
+data:
+  source_url: "https://archive.ics.uci.edu/static/public/502/online+retail+ii.zip"
+  doi: "10.24432/C5CG6D"
+  licence: "CC BY 4.0"
+  raw_file: "data/raw/online_retail_II.xlsx"
+  # SHA-256 of the xlsx inside the UCI zip (verified 2026-09-29).
+  expected_sha256: "bcbe73b35f5b7babf197fb0cb983a11f5d9ff929078d4aa53d171b1f2df2e980"
+  # Local copies tried, in order, before downloading.
+  local_candidates:
+    - "doc/online_retail_II.xlsx"
+    - "online_retail_II.xlsx"
+
+cleaning:
+  # Stock codes that are services, fees or adjustments rather than products (matched after
+  # strip + upper-case). Prefix patterns end with '*'.
+  service_stock_codes:
+    - POST
+    - DOT
+    - M
+    - C2
+    - C3
+    - D
+    - S
+    - B
+    - PADS
+    - CRUK
+    - AMAZONFEE
+    - BANK CHARGES
+    - GIFT
+    - ADJUST*
+    - TEST*
+    - GIFT_0001_*
+  # Line-level outlier flag: lines above this quantile of quantity or revenue are flagged and
+  # their monetary contribution is capped (winsorised) in features, not dropped.
+  outlier_quantile: 0.999
+
+windows:
+  observation_days: 180
+  label_days: 90
+  cutoffs:
+    train: ["2010-06-01", "2010-09-01", "2010-12-01", "2011-03-01"]
+    validation: ["2011-06-01"]
+    test: ["2011-09-01"]
+
+spotcheck:
+  n_folds: 5
+
+tuning:
+  n_trials: 40
+  timeout_seconds: 1200
+
+business:
+  # Retention campaign economics (stated assumptions, see D3 §Threshold).
+  coupon_cost: 4.0          # fixed cost per coupon sent (printing, handling, e-mail ops)
+  discount_rate: 0.15       # the current 15% quarterly coupon
+  save_rate: 0.20           # share of true lapsers a coupon brings back
+  gross_margin: 0.30        # margin on recovered revenue
+  # A saved lapser resumes their recent buying rate for this horizon. 90 days (one label window)
+  # was tried first: the coupon then never pays and the optimal policy is "contact nobody"
+  # (documented negative result in D3).
+  value_horizon_days: 365
+  sensitivity_save_rates: [0.10, 0.20, 0.30]
+
+recommend:
+  holdout_start: "2011-09-01"
+  validation_start: "2011-07-01"   # tuning slice inside the mining period
+  min_support_grid: [0.003, 0.004, 0.005, 0.0075, 0.01, 0.015, 0.02]
+  min_confidence_grid: [0.1, 0.2, 0.3, 0.5]
+  # Chosen from the sweep (reports/metrics/rules_sweep.json, D3 Head B): hit-rate keeps rising as
+  # support falls (+~0.012 per step) but rules grow x2-2.6 and FP-Growth time x3 per step; 0.005
+  # keeps >= ~160 supporting invoices per itemset and ~7k rules. Lift >= 3 is the best cell and
+  # discards rules whose consequent is merely popular.
+  min_support: 0.005
+  min_confidence: 0.2
+  min_lift: 3.0
+  max_len: 3
+  top_k: 5
+
+mlflow:
+  tracking_uri: "sqlite:///mlflow.db"
+  experiment_retention: "boreal-retention"
+  experiment_recommend: "boreal-recommend"
+  registered_model: "boreal-retention"
+
+cloud:
+  # Where the hyper-parameter search runs: local | aws | azure  (override: make hpo PROVIDER=aws).
+  # The course specification (§3.5) names Amazon SageMaker; Azure ML is an equivalent alternative
+  # that needs the instructor's approval before it can replace the SageMaker evidence.
+  provider: local
+  n_trials: 20
+  max_parallel: 2
+  aws:
+    region: ca-central-1
+    instance_type: ml.m5.large
+    use_spot: true
+    max_run_seconds: 900
+    max_wait_seconds: 1800
+    framework_version: "1.4-2"
+  azure:
+    location: canadacentral
+    compute_name: boreal-cpu
+    vm_size: Standard_DS3_v2
+    tier: low_priority          # Azure's spot equivalent
+    idle_seconds_before_scale_down: 120
+    timeout_seconds: 1800
+    experiment: boreal-retention-hpo
