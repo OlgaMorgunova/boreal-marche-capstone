@@ -1,9 +1,34 @@
 {
   "dataset": "UCI Online Retail II",
   "source": "UCI Machine Learning Repository",
+  "source_url": "https://archive.ics.uci.edu/static/public/502/online+retail+ii.zip",
   "doi": "10.24432/C5CG6D",
-  "license": "CC BY 4.0",
-  "source_file": "online_retail_II.xlsx",
-  "sha256": "CALCULATED_VALUE",
-  "date_range": "2009-12-01 to 2011-12-09"
+  "licence": "CC BY 4.0",
+  "citation": "Chen, D. (2012). Online Retail II [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D",
+  "raw_file": "data/raw/online_retail_II.xlsx",
+  "raw_bytes": 45622278,
+  "sha256": "bcbe73b35f5b7babf197fb0cb983a11f5d9ff929078d4aa53d171b1f2df2e980",
+  "acquisition": "existing data/raw copy",
+  "retrieved_at": "2026-09-29T23:04:17+00:00",
+  "sheet_row_counts": {
+    "Year 2009-2010": 525461,
+    "Year 2010-2011": 541910
+  },
+  "row_count": 1067371,
+  "date_min": "2009-12-01 07:45:00",
+  "date_max": "2011-12-09 12:50:00",
+  "bronze_file": "data\\bronze\\transactions.parquet",
+  "bronze_schema": {
+    "row_id": "int64",
+    "invoice": "string",
+    "stock_code": "string",
+    "description": "string",
+    "quantity": "int32",
+    "invoice_date": "timestamp[ns]",
+    "price": "double",
+    "customer_id": "int64",
+    "country": "string",
+    "source_sheet": "string"
+  },
+  "scenario_note": "Public dataset re-skinned as the fictional retailer Boréal Marché for a pedagogical scenario. It is not proprietary client data."
 }

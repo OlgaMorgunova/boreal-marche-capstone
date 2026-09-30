@@ -1,0 +1,122 @@
+{
+  "generated_at": "2026-09-29T23:04:27+00:00",
+  "rules": [
+    {
+      "rule": "R0 normalise codes",
+      "rows_before": 1067371,
+      "rows_after": 1067371,
+      "rationale": "Stock codes/invoices contain trailing spaces and mixed case ('47503J ', 'm'); without normalisation the same SKU is counted twice.",
+      "rows_flagged": 0,
+      "rows_removed": 0
+    },
+    {
+      "rule": "R1 drop sheet overlap",
+      "rows_before": 1067371,
+      "rows_after": 1044848,
+      "rationale": "Both yearly sheets contain 2010-12-01..2010-12-09. Naive concatenation double-counts those orders, inflating frequency and monetary features.",
+      "rows_flagged": 0,
+      "rows_removed": 22523
+    },
+    {
+      "rule": "R2 drop exact duplicate lines",
+      "rows_before": 1044848,
+      "rows_after": 1033034,
+      "rationale": "Identical lines (same invoice, SKU, quantity, timestamp, price, customer) are system double-scans; they inflate quantities and basket co-occurrence. Description is not part of the key (spelling variants of one SKU).",
+      "rows_flagged": 0,
+      "rows_removed": 11814
+    },
+    {
+      "rule": "R3 separate cancellations",
+      "rows_before": 1033034,
+      "rows_after": 1013930,
+      "rationale": "Invoices prefixed 'C' are reversals, not purchases. Kept in a separate table used only as a point-in-time feature; never netted (netting leaks future events).",
+      "rows_flagged": 0,
+      "rows_removed": 19104
+    },
+    {
+      "rule": "R4 drop bad-debt adjustments",
+      "rows_before": 1013930,
+      "rows_after": 1013924,
+      "rationale": "Invoices prefixed 'A' are accounting adjustments ('Adjust bad debt').",
+      "rows_flagged": 0,
+      "rows_removed": 6
+    },
+    {
+      "rule": "R5 drop non-positive quantity",
+      "rows_before": 1013924,
+      "rows_after": 1010531,
+      "rationale": "Non-cancellation lines with quantity <= 0 are stock write-offs/damages ('lost', 'damaged', '?') with no customer.",
+      "rows_flagged": 0,
+      "rows_removed": 3393
+    },
+    {
+      "rule": "R6 drop non-positive price",
+      "rows_before": 1010531,
+      "rows_after": 1007910,
+      "rationale": "Price <= 0 lines are free samples or manual corrections; they are not sales and would distort monetary features.",
+      "rows_flagged": 0,
+      "rows_removed": 2621
+    },
+    {
+      "rule": "R7 drop service / fee SKUs",
+      "rows_before": 1007910,
+      "rows_after": 1003338,
+      "rationale": "Postage, carriage, manual, bank/Amazon fees, test and gift-voucher codes are not products: they would dominate baskets ('recommend postage') and skew category mix.",
+      "rows_flagged": 0,
+      "rows_removed": 4572
+    },
+    {
+      "rule": "R8 canonicalise descriptions",
+      "rows_before": 1003338,
+      "rows_after": 1003338,
+      "rationale": "The same SKU appears under several spellings; one canonical label per stock code keeps the rule engine and catalogue consistent.",
+      "rows_flagged": 58116,
+      "rows_removed": 0
+    },
+    {
+      "rule": "R9 flag + cap outliers",
+      "rows_before": 1003338,
+      "rows_after": 1003338,
+      "rationale": "Lines above the 99.9% quantile of quantity (520) or line revenue (734.40) — e.g. the 80,995-unit error — are flagged and revenue is capped for features instead of dropped (they are real orders but not representative). Caps are estimated on pre-validation data only.",
+      "rows_flagged": 1642,
+      "rows_removed": 0
+    },
+    {
+      "rule": "R10 null customer id (Head A view)",
+      "rows_before": 1003338,
+      "rows_after": 776577,
+      "rationale": "Guest checkouts cannot be attributed to a customer, so they are excluded from the retention table (Head A) but kept for basket mining (Head B) where the invoice is the unit.",
+      "rows_flagged": 226761,
+      "rows_removed": 226761
+    }
+  ],
+  "bronze": {
+    "lines": 1067371,
+    "invoices": 53628,
+    "skus": 5305,
+    "customers": 5942,
+    "revenue": 19287250.56799999,
+    "date_min": "2009-12-01 07:45:00",
+    "date_max": "2011-12-09 12:50:00"
+  },
+  "silver": {
+    "lines": 1003338,
+    "invoices": 39516,
+    "skus": 4724,
+    "customers": 5852,
+    "head_a_lines": 776577,
+    "head_a_invoices": 36594,
+    "head_b_invoices": 39516,
+    "revenue": 19643309.77,
+    "date_min": "2009-12-01 07:45:00",
+    "date_max": "2011-12-09 12:50:00",
+    "mean_lines_per_invoice": 25.39067719404798
+  },
+  "extras": {
+    "qty_cap": 519.820000000298,
+    "rev_cap": 734.4,
+    "distinct_descriptions_before": 5335,
+    "distinct_descriptions_after": 4684
+  },
+  "cancellation_lines": 19104
+}

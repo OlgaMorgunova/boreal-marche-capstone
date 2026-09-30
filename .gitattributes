@@ -1,0 +1,7 @@
+# Normalise line endings: the repository is edited on Windows and Linux.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.png binary
+*.pdf binary
+*.xlsx binary
+*.joblib binary

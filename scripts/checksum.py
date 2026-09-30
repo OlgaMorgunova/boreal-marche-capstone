@@ -1,29 +1,11 @@
-from hashlib import sha256
+"""Print the SHA-256 of the raw workbook (the value recorded in params.yaml and the manifest)."""
+
+import sys
 from pathlib import Path
 
-
-FILE = Path("data/raw/online_retail_II.xlsx")
-
-
-def calculate_sha256(path: Path) -> str:
-    digest = sha256()
-
-    with path.open("rb") as file:
-        for chunk in iter(
-            lambda: file.read(1024 * 1024),
-            b"",
-        ):
-            digest.update(chunk)
-
-    return digest.hexdigest()
-
-
-def main() -> None:
-    checksum = calculate_sha256(FILE)
-
-    print("SHA-256:")
-    print(checksum)
-
+from boreal_marche.config import load_params, repo_root
+from boreal_marche.utils import sha256_file
 
 if __name__ == "__main__":
-    main()
+    path = Path(sys.argv[1]) if len(sys.argv) > 1 else repo_root() / load_params().data.raw_file
+    print(sha256_file(path))
