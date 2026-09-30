@@ -1,0 +1,161 @@
+{
+  "generated_at": "2026-09-29T23:17:47+00:00",
+  "holdout_start": "2011-09-01",
+  "k": 5,
+  "n_cases": 6897,
+  "hit_rate_rules_only": 0.14310569812962157,
+  "hit_rate_hybrid": 0.14455560388574742,
+  "hit_rate_popularity": 0.01681890677105988,
+  "basket_coverage": 0.9172103813252138,
+  "catalogue_coverage": 0.10120913569189431,
+  "distinct_items_recommended": 452,
+  "hybrid_vs_popularity_ratio": 8.594827586206897,
+  "strategies": {
+    "empty_basket": {
+      "basket": [],
+      "strategy": "empty_basket",
+      "unknown_items": [],
+      "recommendations": [
+        {
+          "item": "85123A",
+          "description": "WHITE HANGING HEART T-LIGHT HOLDER",
+          "source": "popularity",
+          "because": null,
+          "lift": null
+        },
+        {
+          "item": "22423",
+          "description": "REGENCY CAKESTAND 3 TIER",
+          "source": "popularity",
+          "because": null,
+          "lift": null
+        },
+        {
+          "item": "85099B",
+          "description": "JUMBO BAG RED RETROSPOT",
+          "source": "popularity",
+          "because": null,
+          "lift": null
+        },
+        {
+          "item": "21212",
+          "description": "PACK OF 72 RETROSPOT CAKE CASES",
+          "source": "popularity",
+          "because": null,
+          "lift": null
+        },
+        {
+          "item": "20725",
+          "description": "LUNCH BAG RED RETROSPOT",
+          "source": "popularity",
+          "because": null,
+          "lift": null
+        }
+      ]
+    },
+    "no_match_basket": {
+      "basket": [
+        "NOT-A-REAL-SKU"
+      ],
+      "strategy": "popularity_fallback",
+      "unknown_items": [
+        "NOT-A-REAL-SKU"
+      ],
+      "recommendations": [
+        {
+          "item": "85123A",
+          "description": "WHITE HANGING HEART T-LIGHT HOLDER",
+          "source": "popularity",
+          "because": null,
+          "lift": null
+        },
+        {
+          "item": "22423",
+          "description": "REGENCY CAKESTAND 3 TIER",
+          "source": "popularity",
+          "because": null,
+          "lift": null
+        },
+        {
+          "item": "85099B",
+          "description": "JUMBO BAG RED RETROSPOT",
+          "source": "popularity",
+          "because": null,
+          "lift": null
+        },
+        {
+          "item": "21212",
+          "description": "PACK OF 72 RETROSPOT CAKE CASES",
+          "source": "popularity",
+          "because": null,
+          "lift": null
+        },
+        {
+          "item": "20725",
+          "description": "LUNCH BAG RED RETROSPOT",
+          "source": "popularity",
+          "because": null,
+          "lift": null
+        }
+      ]
+    },
+    "matching_basket": {
+      "basket": [
+        "22916",
+        "22918"
+      ],
+      "strategy": "rules+popularity",
+      "unknown_items": [],
+      "recommendations": [
+        {
+          "item": "22917",
+          "description": "HERB MARKER ROSEMARY",
+          "source": "rule",
+          "because": [
+            "22916",
+            "22918"
+          ],
+          "lift": 147.4938
+        },
+        {
+          "item": "22920",
+          "description": "HERB MARKER BASIL",
+          "source": "rule",
+          "because": [
+            "22916",
+            "22918"
+          ],
+          "lift": 139.739
+        },
+        {
+          "item": "22919",
+          "description": "HERB MARKER MINT",
+          "source": "rule",
+          "because": [
+            "22916",
+            "22918"
+          ],
+          "lift": 139.739
+        },
+        {
+          "item": "22921",
+          "description": "HERB MARKER CHIVES",
+          "source": "rule",
+          "because": [
+            "22916",
+            "22918"
+          ],
+          "lift": 151.2559
+        },
+        {
+          "item": "85123A",
+          "description": "WHITE HANGING HEART T-LIGHT HOLDER",
+          "source": "popularity",
+          "because": null,
+          "lift": null
+        }
+      ]
+    }
+  },
+  "rule_count": 7512
+}

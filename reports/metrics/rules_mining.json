@@ -1,0 +1,121 @@
+{
+  "generated_at": "2026-09-29T23:17:43+00:00",
+  "memory": {
+    "n_baskets": 32126,
+    "n_items": 4466,
+    "nnz": 781496,
+    "density": 0.005446924878387631,
+    "dense_bool_mb": 136.82815170288086,
+    "sparse_csr_mb": 3.849018096923828,
+    "ratio": 35.548846032247866
+  },
+  "fpgrowth_seconds": 241.412875500042,
+  "apriori_seconds": 2.072314799996093,
+  "itemsets_identical": true,
+  "header": {
+    "mined_at": "2026-09-29T23:17:42+00:00",
+    "algorithm": "fpgrowth (mlxtend)",
+    "git_commit": "a803635a95302521a822367dddea6c36f28f354e-dirty",
+    "source_sha256": "bcbe73b35f5b7babf197fb0cb983a11f5d9ff929078d4aa53d171b1f2df2e980",
+    "mining_period": [
+      "2009-12-01 07:45:00",
+      "2011-09-01"
+    ],
+    "params": {
+      "min_support": 0.005,
+      "min_confidence": 0.2,
+      "min_lift": 3.0,
+      "max_len": 3,
+      "rank_by": "confidence",
+      "single_item_consequents": true
+    },
+    "n_baskets": 32126,
+    "n_items": 4466,
+    "n_frequent_itemsets": 7219,
+    "n_rules_before_lift_filter": 8338,
+    "rule_count": 7512
+  },
+  "lift_trap_example": {
+    "antecedent": [
+      "22294"
+    ],
+    "antecedent_desc": [
+      "HEART FILIGREE DOVE SMALL"
+    ],
+    "consequent": "85123A",
+    "consequent_desc": "WHITE HANGING HEART T-LIGHT HOLDER",
+    "support": 0.01070783788831476,
+    "confidence": 0.44733420026007803,
+    "lift": 2.9983431081901246,
+    "consequent_support": 0.1491937994148042
+  },
+  "top_item": {
+    "item": "85123A",
+    "desc": "WHITE HANGING HEART T-LIGHT HOLDER",
+    "support": 0.1491937994148042
+  },
+  "lift_distribution": {
+    "0.0": 1.3437763001801137,
+    "0.25": 4.927118439232445,
+    "0.5": 7.929046692631794,
+    "0.75": 12.450777916488104,
+    "1.0": 151.25587072773774
+  },
+  "example_rules": [
+    {
+      "id": 0,
+      "antecedent": [
+        "22916",
+        "22918"
+      ],
+      "consequent": "22921",
+      "support": 0.005043,
+      "confidence": 0.86631,
+      "lift": 151.2559
+    },
+    {
+      "id": 1,
+      "antecedent": [
+        "22916",
+        "22921"
+      ],
+      "consequent": "22918",
+      "support": 0.005043,
+      "confidence": 0.964286,
+      "lift": 150.3818
+    },
+    {
+      "id": 2,
+      "antecedent": [
+        "22916",
+        "22919"
+      ],
+      "consequent": "22917",
+      "support": 0.005323,
+      "confidence": 0.95,
+      "lift": 148.8766
+    },
+    {
+      "id": 3,
+      "antecedent": [
+        "22917",
+        "22918"
+      ],
+      "consequent": "22916",
+      "support": 0.005478,
+      "confidence": 0.956522,
+      "lift": 148.4503
+    },
+    {
+      "id": 4,
+      "antecedent": [
+        "22918",
+        "22921"
+      ],
+      "consequent": "22916",
+      "support": 0.005043,
+      "confidence": 0.952941,
+      "lift": 147.8946
+    }
+  ]
+}

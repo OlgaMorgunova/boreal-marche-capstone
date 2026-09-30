@@ -1,17 +1,58 @@
 name: CI
 
 on:
-  push:
   pull_request:
+  push:
+    branches: [master, main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  test:
+  quality:
+    name: lint · types · tests · data quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install (Python 3.11)
+        run: |
+          uv venv .venv --python 3.11
+          uv pip install --python .venv/bin/python -e ".[train,dev]"
+      - name: Ruff (lint + format)
+        run: make lint
+      - name: Mypy
+        run: make typecheck
+      - name: Tests with coverage gate (unit, API contract, golden prediction, pipeline smoke)
+        run: make cov
+      - name: Data-quality suite (synthetic fixtures; real-data checks run locally via `make dq`)
+        run: .venv/bin/python -m pytest tests/test_data_quality.py tests/test_cleaning.py tests/test_features.py -q
+
+  docker:
+    name: docker build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build API image
+        run: docker build -f docker/Dockerfile -t boreal-api:${{ github.sha }} .
+      - name: Report image size
+        run: docker image ls boreal-api:${{ github.sha }} --format '{{.Repository}}:{{.Tag}} {{.Size}}'
+
+  secrets:
+    name: secret scan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-      - run: pip install -e ".[dev]"
-      - run: ruff check .
-      - run: pytest -q
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
