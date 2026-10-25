@@ -14,9 +14,12 @@ concurrency:
 
 jobs:
   quality:
-    name: lint · types · tests · data quality
+    name: lint · types · tests · data quality · assistant eval
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      BOREAL_EMBEDDER: hash        # no model download in CI (retrieval quality: assistant_eval.json)
+      BOREAL_MONITOR_LOOP: "0"
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
@@ -30,21 +33,34 @@ jobs:
         run: make lint
       - name: Mypy
         run: make typecheck
-      - name: Tests with coverage gate (unit, API contract, golden prediction, pipeline smoke)
+      - name: Tests with coverage gate (unit, API contract, golden prediction, monitoring, assistant)
         run: make cov
       - name: Data-quality suite (synthetic fixtures; real-data checks run locally via `make dq`)
         run: .venv/bin/python -m pytest tests/test_data_quality.py tests/test_cleaning.py tests/test_features.py -q
+      - name: Assistant evaluation — tool choice on the 40-question golden set
+        run: .venv/bin/python -m pytest tests/test_assistant.py -q -k "golden"
 
   docker:
-    name: docker build
+    name: docker build · size · container smoke test
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - name: Build API image
-        run: docker build -f docker/Dockerfile -t boreal-api:${{ github.sha }} .
-      - name: Report image size
-        run: docker image ls boreal-api:${{ github.sha }} --format '{{.Repository}}:{{.Tag}} {{.Size}}'
+        run: docker build -f docker/Dockerfile --build-arg GIT_SHA=${{ github.sha }} -t boreal-api:${{ github.sha }} .
+      - name: Build interface image
+        run: docker build -f docker/frontend.Dockerfile -t boreal-ui:${{ github.sha }} .
+      - name: Report image sizes
+        run: docker image ls --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep '${{ github.sha }}' | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Run the API container and smoke-test it (non-root, healthcheck, contract)
+        run: |
+          docker run -d --name api -p 8000:8000 boreal-api:${{ github.sha }}
+          docker exec api id -u | grep -qx 10001
+          python3 scripts/smoke_test.py --api http://127.0.0.1:8000 --expect-sha ${{ github.sha }} --wait-seconds 120
+          docker inspect --format '{{.State.Health.Status}}' api
+      - name: Container logs
+        if: always()
+        run: docker logs api 2>&1 | tail -50 || true
 
   secrets:
     name: secret scan

@@ -1,0 +1,596 @@
+[
+  {
+    "chunk_id": "allergens#important-read-the-label-0",
+    "doc_id": "allergens",
+    "title": "Allergen and Food Safety Information",
+    "section": "Important: read the label",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/allergens.md",
+    "text": "The product label on the package you receive is the authoritative source of ingredient and allergen\ninformation. Suppliers can change recipes; we update product pages within 2 business days of being\nnotified, but the label always wins. If you have a severe allergy, read the label of every product\nbefore use, every time, and speak with your doctor or allergist about what is safe for you. Our\ncustomer service and our chat assistant can tell you what our policies say, but they cannot give\nmedical advice or confirm that a product is safe for a specific person."
+  },
+  {
+    "chunk_id": "allergens#priority-food-allergens-0",
+    "doc_id": "allergens",
+    "title": "Allergen and Food Safety Information",
+    "section": "Priority food allergens",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/allergens.md",
+    "text": "Health Canada identifies priority food allergens that must be declared on labels: eggs, milk,\nmustard, peanuts, crustaceans and molluscs, fish, sesame seeds, soy, sulphites, tree nuts, and wheat\nand triticale. Gluten sources must also be declared. Every food product we sell carries a bilingual\n(French and English) label that lists these allergens in the ingredient list or in a \"Contains\"\nstatement."
+  },
+  {
+    "chunk_id": "allergens#precautionary-may-contain-statements-0",
+    "doc_id": "allergens",
+    "title": "Allergen and Food Safety Information",
+    "section": "Precautionary \"may contain\" statements",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/allergens.md",
+    "text": "Some products carry a \"may contain\" statement, for example \"may contain peanuts\" or \"peut contenir\ndes arachides\". This means the product was made in a facility or on equipment that also handles the\nallergen and that cross-contamination cannot be ruled out. We do not remove products with\nprecautionary statements from the search results, but the allergen filter on the website can hide\nthem."
+  },
+  {
+    "chunk_id": "allergens#using-the-allergen-filter-0",
+    "doc_id": "allergens",
+    "title": "Allergen and Food Safety Information",
+    "section": "Using the allergen filter",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/allergens.md",
+    "text": "On every category page and in search results, the \"Allergens\" filter lets you exclude products that\ncontain, or may contain, one or more priority allergens. The filter uses the information supplied by\nthe manufacturer. It is a convenience, not a guarantee: always confirm with the label."
+  },
+  {
+    "chunk_id": "allergens#shared-facilities-and-our-specialty-rang-0",
+    "doc_id": "allergens",
+    "title": "Allergen and Food Safety Information",
+    "section": "Shared facilities and our specialty range",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/allergens.md",
+    "text": "Our specialty chocolates, baked goods and confectionery come from small Québec and Maritime\nproducers. Many of these producers work in shared kitchens that also handle tree nuts, peanuts,\nwheat, milk and eggs. Unless a product page explicitly says \"made in a dedicated allergen-free\nfacility\", assume that cross-contamination is possible. We cannot guarantee that any product is\ncompletely free of an allergen."
+  },
+  {
+    "chunk_id": "allergens#gluten-free-claims-0",
+    "doc_id": "allergens",
+    "title": "Allergen and Food Safety Information",
+    "section": "Gluten-free claims",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/allergens.md",
+    "text": "A product described as \"gluten-free\" meets the Canadian standard: it contains no gluten above\n20 parts per million and no intentionally added gluten sources. Oats are labelled gluten-free only\nwhen they come from a specialised supply chain."
+  },
+  {
+    "chunk_id": "allergens#non-food-products-0",
+    "doc_id": "allergens",
+    "title": "Allergen and Food Safety Information",
+    "section": "Non-food products",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/allergens.md",
+    "text": "Some non-food items can also matter to people with allergies or sensitivities. Scented candles and\ndiffusers contain fragrance compounds; some balloons and party items contain natural rubber latex;\nsome wooden kitchen tools are finished with food-safe oils that can include nut oils. These products\nlist their materials on the product page."
+  },
+  {
+    "chunk_id": "allergens#recalls-0",
+    "doc_id": "allergens",
+    "title": "Allergen and Food Safety Information",
+    "section": "Recalls",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/allergens.md",
+    "text": "We follow the recall notices of the Canadian Food Inspection Agency (CFIA). When a product we sold is\nrecalled, we remove it from sale immediately and e-mail every customer who bought it in the\naffected period within 24 hours, with instructions. You receive a full refund for a recalled\nproduct, whether or not you still have it, and you should not return it unless the notice asks you\nto. Recall notices are also posted on the home page."
+  },
+  {
+    "chunk_id": "allergens#allergic-reactions-0",
+    "doc_id": "allergens",
+    "title": "Allergen and Food Safety Information",
+    "section": "Allergic reactions",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/allergens.md",
+    "text": "If you think you are having an allergic reaction, call 911 or your local emergency number\nimmediately. After the situation is under control, please contact us with the product name, the\nlot number on the package and your order number so that we can investigate with the supplier and,\nif needed, report to the CFIA."
+  },
+  {
+    "chunk_id": "allergens#storage-and-food-safety-at-home-0",
+    "doc_id": "allergens",
+    "title": "Allergen and Food Safety Information",
+    "section": "Storage and food safety at home",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/allergens.md",
+    "text": "Refrigerate perishable products as soon as they are delivered and respect the storage instructions\non the label. Do not eat chilled products that arrived above 4 °C or whose packaging is damaged:\nreport them under our quality guarantee (see the Returns policy) and we will refund them."
+  },
+  {
+    "chunk_id": "delivery#where-we-deliver-0",
+    "doc_id": "delivery",
+    "title": "Delivery and Shipping Policy",
+    "section": "Where we deliver",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/delivery.md",
+    "text": "Boréal Marché delivers groceries and specialty goods to addresses in Québec, Ontario and the\nMaritime provinces (New Brunswick, Nova Scotia and Prince Edward Island). Newfoundland and Labrador\nis served for non-perishable products only. We do not deliver perishable or refrigerated products\noutside Canada. Customers outside Canada can order non-perishable specialty goods (decor, kitchen\nand gift items) through our international service described below. We cannot deliver to post office\nboxes for orders that contain perishable products, because those orders need a person or a safe\nplace at the door within a fixed window."
+  },
+  {
+    "chunk_id": "delivery#delivery-times-by-region-0",
+    "doc_id": "delivery",
+    "title": "Delivery and Shipping Policy",
+    "section": "Delivery times by region",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/delivery.md",
+    "text": "Delivery times are counted in business days (Monday to Friday, excluding statutory holidays) from\nthe moment your order is confirmed, which is when payment is authorised.\n\n| Region | Perishable orders | Non-perishable orders |\n|---|---|---|\n| Greater Montréal and Québec City | Next day if ordered before 2:00 p.m. (Eastern) | 1 to 2 business days |\n| Rest of Québec | 2 to 3 business days | 2 to 4 business days |\n| Ottawa, Toronto and the Golden Horseshoe | 2 business days | 2 to 3 business days |\n| Rest of Ontario | 3 business days | 3 to 5 business days |\n| New Brunswick, Nova Scotia, Prince Edward Island | 3 to 4 business days | 4 to 6 business days |\n| Newfoundland and Labrador | not available | 5 to 8 business days |\n| International (non-perishable only) | not available | 7 to 15 business days |"
+  },
+  {
+    "chunk_id": "delivery#delivery-times-by-region-1",
+    "doc_id": "delivery",
+    "title": "Delivery and Shipping Policy",
+    "section": "Delivery times by region",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/delivery.md",
+    "text": "These are targets, not guarantees. Severe weather, road closures and carrier disruptions can add one\nor more days; when that happens we notify you by e-mail and text message as soon as we know."
+  },
+  {
+    "chunk_id": "delivery#delivery-windows-0",
+    "doc_id": "delivery",
+    "title": "Delivery and Shipping Policy",
+    "section": "Delivery windows",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/delivery.md",
+    "text": "In Greater Montréal and Québec City our own refrigerated vans deliver in three-hour windows, Monday\nto Saturday: 8:00–11:00, 11:00–14:00, 14:00–17:00 and 17:00–20:00. You choose the window at\ncheckout; the earliest available window depends on the order time and on van capacity. You can\nchange the window up to 10:00 p.m. on the day before delivery from the \"My orders\" page. Outside\nthese two areas, orders are shipped by a partner carrier, which delivers during the day without a\nchoice of window. The tracking link in your confirmation e-mail shows the carrier's estimate."
+  },
+  {
+    "chunk_id": "delivery#perishable-products-and-cold-chain-0",
+    "doc_id": "delivery",
+    "title": "Delivery and Shipping Policy",
+    "section": "Perishable products and cold chain",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/delivery.md",
+    "text": "Perishable products (dairy, fresh bakery, chilled specialty items) travel in insulated boxes with\ngel ice packs designed to keep them at or below 4 °C for 48 hours. To make sure a perishable parcel\nnever sits in a depot over a weekend, perishable orders to the Maritimes and to the rest of Ontario\nship only from Monday to Wednesday. Orders placed on Thursday, Friday or the weekend ship the\nfollowing Monday. Please refrigerate perishable products as soon as you receive them. The insulated\nboxes are recyclable and the gel packs are non-toxic; you can return boxes to our van drivers in\nMontréal and Québec City for reuse."
+  },
+  {
+    "chunk_id": "delivery#delivery-fees-0",
+    "doc_id": "delivery",
+    "title": "Delivery and Shipping Policy",
+    "section": "Delivery fees",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/delivery.md",
+    "text": "| Region | Standard fee | Free delivery from |\n|---|---|---|\n| Québec | $6.95 | $75 before taxes |\n| Ontario | $8.95 | $75 before taxes |\n| Maritimes | $12.95 | $100 before taxes |\n| Newfoundland and Labrador | $16.95 | $150 before taxes |\n| International | calculated at checkout | not available |\n\nMembers of the Boréal Rewards loyalty programme at the Boréal tier get free delivery from $50, and\nmembers at the Aurore tier get free delivery on every order (see the Loyalty Programme Terms). The\nfree-delivery threshold is calculated on the value of the products after discounts and before\ntaxes; gift cards do not count toward it."
+  },
+  {
+    "chunk_id": "delivery#missed-deliveries-0",
+    "doc_id": "delivery",
+    "title": "Delivery and Shipping Policy",
+    "section": "Missed deliveries",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/delivery.md",
+    "text": "If nobody is home during a van delivery, the driver leaves non-perishable products at the door or\nin the safe place you indicated at checkout, and takes a photo. Perishable products are never left\nunattended: they are brought back to our Laval depot and kept refrigerated. You can book a new\nwindow for the next day for a $5 redelivery fee, or pick the order up at the Laval depot free of\ncharge within 48 hours. After 48 hours perishable products are donated to a partner food bank and\nrefunded as store credit, minus the delivery fee. For carrier deliveries, the carrier leaves a\nnotice and holds the parcel at the nearest pickup point for five business days."
+  },
+  {
+    "chunk_id": "delivery#tracking-your-order-0",
+    "doc_id": "delivery",
+    "title": "Delivery and Shipping Policy",
+    "section": "Tracking your order",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/delivery.md",
+    "text": "Every order receives a confirmation e-mail with an order number that starts with \"BM\". When the\norder leaves our warehouse you receive a tracking link by e-mail and, if you gave us a mobile\nnumber, by text message. For van deliveries in Montréal and Québec City the link shows the van's\nposition on the day of delivery and a 30-minute arrival estimate."
+  },
+  {
+    "chunk_id": "delivery#holidays-and-seasonal-cut-offs-0",
+    "doc_id": "delivery",
+    "title": "Delivery and Shipping Policy",
+    "section": "Holidays and seasonal cut-offs",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/delivery.md",
+    "text": "We do not deliver on statutory holidays: New Year's Day, Good Friday, Victoria Day / National\nPatriots' Day, the Fête nationale du Québec (June 24) in Québec, Canada Day (July 1), Labour Day,\nThanksgiving, Christmas Day and Boxing Day. Orders that would arrive on a holiday arrive on the next\nbusiness day. For the end-of-year season, the last day to order for delivery before December 24 is\npublished on the home page at the beginning of November; it is usually December 18 for the\nMaritimes and December 21 for Greater Montréal and Québec City."
+  },
+  {
+    "chunk_id": "delivery#international-orders-0",
+    "doc_id": "delivery",
+    "title": "Delivery and Shipping Policy",
+    "section": "International orders",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/delivery.md",
+    "text": "International orders contain non-perishable specialty goods only. They are shipped by a tracked\ninternational courier. Import duties, taxes and customs fees of the destination country are paid by\nthe customer on delivery and are not refunded if a parcel is refused. Delivery times are estimates\nbecause customs clearance is outside our control."
+  },
+  {
+    "chunk_id": "delivery#wholesale-and-business-deliveries-0",
+    "doc_id": "delivery",
+    "title": "Delivery and Shipping Policy",
+    "section": "Wholesale and business deliveries",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/delivery.md",
+    "text": "Business accounts that order in wholesale quantities (see the Ordering and Payment Policy) receive\npallet or multi-box shipments by freight carrier. Freight deliveries require a loading area or a\nperson able to receive the boxes, and are booked by our business desk with a two-hour window."
+  },
+  {
+    "chunk_id": "delivery#contact-0",
+    "doc_id": "delivery",
+    "title": "Delivery and Shipping Policy",
+    "section": "Contact",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/delivery.md",
+    "text": "Customer service answers delivery questions Monday to Friday 8:00–20:00 and Saturday 9:00–17:00\n(Eastern time) by chat on the website, by e-mail at support@borealmarche.example and by telephone\nat 1-800-555-0142. Please have your order number ready."
+  },
+  {
+    "chunk_id": "loyalty#joining-the-programme-0",
+    "doc_id": "loyalty",
+    "title": "Boréal Rewards Loyalty Programme Terms",
+    "section": "Joining the programme",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/loyalty.md",
+    "text": "Boréal Rewards is free. Any person aged 18 or over with a Canadian delivery address can join from\nthe \"My account\" page; customers outside Canada can join but cannot redeem points on international\norders. One membership per person; memberships cannot be shared or transferred. Business accounts\nhave a separate programme described in their business agreement."
+  },
+  {
+    "chunk_id": "loyalty#earning-points-0",
+    "doc_id": "loyalty",
+    "title": "Boréal Rewards Loyalty Programme Terms",
+    "section": "Earning points",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/loyalty.md",
+    "text": "Members earn 1 point for every dollar spent on products, after discounts and before taxes. Points\nare not earned on taxes, delivery fees, gift card purchases or the part of an order paid with\npoints. Points appear in your account when the order is delivered. Members receive a 200-point\nbonus in the month of their birthday, and from time to time we run promotions that award extra\npoints on selected products; the conditions of each promotion are shown on the product page."
+  },
+  {
+    "chunk_id": "loyalty#redeeming-points-0",
+    "doc_id": "loyalty",
+    "title": "Boréal Rewards Loyalty Programme Terms",
+    "section": "Redeeming points",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/loyalty.md",
+    "text": "Every 500 points can be redeemed for $5 off an order. The minimum redemption is 500 points and\npoints can pay for up to 50% of the value of the products in an order. You choose how many points\nto use at checkout. Points cannot be exchanged for cash or gift cards."
+  },
+  {
+    "chunk_id": "loyalty#membership-tiers-0",
+    "doc_id": "loyalty",
+    "title": "Boréal Rewards Loyalty Programme Terms",
+    "section": "Membership tiers",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/loyalty.md",
+    "text": "Your tier depends on the points you earned in the last 12 months and is recalculated on the first\nday of every month.\n\n| Tier | Points earned in the last 12 months | Benefits |\n|---|---|---|\n| Essentiel | 0 to 499 | Earn and redeem points; birthday bonus |\n| Boréal | 500 to 1,499 | Free delivery from $50; early access to seasonal collections |\n| Aurore | 1,500 or more | Free delivery on every order; free change-of-mind return labels; priority customer service |"
+  },
+  {
+    "chunk_id": "loyalty#point-expiry-0",
+    "doc_id": "loyalty",
+    "title": "Boréal Rewards Loyalty Programme Terms",
+    "section": "Point expiry",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/loyalty.md",
+    "text": "Points do not expire as long as your account is active. An account is inactive when no order has\nbeen delivered for 12 consecutive months; the points on an inactive account expire at the end of\nthat 12-month period. We send a reminder by e-mail 30 days before points expire."
+  },
+  {
+    "chunk_id": "loyalty#returns-and-cancellations-0",
+    "doc_id": "loyalty",
+    "title": "Boréal Rewards Loyalty Programme Terms",
+    "section": "Returns and cancellations",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/loyalty.md",
+    "text": "Points earned on products you return or on orders you cancel are removed from your balance. If you\nredeemed points on an order and then return part of it, the points are returned to your account in\nproportion to the value of the products you returned."
+  },
+  {
+    "chunk_id": "loyalty#quarterly-offers-and-how-members-are-sel-0",
+    "doc_id": "loyalty",
+    "title": "Boréal Rewards Loyalty Programme Terms",
+    "section": "Quarterly offers and how members are selected",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/loyalty.md",
+    "text": "Each quarter, some members receive a personal discount offer (currently 15% off one order). To\ndecide who receives it, Boréal Marché uses an automated estimate of how likely each customer is to\norder again in the next 90 days, based on past orders and delivery region. A member of the marketing\nteam reviews and approves every offer list before it is sent. The estimate is not used to change\nprices, to refuse service or to change your tier. You can ask which information and main factors\nwere used for your account, have inaccurate information corrected, ask a staff member to review the\ndecision, or opt out of this profiling while staying a member: see the Privacy Notice."
+  },
+  {
+    "chunk_id": "loyalty#changes-to-the-programme-0",
+    "doc_id": "loyalty",
+    "title": "Boréal Rewards Loyalty Programme Terms",
+    "section": "Changes to the programme",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/loyalty.md",
+    "text": "We may change these terms with 30 days' notice by e-mail and on the website. If we end the\nprogramme, members will have at least 90 days to redeem their points."
+  },
+  {
+    "chunk_id": "loyalty#questions-0",
+    "doc_id": "loyalty",
+    "title": "Boréal Rewards Loyalty Programme Terms",
+    "section": "Questions",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/loyalty.md",
+    "text": "For questions about your points balance or tier, see \"My account → Boréal Rewards\" or contact\ncustomer service at support@borealmarche.example or 1-800-555-0142."
+  },
+  {
+    "chunk_id": "ordering#placing-an-order-0",
+    "doc_id": "ordering",
+    "title": "Ordering, Payment and Account Policy",
+    "section": "Placing an order",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/ordering.md",
+    "text": "You can order on the website or in the mobile app, with or without an account; a guest order\ncannot earn Boréal Rewards points and its history is not kept in an account. Prices are in Canadian\ndollars. The minimum order is $35 before taxes for orders that contain perishable products; there is\nno minimum for orders of non-perishable products only. When the order is placed you receive a\nconfirmation e-mail with an order number starting with \"BM\"."
+  },
+  {
+    "chunk_id": "ordering#payment-methods-0",
+    "doc_id": "ordering",
+    "title": "Ordering, Payment and Account Policy",
+    "section": "Payment methods",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/ordering.md",
+    "text": "We accept Visa, Mastercard and American Express credit cards, Visa and Mastercard debit cards,\nPayPal, Boréal Marché gift cards and Boréal Rewards points. Your card is authorised when you place\nthe order and charged when the order leaves our warehouse; if a product is unavailable, you are\ncharged only for what is shipped. We do not accept cash on delivery or cheques, except for approved\nbusiness accounts."
+  },
+  {
+    "chunk_id": "ordering#taxes-0",
+    "doc_id": "ordering",
+    "title": "Ordering, Payment and Account Policy",
+    "section": "Taxes",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/ordering.md",
+    "text": "Federal GST and Québec QST, or HST in Ontario and the Atlantic provinces, are added at checkout\naccording to the delivery address. Basic groceries are zero-rated; specialty goods such as\ndecorations, kitchenware and confectionery are taxable. The tax amount appears on the invoice that\ncomes with the confirmation e-mail."
+  },
+  {
+    "chunk_id": "ordering#changing-or-cancelling-an-order-0",
+    "doc_id": "ordering",
+    "title": "Ordering, Payment and Account Policy",
+    "section": "Changing or cancelling an order",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/ordering.md",
+    "text": "You can change the products, quantities, delivery window or address of an order, or cancel it, from\n\"My orders\" until 10:00 p.m. on the day before delivery for van deliveries, or until the order\nstatus becomes \"In preparation\" for carrier deliveries. After that, the order can no longer be\nchanged; you can refuse a carrier parcel or return non-perishable products under the Returns\npolicy. A cancelled order is refunded in full to the original payment method; any points used are\nreturned to your account."
+  },
+  {
+    "chunk_id": "ordering#substitutions-0",
+    "doc_id": "ordering",
+    "title": "Ordering, Payment and Account Policy",
+    "section": "Substitutions",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/ordering.md",
+    "text": "When a product in your order is out of stock on the day of preparation, we can replace it with a\nsimilar product of the same or lower price, if you allowed substitutions for that product at\ncheckout. Substituted products are clearly marked on the delivery slip; you can refuse a\nsubstitution at the door or return it free of charge within 7 days. If you did not allow\nsubstitutions, the missing product is removed and not charged."
+  },
+  {
+    "chunk_id": "ordering#prices-and-promotions-0",
+    "doc_id": "ordering",
+    "title": "Ordering, Payment and Account Policy",
+    "section": "Prices and promotions",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/ordering.md",
+    "text": "Prices shown at the time you place the order are the prices you pay, even if they change before\ndelivery. In case of an obvious pricing error, we contact you before preparing the order and you may\ncancel it. Promotional codes are applied at checkout, one code per order, and cannot be combined\nwith the quarterly loyalty offer unless the code says so. We do not price-match other retailers."
+  },
+  {
+    "chunk_id": "ordering#gift-cards-0",
+    "doc_id": "ordering",
+    "title": "Ordering, Payment and Account Policy",
+    "section": "Gift cards",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/ordering.md",
+    "text": "Gift cards are sold in amounts from $25 to $500. In accordance with Québec law they do not expire\nand have no inactivity fees. Gift cards can be used for products and delivery fees but not to buy\nother gift cards. A lost gift card can be replaced if you have the purchase receipt."
+  },
+  {
+    "chunk_id": "ordering#business-and-wholesale-accounts-0",
+    "doc_id": "ordering",
+    "title": "Ordering, Payment and Account Policy",
+    "section": "Business and wholesale accounts",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/ordering.md",
+    "text": "Businesses (cafés, gift shops, offices) can apply for a business account. Business accounts get\nwholesale pricing on orders of 24 units or more of the same product, freight delivery, and, after\napproval, payment by invoice at 30 days. Business accounts are managed by our business desk at\nbusiness@borealmarche.example."
+  },
+  {
+    "chunk_id": "ordering#your-account-0",
+    "doc_id": "ordering",
+    "title": "Ordering, Payment and Account Policy",
+    "section": "Your account",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/ordering.md",
+    "text": "You can update your name, addresses, telephone number and communication preferences in \"My\naccount\". To close your account, use \"My account → Privacy → Close my account\" or write to\nprivacy@borealmarche.example; we confirm the closure within 30 days. Closing your account cancels\nyour Boréal Rewards membership and any unused points."
+  },
+  {
+    "chunk_id": "ordering#customer-service-0",
+    "doc_id": "ordering",
+    "title": "Ordering, Payment and Account Policy",
+    "section": "Customer service",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/ordering.md",
+    "text": "Customer service is open Monday to Friday 8:00–20:00 and Saturday 9:00–17:00 (Eastern time), in\nFrench and English, by chat, by e-mail at support@borealmarche.example and by telephone at\n1-800-555-0142. Outside these hours the chat assistant answers questions about our policies and your\norders and passes anything it cannot answer to the team for the next business day."
+  },
+  {
+    "chunk_id": "privacy#who-is-responsible-for-your-personal-inf-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "Who is responsible for your personal information",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "Boréal Marché is responsible for the personal information it collects. Our person in charge of the\nprotection of personal information is the Chief Privacy Officer, who can be reached at\nprivacy@borealmarche.example or by mail at Boréal Marché, Privacy Office, Laval, Québec. Their title\nand contact information are published on our website, as Québec's Act respecting the protection of\npersonal information in the private sector (Law 25) requires."
+  },
+  {
+    "chunk_id": "privacy#what-we-collect-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "What we collect",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "We collect the information you give us when you create an account or order: your name, e-mail\naddress, telephone number, delivery and billing addresses, and your order history (dates, products,\nquantities, amounts, cancellations and returns). Payment card numbers are processed by our payment\nprovider and are never stored by Boréal Marché. When you use the website we collect technical\ninformation (device type, pages visited) through cookies that you can refuse, except for the cookies\nstrictly necessary to keep your basket and sign you in."
+  },
+  {
+    "chunk_id": "privacy#why-we-use-it-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "Why we use it",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "We use your information to process and deliver your orders, provide customer service, run the Boréal\nRewards programme, prevent fraud, meet our legal obligations, and improve our services. With your\nconsent we also send you marketing e-mails, which you can stop at any time with the link in each\ne-mail."
+  },
+  {
+    "chunk_id": "privacy#automated-decisions-and-profiling-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "Automated decisions and profiling",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "We use an automated system to estimate how likely you are to order again in the next 90 days, based\non your order history and your delivery region. This is a form of profiling. The estimate is used\nonly to decide who receives our quarterly discount offer; a member of our marketing team reviews and\napproves every offer list, so the decision is not based exclusively on automated processing. You\ncan ask us which personal information and which main factors were used, ask us to correct\ninaccurate information, submit your observations to a staff member who can review the decision, and\nopt out of this profiling at any time. Our product recommendations (\"you might also like\") are based\non which products are bought together across all orders, not on a personal profile."
+  },
+  {
+    "chunk_id": "privacy#our-chat-assistant-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "Our chat assistant",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "The chat assistant answers questions from our published policies and can look up your own account\ninformation when you are signed in. It will not disclose another customer's information. Questions\nare processed on servers located in Canada. By default the assistant uses a model that runs on our\nown infrastructure; we do not send your personal information to hosted language-model providers.\nIf the assistant cannot answer from our policies, it passes the conversation to a member of our team."
+  },
+  {
+    "chunk_id": "privacy#where-your-information-is-stored-and-who-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "Where your information is stored and who sees it",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "Your information is stored in Canada. Our delivery partners receive only what they need to deliver\nyour order (name, address, telephone number). Before any transfer outside Québec, we assess whether\nthe information would receive adequate protection, as Law 25 requires."
+  },
+  {
+    "chunk_id": "privacy#how-long-we-keep-it-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "How long we keep it",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "We keep order records for 7 years for tax purposes. Account information is kept while your account\nis active and deleted or anonymised 24 months after your last order or when you close your account,\nunless the law requires us to keep it longer. Prediction logs used to monitor our models are kept\nfor 13 months and then deleted."
+  },
+  {
+    "chunk_id": "privacy#your-rights-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "Your rights",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "You can ask to access your personal information, to have it corrected, to withdraw your consent, to\nhave it de-indexed, and to receive the computerised personal information you provided in a\nstructured, commonly used technological format. Write to privacy@borealmarche.example; we answer\nwithin 30 days. If you are not satisfied with our answer, you can file a complaint with the\nCommission d'accès à l'information du Québec."
+  },
+  {
+    "chunk_id": "privacy#confidentiality-incidents-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "Confidentiality incidents",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "If a confidentiality incident presents a risk of serious injury, we notify the Commission d'accès à\nl'information and the people concerned without delay, and we keep a register of incidents."
+  },
+  {
+    "chunk_id": "privacy#responsable-de-la-protection-des-renseig-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "Responsable de la protection des renseignements personnels",
+    "lang": "fr",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "Boréal Marché est responsable des renseignements personnels qu'elle recueille. La personne\nresponsable de la protection des renseignements personnels est notre chef de la protection de la\nvie privée, joignable à privacy@borealmarche.example ou par la poste au Bureau de la vie privée,\nBoréal Marché, Laval (Québec)."
+  },
+  {
+    "chunk_id": "privacy#renseignements-recueillis-et-utilisation-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "Renseignements recueillis et utilisation",
+    "lang": "fr",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "Nous recueillons votre nom, votre adresse courriel, votre numéro de téléphone, vos adresses de\nlivraison et de facturation ainsi que l'historique de vos commandes (dates, produits, quantités,\nmontants, annulations et retours). Les numéros de carte de paiement sont traités par notre\nfournisseur de paiement et ne sont jamais conservés par Boréal Marché. Nous utilisons ces\nrenseignements pour traiter et livrer vos commandes, offrir le service à la clientèle, gérer le\nprogramme Boréal Récompenses, prévenir la fraude et respecter nos obligations légales."
+  },
+  {
+    "chunk_id": "privacy#d-cisions-automatis-es-et-profilage-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "Décisions automatisées et profilage",
+    "lang": "fr",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "Nous utilisons un système automatisé pour estimer la probabilité que vous passiez une nouvelle\ncommande au cours des 90 prochains jours, à partir de l'historique de vos commandes et de votre\nrégion de livraison. Il s'agit d'un profilage. Cette estimation sert uniquement à déterminer qui\nreçoit notre offre de rabais trimestrielle; un membre de notre équipe marketing examine et approuve\nchaque liste d'offres. Vous pouvez nous demander quels renseignements et quels principaux facteurs\nont été utilisés, faire corriger des renseignements inexacts, présenter vos observations à un membre\ndu personnel en mesure de réviser la décision, et refuser ce profilage en tout temps."
+  },
+  {
+    "chunk_id": "privacy#assistant-virtuel-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "Assistant virtuel",
+    "lang": "fr",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "L'assistant répond à partir de nos politiques publiées et peut consulter les renseignements de votre\npropre compte lorsque vous êtes connecté. Il ne divulgue jamais les renseignements d'un autre client.\nPar défaut, il utilise un modèle exécuté sur notre propre infrastructure au Canada; vos\nrenseignements personnels ne sont pas transmis à des fournisseurs de modèles de langage hébergés."
+  },
+  {
+    "chunk_id": "privacy#conservation-et-droits-0",
+    "doc_id": "privacy",
+    "title": "Privacy Notice / Avis de confidentialité",
+    "section": "Conservation et droits",
+    "lang": "fr",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
+    "text": "Les dossiers de commande sont conservés 7 ans à des fins fiscales; les renseignements de compte sont\nsupprimés ou anonymisés 24 mois après votre dernière commande. Vous pouvez demander l'accès à vos\nrenseignements, leur rectification, le retrait de votre consentement, leur désindexation et leur\ncommunication dans un format technologique structuré et couramment utilisé. Écrivez à\nprivacy@borealmarche.example; nous répondons dans un délai de 30 jours. Vous pouvez porter plainte\nauprès de la Commission d'accès à l'information du Québec."
+  },
+  {
+    "chunk_id": "returns#our-commitment-0",
+    "doc_id": "returns",
+    "title": "Returns, Refunds and Quality Guarantee",
+    "section": "Our commitment",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/returns.md",
+    "text": "We want every order to arrive complete, in good condition and as described. This policy explains\nwhat you can return, how long you have, how refunds are paid and what we do when something arrives\ndamaged or wrong. It does not limit any right you have under the Québec Consumer Protection Act or\nthe consumer protection laws of your province."
+  },
+  {
+    "chunk_id": "returns#non-perishable-products-30-day-returns-0",
+    "doc_id": "returns",
+    "title": "Returns, Refunds and Quality Guarantee",
+    "section": "Non-perishable products: 30-day returns",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/returns.md",
+    "text": "You can return non-perishable products (kitchenware, home decor, lighting, bags and wrapping,\nstationery, toys and other specialty goods) within 30 days of delivery for a full refund of the\nproduct price, provided the product is unused and in its original packaging with its labels. Items\nthat were opened but are faulty are covered by the damaged and defective items section below, not by\nthis section. Seasonal decorations bought between November 1 and December 24 can be returned until\nJanuary 15 of the following year."
+  },
+  {
+    "chunk_id": "returns#perishable-products-quality-guarantee-in-0",
+    "doc_id": "returns",
+    "title": "Returns, Refunds and Quality Guarantee",
+    "section": "Perishable products: quality guarantee instead of returns",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/returns.md",
+    "text": "For food safety reasons we cannot take back perishable products (dairy, fresh bakery, chilled or\nfrozen specialty foods) or opened food products. Instead, our quality guarantee applies: if a\nperishable product arrives spoiled, warm, past its best-before date or otherwise not up to standard,\nreport it within 48 hours of delivery with a photo of the product and its label. We refund the\nproduct or credit your account, at your choice, without asking you to send the product back."
+  },
+  {
+    "chunk_id": "returns#damaged-defective-or-wrong-items-0",
+    "doc_id": "returns",
+    "title": "Returns, Refunds and Quality Guarantee",
+    "section": "Damaged, defective or wrong items",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/returns.md",
+    "text": "If a product arrives damaged, does not work, or is not what you ordered, tell us within 7 days of\ndelivery. We send a replacement at no cost or refund you in full, including the share of the\ndelivery fee for that product. For large or fragile items we may ask for a photo before sending a\nreplacement. You do not pay return shipping for our mistakes: we e-mail you a prepaid label, or our\nvan driver collects the item at your next delivery in Montréal and Québec City."
+  },
+  {
+    "chunk_id": "returns#items-that-cannot-be-returned-0",
+    "doc_id": "returns",
+    "title": "Returns, Refunds and Quality Guarantee",
+    "section": "Items that cannot be returned",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/returns.md",
+    "text": "The following are final sale: gift cards; personalised or engraved items; products sold in the\n\"Dernière chance\" clearance section; opened personal-care and hygiene items; and perishable products\n(which are covered by the quality guarantee instead). Wholesale orders placed through a business\naccount follow the return terms of the business agreement."
+  },
+  {
+    "chunk_id": "returns#how-to-start-a-return-0",
+    "doc_id": "returns",
+    "title": "Returns, Refunds and Quality Guarantee",
+    "section": "How to start a return",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/returns.md",
+    "text": "Sign in, open \"My orders\", select the order and choose \"Return an item\". Select the items and the\nreason; you receive a return authorisation number and, where applicable, a prepaid label by e-mail.\nYou can also start a return through the chat assistant or by e-mail at\nsupport@borealmarche.example with your order number (it starts with \"BM\"). Pack the items securely\nwith the return authorisation number and drop the parcel at any Canada Post outlet within 14 days of\nreceiving the authorisation. Returns sent without an authorisation number can take longer to\nprocess."
+  },
+  {
+    "chunk_id": "returns#return-shipping-costs-0",
+    "doc_id": "returns",
+    "title": "Returns, Refunds and Quality Guarantee",
+    "section": "Return shipping costs",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/returns.md",
+    "text": "When you return a product because you changed your mind, a return label costs $7.95 and is deducted\nfrom your refund. Returns are free when the product was damaged, defective or wrong, and for members\nat the Aurore tier of the Boréal Rewards programme. International customers pay the return shipping\nand any duties for change-of-mind returns."
+  },
+  {
+    "chunk_id": "returns#refunds-0",
+    "doc_id": "returns",
+    "title": "Returns, Refunds and Quality Guarantee",
+    "section": "Refunds",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/returns.md",
+    "text": "We inspect returned items within 3 business days of their arrival at our Laval warehouse. The refund\nis then issued to the original payment method; your bank or card issuer usually takes 5 to 10\nbusiness days to show it. Refunds for orders paid with a gift card are credited back to a gift card.\nIf you prefer, you can receive store credit instead of a refund: store credit is issued immediately\nafter inspection and includes a 10% bonus on the refunded amount. Delivery fees are refunded only\nwhen the whole order is returned because of our error."
+  },
+  {
+    "chunk_id": "returns#exchanges-0",
+    "doc_id": "returns",
+    "title": "Returns, Refunds and Quality Guarantee",
+    "section": "Exchanges",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/returns.md",
+    "text": "We do not process direct exchanges. Return the item for a refund and place a new order for the item\nyou want; if the new item is out of stock, our customer service can reserve it for 48 hours."
+  },
+  {
+    "chunk_id": "returns#loyalty-points-on-returned-items-0",
+    "doc_id": "returns",
+    "title": "Returns, Refunds and Quality Guarantee",
+    "section": "Loyalty points on returned items",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/returns.md",
+    "text": "Boréal Rewards points earned on a returned product are removed from your balance when the refund is\nissued. If you used points to pay for part of the order, the points are returned to your account for\nthe share of the returned products."
+  },
+  {
+    "chunk_id": "returns#late-or-missing-refunds-0",
+    "doc_id": "returns",
+    "title": "Returns, Refunds and Quality Guarantee",
+    "section": "Late or missing refunds",
+    "lang": "en",
+    "source": "C:/projects/boreal-marche-capstone/docs/corpus/returns.md",
+    "text": "If you have not received your refund 10 business days after the confirmation e-mail, first check\nwith your bank, then contact customer service with your order number and return authorisation\nnumber. Customer service can trace the refund and, if it was not issued, issue it the same day."
+  }
+]

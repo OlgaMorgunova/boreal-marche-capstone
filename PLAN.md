@@ -96,3 +96,42 @@ downloaded from UCI) was run end to end on Linux on 2026-09-29.
 
 `uv` was installed to `~/.local/bin/uv` and CPython 3.11 to `~/.local/share/uv/python/`; the project
 environment is `.venv/`. Regenerate everything with `make setup && make all && make test && make reports`.
+
+---
+
+# D4 — Deployment Demonstration and Dashboard (executed 2026-10-24)
+
+Nothing committed, pushed or tagged. Commit/tag plan: [docs/COMMIT_PLAN_D4.md](docs/COMMIT_PLAN_D4.md).
+
+- [x] **Head C** — 6-document corpus (~5,000 words), 66 chunks, multilingual ONNX embeddings; 4 typed tools
+  (retention and recommendations call the API over HTTP); rule / Ollama / OpenAI providers behind one
+  interface; guardrails (other customer, out of scope, similarity floor → handoff, citations, invented
+  SKU/percentage replacement); golden set (40, written first) + paraphrase set (20, written after)
+- [x] **API** — `/customers`, `/products`, `/chat`, `/chat/stream` (SSE), `/chat/providers`, `/metrics`,
+  `/monitoring/{report,alerts,timeseries}`; request/prediction/recommendation/chat logging to SQL
+- [x] **Monitoring** — PSI + KS per feature, prediction drift, data quality, error rate, p95, rule fire-rate,
+  traffic lights, alert state machine (log + webhook + GitHub issue), delayed-ground-truth backfill
+- [x] **Interface** — Streamlit, 5 sections, EN/FR, what-if, persisted basket, streaming assistant
+- [x] **Traffic** — Locust (course lab pattern), normal + shifted cohort, evidence saved per phase
+- [x] **Containers** — digest-pinned multi-stage API (1,437 → 823 MB unpacked) and UI images, non-root,
+  healthchecks, allow-list ignore files; compose with Postgres + Ollama (API/UI/Postgres tested)
+- [x] **CI/CD** — ci.yml extended; cd.yml (OIDC → ECR → App Runner → smoke test); retrain.yml (PR only,
+  fairness gate); monitor.yml; IAM policies + bootstrap script in `infra/aws/`
+- [x] **D4 note** — `reports/977_D4_Morgunova_DeploymentDemonstration.pdf` (6 pages, live items PENDING)
+- [ ] **PENDING (Olga)** — AWS bootstrap, GitHub variables/environment/branch protection, first CD run,
+  live simulation, video, evidence PR, tag `v0.9` (runbook + commit plan)
+- [ ] **PENDING (AWS)** — SageMaker spot quota (case 179073448000753); then `SAGEMAKER_HPO.md` and D3 §11
+
+## D4 decision log
+
+| Date | Decision | Why |
+|---|---|---|
+| 2026-10-24 | Hosting: AWS App Runner (API 1 vCPU/2 GB, UI 0.25/0.5), single instance | User choice; deploys from ECR with OIDC; API idles at ~750 MiB |
+| 2026-10-24 | No OpenAI key: provider implemented + unit-tested, not evaluated | User answer; §8.5 forbids personal data to hosted LLMs anyway |
+| 2026-10-24 | fastembed (ONNX) instead of sentence-transformers | No torch: keeps the API image < 1 GB |
+| 2026-10-24 | Drift reference = calibration snapshot minus demo customers | Pooled training reference made healthy traffic red (left-censored history) |
+| 2026-10-24 | `season_q` excluded from drift | Constant within a quarter by construction |
+| 2026-10-24 | Similarity floor 0.30 | Golden-set sweep: lowest answerable policy question scores 0.35 |
+| 2026-10-24 | Paraphrase set written after the rule keywords | Rule baseline 100% golden vs 35% paraphrases: overfitting made visible |
+| 2026-10-24 | `xgboost-cpu` in the image; numpy tests kept | −200 MB of CUDA wheels; deleting numpy/_core/tests crashed start-up |
+| 2026-10-24 | Fairness gate = non-regression while a gap exists | Top-spend-quartile lapser recall 0.32 vs 0.82 overall (D5) |

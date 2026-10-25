@@ -1,0 +1,30 @@
+{
+  "description": "Generalisation check for Head C, written AFTER the rule provider's keyword lists (unlike assistant_golden.json, which was written first). Natural phrasings that deliberately avoid the obvious keywords, to measure how much of the rule baseline's golden-set score is overfitting to the questions its author had seen.",
+  "written_at": "2026-10-24",
+  "session_customer_ref": "BM-E9B033CE",
+  "cases": [
+    {"id": "X01", "category": "policy", "lang": "en", "question": "When will my groceries get to Halifax?", "expected_tool": "policy_search", "expected_source": "delivery"},
+    {"id": "X02", "category": "policy", "lang": "en", "question": "I got the wrong thing in my box, what now?", "expected_tool": "policy_search", "expected_source": "returns"},
+    {"id": "X03", "category": "policy", "lang": "en", "question": "Is there sesame in the cookies from your bakery partners?", "expected_tool": "policy_search", "expected_source": "allergens"},
+    {"id": "X04", "category": "policy", "lang": "en", "question": "Who can I complain to about how you use my info?", "expected_tool": "policy_search", "expected_source": "privacy"},
+    {"id": "X05", "category": "policy", "lang": "en", "question": "Do you take PayPal?", "expected_tool": "policy_search", "expected_source": "ordering"},
+    {"id": "X06", "category": "policy", "lang": "en", "question": "What perks do I get if I spend a lot with you each year?", "expected_tool": "policy_search", "expected_source": "loyalty"},
+
+    {"id": "X07", "category": "tool", "lang": "en", "question": "Do you think I'll come back and buy again?", "expected_tool": "retention_score", "expected_source": null},
+    {"id": "X08", "category": "tool", "lang": "en", "question": "Is it likely I'll get a coupon this quarter?", "expected_tool": "retention_score", "expected_source": null},
+    {"id": "X09", "category": "tool", "lang": "en", "question": "I'm buying 22423, anything that pairs nicely?", "expected_tool": "recommendations", "expected_source": null},
+    {"id": "X10", "category": "tool", "lang": "en", "question": "What's the price on the jumbo bag red retrospot?", "expected_tool": "product_lookup", "expected_source": null},
+    {"id": "X11", "category": "tool", "lang": "en", "question": "Have you got any cake cases?", "expected_tool": "product_lookup", "expected_source": null},
+
+    {"id": "X12", "category": "out_of_scope", "lang": "en", "question": "Tell me a joke.", "expected_tool": "out_of_scope", "expected_source": null},
+    {"id": "X13", "category": "out_of_scope", "lang": "en", "question": "How do I fix the brakes on my car?", "expected_tool": "out_of_scope", "expected_source": null},
+    {"id": "X14", "category": "out_of_scope", "lang": "en", "question": "What was the score of the Canadiens game last night?", "expected_tool": "out_of_scope", "expected_source": null},
+    {"id": "X15", "category": "out_of_scope", "lang": "en", "question": "Recommend a good movie for tonight.", "expected_tool": "out_of_scope", "expected_source": null},
+    {"id": "X16", "category": "out_of_scope", "lang": "en", "question": "Can you book me a flight to Paris?", "expected_tool": "out_of_scope", "expected_source": null},
+
+    {"id": "X17", "category": "french", "lang": "fr", "question": "Quand vais-je recevoir ma commande à Moncton ?", "expected_tool": "policy_search", "expected_source": "delivery"},
+    {"id": "X18", "category": "french", "lang": "fr", "question": "J'ai reçu un produit brisé, que dois-je faire ?", "expected_tool": "policy_search", "expected_source": "returns"},
+    {"id": "X19", "category": "french", "lang": "fr", "question": "Y a-t-il du gluten dans vos biscuits ?", "expected_tool": "policy_search", "expected_source": "allergens"},
+    {"id": "X20", "category": "french", "lang": "fr", "question": "Quel est le prix du présentoir à gâteaux Regency ?", "expected_tool": "product_lookup", "expected_source": null}
+  ]
+}

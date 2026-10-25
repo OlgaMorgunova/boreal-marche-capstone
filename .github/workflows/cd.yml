@@ -1,0 +1,81 @@
+# Continuous deployment: every merge to master builds SHA-tagged images, pushes them to Amazon ECR
+# and deploys them to AWS App Runner, then smoke-tests the live service.
+#
+# Authentication is GitHub OIDC -> IAM role (aws-actions/configure-aws-credentials). No AWS access
+# key is stored in GitHub: the role trusts only this repository's master branch and the
+# "production" environment, and every credential expires with the job (infra/aws/, runbook
+# docs/runbooks/AWS_APPRUNNER_DEPLOY.md). The values below are repository *variables* (not secrets:
+# ARNs are identifiers, not credentials).
+name: CD
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  id-token: write   # request the OIDC token
+  contents: read
+
+concurrency:
+  group: cd-production
+  cancel-in-progress: false
+
+env:
+  # App Runner is not offered in ca-central-1; the serving stack runs in us-east-1 (D4 §6).
+  AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+
+jobs:
+  deploy:
+    name: build · push · deploy · smoke test
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to AWS with OIDC (no stored credentials)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          role-session-name: gh-cd-${{ github.run_id }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Show the assumed identity (evidence for D4)
+        run: aws sts get-caller-identity --query '{Account:Account,Arn:Arn}' --output table
+
+      - name: Log in to Amazon ECR
+        id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push images tagged with the commit SHA
+        env:
+          REGISTRY: ${{ steps.ecr.outputs.registry }}
+        run: |
+          API_IMAGE="$REGISTRY/boreal-api:$GITHUB_SHA"
+          UI_IMAGE="$REGISTRY/boreal-ui:$GITHUB_SHA"
+          docker build -f docker/Dockerfile --build-arg GIT_SHA=$GITHUB_SHA --build-arg IMAGE_TAG=$GITHUB_SHA -t "$API_IMAGE" .
+          docker build -f docker/frontend.Dockerfile -t "$UI_IMAGE" .
+          docker push "$API_IMAGE"
+          docker push "$UI_IMAGE"
+          docker image ls --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep "$GITHUB_SHA" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "API_IMAGE=$API_IMAGE" >> "$GITHUB_ENV"
+          echo "UI_IMAGE=$UI_IMAGE" >> "$GITHUB_ENV"
+
+      - name: Deploy API to App Runner
+        run: |
+          python3 scripts/apprunner_deploy.py --service-arn "${{ vars.APPRUNNER_API_ARN }}" \
+            --image "$API_IMAGE" --port 8000 --access-role-arn "${{ vars.APPRUNNER_ECR_ROLE_ARN }}" \
+            --env GIT_SHA=$GITHUB_SHA --env IMAGE_TAG=$GITHUB_SHA --env BOREAL_API_URL=http://127.0.0.1:8000
+
+      - name: Deploy interface to App Runner
+        run: |
+          python3 scripts/apprunner_deploy.py --service-arn "${{ vars.APPRUNNER_UI_ARN }}" \
+            --image "$UI_IMAGE" --port 8501 --access-role-arn "${{ vars.APPRUNNER_ECR_ROLE_ARN }}" \
+            --env API_URL=${{ vars.API_URL }} --env PUBLIC_API_URL=${{ vars.API_URL }}
+
+      - name: Post-deploy smoke test (deployed version must equal this commit)
+        run: |
+          python3 scripts/smoke_test.py --api "${{ vars.API_URL }}" --ui "${{ vars.UI_URL }}" \
+            --expect-sha "$GITHUB_SHA" | tee smoke.txt
+          { echo '### Smoke test'; echo '```'; cat smoke.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"

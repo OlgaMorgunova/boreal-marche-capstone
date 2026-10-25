@@ -1,0 +1,9 @@
+{
+  "measured_at": "2026-10-24",
+  "method": "60 sequential POSTs with httpx from the boreal-ui container to http://api:8000 on the same Docker network (no host port proxy), image boreal-api:d4",
+  "client_side_ms": {
+    "/predict": {"p50": 9.0, "p95": 13.5},
+    "/recommend": {"p50": 1.7, "p95": 2.2}
+  },
+  "finding": "Through Docker Desktop's Windows port proxy, Locust saw ~55 ms median on POST endpoints and the API's own middleware measured p95 54-70 ms, while GET endpoints stayed at ~2 ms: the extra ~45 ms is the proxy delaying the request body (TCP delayed-ACK), not model time. Inside the Docker network /predict p95 is 13.5 ms. Analysed further in D5."
+}

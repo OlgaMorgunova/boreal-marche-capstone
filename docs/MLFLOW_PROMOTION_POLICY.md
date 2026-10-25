@@ -20,8 +20,16 @@ A candidate becomes `champion` only if **all** hold on the **validation snapshot
 3. **Calibrated:** expected calibration error (ECE, 10 bins) **≤ 0.05**.
 4. **Beats the current champion** by **≥ 0.005 PR-AUC** (or no champion exists). A retrain that is
    merely as good does not churn the served model.
-5. **Tests are green** in CI (unit, contract, golden-prediction regression, data-quality).
-6. **Human sign-off** on the pull request opened by the weekly retraining workflow (D4): the workflow
+5. **Fairness gate (added in D4):** recall of the coupon decision among true lapsers, per region,
+   tenure band (<6 m, 6–12 m, >12 m) and spend quartile (groups with ≥ 30 lapsers). The candidate's
+   worst gap below overall recall must be ≤ 5 points or, while a known gap is being mitigated (D5),
+   no worse than the champion's. Measured on the validation snapshot by
+   `boreal_marche.retention.promote`. Known gap at v0.9: the champion's top-spend quartile is 50
+   points below overall recall (0.317 vs 0.818) — high spenders get high return probabilities, so
+   few of the ones who do lapse receive the offer. Mitigations are analysed in D5.
+6. **Tests are green** in CI (unit, contract, golden-prediction regression, data-quality).
+7. **Human sign-off** on the pull request opened by the weekly retraining workflow
+   (`.github/workflows/retrain.yml`, D4): the workflow
    never deploys; a person merges. This is also the Law 25 human-review step for the model itself.
 
 The decision, each check's result and the lineage (git SHA, raw-data SHA-256, gold SHA-256, run id)

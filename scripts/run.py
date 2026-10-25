@@ -4,6 +4,9 @@
     python scripts/run.py train evaluate   # any stages, in order
     python scripts/run.py evaluate --force # re-score the test set (adds a reported look)
     python scripts/run.py hpo --provider azure --dry-run   # extra args go to the last stage
+    python scripts/run.py notebook         # re-execute the walkthrough notebook, outputs saved
+    python scripts/run.py api              # D4: API on :8000 (second terminal: `frontend`, :8501)
+    python scripts/run.py simulate         # D4: Locust traffic, normal then shifted cohort
     python scripts/run.py --list
 
 Run it with the project interpreter: `.venv/bin/python` (Linux/macOS) or `.venv\\Scripts\\python`
@@ -35,8 +38,28 @@ STAGES: dict[str, list[list[str]]] = {
     "rules": [M + ["boreal_marche.recommend.mine"]],
     "rules-eval": [M + ["boreal_marche.recommend.evaluate"]],
     "hpo": [M + ["boreal_marche.cloud"]],
+    "reference": [M + ["boreal_marche.monitoring.reference"]],
+    "index": [M + ["boreal_marche.assistant.index"]],
+    "assistant-eval": [M + ["boreal_marche.assistant.evaluate"]],
+    "simulate": [[sys.executable, "scripts/simulate_traffic.py"]],
+    "loadtest": [M + ["locust", "-f", "loadtest/locustfile.py", "--host", "http://127.0.0.1:8000"]],
+    "backfill": [M + ["boreal_marche.monitoring.backfill", "--replay-validation"]],
+    "frontend": [M + ["streamlit", "run", "frontend/app.py", "--server.port", "8501"]],
     "figures": [M + ["boreal_marche.reporting.figures"]],
     "reports": [M + ["boreal_marche.reporting.figures"], M + ["boreal_marche.reporting.build"]],
+    "notebook": [
+        M
+        + [
+            "jupyter",
+            "nbconvert",
+            "--to",
+            "notebook",
+            "--execute",
+            "--inplace",
+            "--ExecutePreprocessor.timeout=900",
+            "notebooks/01_project_walkthrough.ipynb",
+        ]
+    ],
     "test": [M + ["pytest"]],
     "cov": [
         M + ["pytest", "--cov=boreal_marche", "--cov-report=term-missing", "--cov-fail-under=70"]
@@ -65,6 +88,8 @@ PIPELINE = [
     "rules-sweep",
     "rules",
     "rules-eval",
+    "reference",
+    "index",
 ]
 
 

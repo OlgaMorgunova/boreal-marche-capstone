@@ -1,0 +1,634 @@
+{
+  "generated_at": 1792848871.7256284,
+  "status": "red",
+  "window": {
+    "predictions": 500,
+    "requests": 2000,
+    "min_predictions": 100,
+    "from": 1792848855.3174386,
+    "to": 1792848871.477449
+  },
+  "checks": [
+    {
+      "name": "input_drift",
+      "status": "red",
+      "value": 0.5277777777777778,
+      "unit": "share of features with PSI >= red",
+      "threshold": {
+        "amber": "any PSI >= 0.1",
+        "red": 0.1
+      },
+      "detail": "top drifted: revenue_trend, region, orders_trend"
+    },
+    {
+      "name": "prediction_drift",
+      "status": "red",
+      "value": 2.1117968514783643,
+      "unit": "PSI of p_return",
+      "threshold": {
+        "amber": 0.1,
+        "red": 0.25
+      }
+    },
+    {
+      "name": "data_quality",
+      "status": "red",
+      "value": 0.994,
+      "unit": "max(missing-rate change, /predict 422 rate)",
+      "threshold": {
+        "amber": 0.05,
+        "red": 0.15
+      }
+    },
+    {
+      "name": "error_rate",
+      "status": "green",
+      "value": 0.0,
+      "unit": "share of 5xx responses",
+      "threshold": {
+        "amber": 0.01,
+        "red": 0.05
+      }
+    },
+    {
+      "name": "latency_p95_predict",
+      "status": "green",
+      "value": 70.20049999999998,
+      "unit": "ms, server-side",
+      "threshold": {
+        "amber": 150.0,
+        "red": 500.0
+      }
+    },
+    {
+      "name": "rule_fire_rate",
+      "status": "red",
+      "value": 0.1882591093117409,
+      "unit": "share of non-empty baskets answered by a rule",
+      "threshold": {
+        "amber": 0.5,
+        "red": 0.3,
+        "direction": "lower is worse"
+      }
+    }
+  ],
+  "features": [
+    {
+      "feature": "revenue_trend",
+      "missing_ref": 0.0,
+      "missing_live": 0.994,
+      "missing_delta": 0.994,
+      "psi": 15.626161513382948,
+      "ks": 0.724,
+      "ks_pvalue": 0.0423804695133833,
+      "mean_ref": 0.11564978117241753,
+      "mean_live": -0.603586543053337,
+      "status": "red"
+    },
+    {
+      "feature": "region",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 12.118705985309505,
+      "ks": null,
+      "ks_pvalue": null,
+      "status": "red"
+    },
+    {
+      "feature": "orders_trend",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 8.351515688958854,
+      "ks": 0.4945,
+      "ks_pvalue": 8.581190624112974e-90,
+      "mean_ref": 0.2625106022052587,
+      "mean_live": 0.0,
+      "status": "red"
+    },
+    {
+      "feature": "tenure_days",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 7.838056791735228,
+      "ks": 0.913,
+      "ks_pvalue": 2.3e-322,
+      "mean_ref": 338.8947195127698,
+      "mean_live": 34.41402524314207,
+      "status": "red"
+    },
+    {
+      "feature": "mean_gap_days",
+      "missing_ref": 0.17514843087362172,
+      "missing_live": 0.64,
+      "missing_delta": 0.46485156912637826,
+      "psi": 5.625991517226105,
+      "ks": 0.9072407883461868,
+      "ks_pvalue": 1.6668170748394802e-159,
+      "mean_ref": 88.6613215079752,
+      "mean_live": 12.15668086721907,
+      "status": "red"
+    },
+    {
+      "feature": "orders_lifetime",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 5.545965346962931,
+      "ks": 0.7025,
+      "ks_pvalue": 9.761670417642339e-193,
+      "mean_ref": 7.5716709075487705,
+      "mean_live": 1.378,
+      "status": "red"
+    },
+    {
+      "feature": "std_gap_days",
+      "missing_ref": 0.3061916878710772,
+      "missing_live": 0.994,
+      "missing_delta": 0.6878083121289228,
+      "psi": 5.045364347968546,
+      "ks": 0.6308068459657702,
+      "ks_pvalue": 0.10626328924246628,
+      "mean_ref": 50.25317772308834,
+      "mean_live": 29.124731758421394,
+      "status": "red"
+    },
+    {
+      "feature": "orders_30d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 4.317929048480169,
+      "ks": 0.602,
+      "ks_pvalue": 1.1795501204073297e-136,
+      "mean_ref": 0.5720949957591179,
+      "mean_live": 0.994,
+      "status": "red"
+    },
+    {
+      "feature": "recency_days",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 4.271266117975269,
+      "ks": 0.602,
+      "ks_pvalue": 1.1795501204073297e-136,
+      "mean_ref": 60.62083244981623,
+      "mean_live": 15.872621654417653,
+      "status": "red"
+    },
+    {
+      "feature": "revenue_lifetime",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 3.394165994721619,
+      "ks": 0.745,
+      "ks_pvalue": 6.905161418907108e-221,
+      "mean_ref": 3403.757553011026,
+      "mean_live": 330.9760030806306,
+      "status": "red"
+    },
+    {
+      "feature": "orders_90d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 3.313263094381954,
+      "ks": 0.262,
+      "ks_pvalue": 1.2731355172876644e-24,
+      "mean_ref": 1.4631043256997456,
+      "mean_live": 1.354,
+      "status": "red"
+    },
+    {
+      "feature": "overdue_ratio",
+      "missing_ref": 0.17514843087362172,
+      "missing_live": 0.64,
+      "missing_delta": 0.46485156912637826,
+      "psi": 3.1379113201835596,
+      "ks": 0.5252213653241931,
+      "ks_pvalue": 1.2890495305685804e-42,
+      "mean_ref": 1.1381343902342351,
+      "mean_live": 1.6801694933766405,
+      "status": "red"
+    },
+    {
+      "feature": "active_months_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 2.7564631495766183,
+      "ks": 0.456,
+      "ks_pvalue": 8.307327231225473e-76,
+      "mean_ref": 1.9346904156064462,
+      "mean_live": 1.006,
+      "status": "red"
+    },
+    {
+      "feature": "orders_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 2.306046780180177,
+      "ks": 0.3,
+      "ks_pvalue": 2.822350709568837e-32,
+      "mean_ref": 2.6636980491942324,
+      "mean_live": 1.36,
+      "status": "red"
+    },
+    {
+      "feature": "max_order_value_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 2.239848640626079,
+      "ks": 0.631,
+      "ks_pvalue": 1.7255476542940658e-151,
+      "mean_ref": 495.9179007633587,
+      "mean_live": 252.49233230379468,
+      "status": "red"
+    },
+    {
+      "feature": "revenue_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 2.1168859527396844,
+      "ks": 0.5885,
+      "ks_pvalue": 4.3552191850031065e-130,
+      "mean_ref": 1092.256675148431,
+      "mean_live": 312.23020308063064,
+      "status": "red"
+    },
+    {
+      "feature": "aov_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 1.9855448275643606,
+      "ks": 0.604,
+      "ks_pvalue": 1.2046632357067206e-137,
+      "mean_ref": 369.2303395390866,
+      "mean_live": 248.0938523037947,
+      "status": "red"
+    },
+    {
+      "feature": "tenure_censored",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 1.810778213983982,
+      "ks": 0.2315,
+      "ks_pvalue": 2.891118056786541e-19,
+      "mean_ref": 0.2268871925360475,
+      "mean_live": 0.0,
+      "status": "red"
+    },
+    {
+      "feature": "revenue_90d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.7200496381899707,
+      "ks": 0.372,
+      "ks_pvalue": 7.244113475182513e-50,
+      "mean_ref": 589.8106530958439,
+      "mean_live": 300.54448308063064,
+      "status": "red"
+    },
+    {
+      "feature": "revenue_30d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.09163920330156991,
+      "ks": 0.6025,
+      "ks_pvalue": 6.6748530933390635e-137,
+      "mean_ref": 229.3643638676845,
+      "mean_live": 297.6557230806306,
+      "status": "red"
+    },
+    {
+      "feature": "distinct_skus_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.07086102779907533,
+      "ks": 0.0585,
+      "ks_pvalue": 0.12638557348242035,
+      "mean_ref": 41.899491094147585,
+      "mean_live": 39.288,
+      "status": "green"
+    },
+    {
+      "feature": "lines_per_order_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.0626404098825745,
+      "ks": 0.06,
+      "ks_pvalue": 0.10956537845694832,
+      "mean_ref": 20.86078781951393,
+      "mean_live": 18.805795018215136,
+      "status": "green"
+    },
+    {
+      "feature": "mean_order_hour_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.05550202111118196,
+      "ks": 0.056,
+      "ks_pvalue": 0.15905255368277962,
+      "mean_ref": 12.431284191544833,
+      "mean_live": 12.318542531793806,
+      "status": "green"
+    },
+    {
+      "feature": "share_lighting",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.05390628490672944,
+      "ks": 0.045,
+      "ks_pvalue": 0.38603787290555963,
+      "mean_ref": 0.09689357299138378,
+      "mean_live": 0.10328362866892664,
+      "status": "green"
+    },
+    {
+      "feature": "mean_unit_price_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.042196190254772024,
+      "ks": 0.0345,
+      "ks_pvalue": 0.7198824856997894,
+      "mean_ref": 3.7289348524496417,
+      "mean_live": 3.9155577369006793,
+      "status": "green"
+    },
+    {
+      "feature": "units_per_line_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.03775196228621768,
+      "ks": 0.068,
+      "ks_pvalue": 0.04811013522438849,
+      "mean_ref": 55.863654505176626,
+      "mean_live": 17.03243287725448,
+      "status": "green"
+    },
+    {
+      "feature": "share_seasonal",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.03523518860671809,
+      "ks": 0.0915,
+      "ks_pvalue": 0.0023630892010392886,
+      "mean_ref": 0.020131455259164384,
+      "mean_live": 0.029332122909799616,
+      "status": "green"
+    },
+    {
+      "feature": "share_home_decor",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.03207712638281089,
+      "ks": 0.0505,
+      "ks_pvalue": 0.25434757461746127,
+      "mean_ref": 0.17366323158869262,
+      "mean_live": 0.1624053732231576,
+      "status": "green"
+    },
+    {
+      "feature": "share_kitchen",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.031002111968901104,
+      "ks": 0.0705,
+      "ks_pvalue": 0.03642176982317014,
+      "mean_ref": 0.2763414167076273,
+      "mean_live": 0.2594363647086155,
+      "status": "green"
+    },
+    {
+      "feature": "cancel_rate_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.026523261619287385,
+      "ks": 0.04,
+      "ks_pvalue": 0.5362962564058529,
+      "mean_ref": 0.026843843785020978,
+      "mean_live": 0.029991612973559085,
+      "status": "green"
+    },
+    {
+      "feature": "share_bags_wrap",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.02039016831140765,
+      "ks": 0.0525,
+      "ks_pvalue": 0.21568978443608844,
+      "mean_ref": 0.09894516241280166,
+      "mean_live": 0.0983068931835243,
+      "status": "green"
+    },
+    {
+      "feature": "sku_repeat_rate_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.019422234953260627,
+      "ks": 0.035,
+      "ks_pvalue": 0.7032331457457696,
+      "mean_ref": 0.09368094286957478,
+      "mean_live": 0.0851267335466762,
+      "status": "green"
+    },
+    {
+      "feature": "category_entropy_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.012719453364604873,
+      "ks": 0.047,
+      "ks_pvalue": 0.3338009458448505,
+      "mean_ref": 1.3600748927777166,
+      "mean_live": 1.3726251352304257,
+      "status": "green"
+    },
+    {
+      "feature": "weekend_share_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.011583803104493917,
+      "ks": 0.0385,
+      "ks_pvalue": 0.5855914827410528,
+      "mean_ref": 0.11595067090783903,
+      "mean_live": 0.08893134743015899,
+      "status": "green"
+    },
+    {
+      "feature": "cancel_lines_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.00871617014820113,
+      "ks": 0.031,
+      "ks_pvalue": 0.8298908380764453,
+      "mean_ref": 1.2472434266327397,
+      "mean_live": 1.208,
+      "status": "green"
+    },
+    {
+      "feature": "outlier_line_share_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.0,
+      "ks": 0.0105,
+      "ks_pvalue": 0.9999999999745484,
+      "mean_ref": 0.007541527737160127,
+      "mean_live": 0.0050592146376200785,
+      "status": "green"
+    }
+  ],
+  "excluded_features": [
+    "season_q"
+  ],
+  "prediction": {
+    "mean_ref": 0.4989369040481589,
+    "send_coupon_rate_ref": 0.6017811704834606,
+    "psi": 2.1117968514783643,
+    "mean_live": 0.2702824202972804,
+    "send_coupon_rate_live": 0.954,
+    "status": "red"
+  },
+  "data_quality": {
+    "max_missing_delta": 0.994,
+    "worst_missing_feature": "revenue_trend",
+    "predict_validation_error_rate": 0.0,
+    "unknown_item_rate": 0.8516699410609038
+  },
+  "operations": {
+    "request_count": 1995,
+    "rpm": 975.5484992452724,
+    "error_rate": 0.0,
+    "by_endpoint": {
+      "/chat": {
+        "count": 161,
+        "p50": 55.404,
+        "p95": 69.373,
+        "p99": 93.98060000000012,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/customers/{ref}/features": {
+        "count": 12,
+        "p50": 1.803,
+        "p95": 9.9154,
+        "p99": 10.28148,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/predict": {
+        "count": 1015,
+        "p50": 52.25,
+        "p95": 70.20049999999998,
+        "p99": 93.71938000000004,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/predict/batch": {
+        "count": 152,
+        "p50": 52.82299999999999,
+        "p95": 69.81334999999999,
+        "p99": 92.16824000000028,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/products": {
+        "count": 10,
+        "p50": 8.251,
+        "p95": 17.33329999999999,
+        "p99": 20.229860000000002,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/recommend": {
+        "count": 482,
+        "p50": 43.7645,
+        "p95": 53.4214,
+        "p99": 57.76566999999999,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/version": {
+        "count": 163,
+        "p50": 0.639,
+        "p95": 1.3080000000000003,
+        "p99": 10.764379999999953,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      }
+    },
+    "from": 1792848748.7784803,
+    "to": 1792848871.4786844
+  },
+  "recommend": {
+    "n": 500,
+    "rule_fire_rate": 0.1882591093117409,
+    "rule_fire_rate_ref": 0.9172103813252138,
+    "strategies": {
+      "popularity_fallback": 401,
+      "rules": 64,
+      "rules+popularity": 29,
+      "empty_basket": 6
+    }
+  },
+  "assistant": {
+    "n": 298,
+    "by_provider": {
+      "rule": {
+        "count": 298,
+        "median": 9.1
+      }
+    },
+    "refusal_rate": 0.1912751677852349,
+    "handoff_rate": 0.0,
+    "tools": {
+      "policy_search": 162,
+      "out_of_scope": 57,
+      "recommendations": 41,
+      "retention_score": 23,
+      "product_lookup": 15
+    }
+  },
+  "cohorts_in_window": {
+    "shifted": 497,
+    "none": 3
+  },
+  "reference": {
+    "source": "data/gold/retention.parquet, calibration snapshot 2011-06-01 minus the 300 held-out demo customers",
+    "model_version": "0.3.0+xgboost",
+    "generated_at": "2026-10-24T13:02:56+00:00"
+  },
+  "ground_truth": {
+    "n_labelled": 0,
+    "label_window_days": 90,
+    "first_prediction_ts": 1792848585.759346,
+    "first_true_signal_ts": 1801229385.759346
+  },
+  "new_alerts": []
+}

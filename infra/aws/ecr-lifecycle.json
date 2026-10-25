@@ -1,0 +1,10 @@
+{
+  "rules": [
+    {
+      "rulePriority": 1,
+      "description": "Keep the 10 most recent images (rollback window), expire older ones",
+      "selection": { "tagStatus": "any", "countType": "imageCountMoreThan", "countNumber": 10 },
+      "action": { "type": "expire" }
+    }
+  ]
+}

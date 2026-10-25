@@ -1,19 +1,19 @@
-.git
-.venv
-.github
-data
-doc
-docs
-notebooks
-reports
-tests
-mlruns
-mlflow.db
-frontend
-*.xlsx
-*.zip
+# Allow-list for the API image (docker/Dockerfile): the build context is only what the image needs.
+# Data, notebooks, MLflow state, reports, tests and .env never reach the Docker daemon.
+# The interface image has its own list: docker/frontend.Dockerfile.dockerignore.
+*
+!pyproject.toml
+!README.md
+!params.yaml
+!src/
+!docker/requirements-api.txt
+!artifacts/model.joblib
+!artifacts/model_meta.json
+!artifacts/rules.json
+!artifacts/reference_profile.json
+!artifacts/demo_customers.json
+!artifacts/catalogue.json
+!artifacts/index/
 **/__pycache__
 **/*.pyc
-.env
-.env.*
-artifacts/model_*.joblib
+src/*.egg-info

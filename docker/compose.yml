@@ -1,11 +1,82 @@
+# Whole platform with one command (from the repository root):
+#   docker compose -f docker/compose.yml up --build -d        (or: make up)
+# API http://localhost:8000/docs · UI http://localhost:8501 · Postgres :5432 · Ollama :11434
+# First start pulls the local LLM (OLLAMA_MODEL, default llama3.1:8b, ~4.9 GB) into a volume; the
+# assistant's "ollama" provider shows "unavailable" until the pull finishes, the rule provider works
+# immediately. Smaller machine: OLLAMA_MODEL=llama3.2:3b docker compose -f docker/compose.yml up -d
+name: boreal-marche
+
 services:
   api:
     build:
       context: ..
       dockerfile: docker/Dockerfile
+      args:
+        GIT_SHA: ${GIT_SHA:-local}
+        IMAGE_TAG: compose
     image: boreal-api:local
     ports:
       - "8000:8000"
     environment:
-      GIT_SHA: ${GIT_SHA:-local}
-    # D4 adds: Streamlit frontend, Postgres prediction log, Ollama local LLM, MLflow server.
+      DATABASE_URL: postgresql+psycopg://boreal:${POSTGRES_PASSWORD:-boreal-local-only}@db:5432/boreal
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.1:8b}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ALERT_WEBHOOK_URL: ${ALERT_WEBHOOK_URL:-}
+      BOREAL_API_URL: http://127.0.0.1:8000
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/frontend.Dockerfile
+    image: boreal-ui:local
+    ports:
+      - "8501:8501"
+    environment:
+      API_URL: http://api:8000
+      PUBLIC_API_URL: http://localhost:8000
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16.4-alpine
+    environment:
+      POSTGRES_USER: boreal
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-boreal-local-only}
+      POSTGRES_DB: boreal
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U boreal -d boreal"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:0.11.10
+    volumes:
+      - ollama:/root/.ollama
+    ports:
+      - "11434:11434"
+    restart: unless-stopped
+
+  # One-shot: pulls the model into the shared volume, then exits.
+  ollama-pull:
+    image: ollama/ollama:0.11.10
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    entrypoint: ["ollama", "pull", "${OLLAMA_MODEL:-llama3.1:8b}"]
+    depends_on:
+      - ollama
+    restart: "no"
+
+volumes:
+  pgdata:
+  ollama:

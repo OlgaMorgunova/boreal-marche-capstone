@@ -1,0 +1,9 @@
+# Allow-list for the interface image (BuildKit uses <Dockerfile>.dockerignore when present).
+*
+!docker/requirements-frontend.txt
+!frontend/
+!MODEL_CARD.md
+!DATA_CARD.md
+!GOVERNANCE_LOI25.md
+!reports/figures/architecture.png
+**/__pycache__

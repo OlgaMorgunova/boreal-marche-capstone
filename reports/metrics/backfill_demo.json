@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-10-24T13:34:46+00:00",
+  "labels_written": 2849,
+  "n_labelled": 2849,
+  "label_window_days": 90,
+  "first_prediction_ts": 1792848585.759346,
+  "first_true_signal_ts": 1801229385.759346,
+  "pr_auc": 0.7678054514912396,
+  "lapser_recall": 0.7746955345060893,
+  "base_rate": 0.48122148122148123,
+  "mean_p_return": 0.5077308677597181,
+  "note": "Historical replay on a copy of the container's prediction log: demo customers' 90-day outcomes are known from the validation snapshot (in-sample for the calibrator). Demonstrates the backfill pipeline, not a new performance estimate. The shifted cohort has synthetic references and stays unlabelled."
+}
