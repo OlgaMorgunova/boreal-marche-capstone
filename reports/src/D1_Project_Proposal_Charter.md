@@ -144,8 +144,8 @@ its crossover point is analysed in D3. The HPO backend is a configuration switch
 low-priority VMs) is prepared as a fallback to be used only with the instructor's approval. Budget runbook: `docs/runbooks/AWS_BUDGET_ALARM.md`.
 
 > **Control point — budget alarm evidence.** A $10 monthly cost budget with alerts at 50%, 85% and
-> 100% forecast is part of this cost plan. Its configuration must be verified in the AWS console and
-> the screenshot attached to this section before submission (steps in the budget runbook).
+> 100% forecast is part of this cost plan.
+![d1_aws_budget_alarm](figures/d1_aws_budget_alarm.png)
 
 ## 10. Sources and AI-tool use
 
