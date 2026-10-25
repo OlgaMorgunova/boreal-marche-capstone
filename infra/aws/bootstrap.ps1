@@ -20,7 +20,9 @@ IAM admin user — NOT root access keys), Docker running. Step-by-step: docs/run
 param(
     [string]$AwsProfile = "admin-profile",
     [string]$Region = "us-east-1",
-    [string]$Repo = "OlgaMorgunova/boreal-marche-capstone",
+    # Exactly as GitHub writes it in the OIDC "sub" claim: owner and repository carry their immutable
+    # numeric IDs (seen in CloudTrail, 2026-10-25). Find yours in the AccessDenied event's userName.
+    [string]$Repo = "OlgaMorgunova@169389466/boreal-marche-capstone@1370564309",
     [string]$ApiCpu = "1 vCPU",
     [string]$ApiMemory = "2 GB",
     [string]$UiCpu = "0.25 vCPU",

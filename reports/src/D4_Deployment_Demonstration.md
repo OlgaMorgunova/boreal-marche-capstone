@@ -119,10 +119,15 @@ two App Runner services at the new tags (`scripts/apprunner_deploy.py`) and wait
 golden prediction is reproduced, a rule fires and the assistant cites a source.
 
 **Why OIDC.** No AWS key exists in GitHub: the role's trust policy (`infra/aws/github-oidc-trust.json`)
-accepts only tokens whose subject is `repo:OlgaMorgunova/boreal-marche-capstone:environment:production`,
-and the environment is restricted to `master`. Its permissions (`infra/aws/github-deploy-policy.json`)
+accepts only tokens whose subject is
+`repo:OlgaMorgunova@169389466/boreal-marche-capstone@1370564309:environment:production`, and the
+environment is restricted to `master`. Its permissions (`infra/aws/github-deploy-policy.json`)
 are push to two repositories, update/describe two services, pass one role to App Runner. A leaked log
-or fork cannot deploy, and nothing needs rotating.
+or fork cannot deploy, and nothing needs rotating. *Debugged in practice:* the first CD run was
+refused (`AccessDenied`) because I had written the subject as `repo:owner/repo:…`; CloudTrail's
+`AssumeRoleWithWebIdentity` event showed that GitHub's subject carries the immutable owner and
+repository IDs, so the trust policy now matches that form — which also means a recreated repository
+with the same name could not deploy.
 
 **Scheduled retraining.** `.github/workflows/retrain.yml` (Mondays) re-runs ETL, retrains, re-mines
 rules, logs to MLflow, and evaluates the promotion policy against the committed champion on the

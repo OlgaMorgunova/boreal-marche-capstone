@@ -39,7 +39,7 @@ From the repository root, Docker Desktop running, signed in with the admin SSO p
 aws sso login --profile admin-profile
 aws sts get-caller-identity --profile admin-profile     # must show AWSReservedSSO_AdministratorAccess
 powershell -ExecutionPolicy Bypass -File infra\aws\bootstrap.ps1 -AwsProfile admin-profile
-# defaults: -Region us-east-1 -Repo OlgaMorgunova/boreal-marche-capstone
+# defaults: -Region us-east-1 -Repo OlgaMorgunova@169389466/boreal-marche-capstone@1370564309
 ```
 
 It creates the OIDC provider, two ECR repositories (scan on push, immutable tags, keep last 10), the
@@ -55,7 +55,22 @@ checks on `/ready` and `/_stcore/health`). It ends by printing seven values.
   `AWS_DEPLOY_ROLE_ARN`, `APPRUNNER_ECR_ROLE_ARN`, `APPRUNNER_API_ARN`, `APPRUNNER_UI_ARN`, `API_URL`, `UI_URL` (values
   printed by the script). They are identifiers, not credentials — there are **no secrets** to add.
 - *Settings → Environments → New environment* `production` → *Deployment branches*: `master` only.
-  The trust policy only accepts tokens whose subject is `repo:OlgaMorgunova/boreal-marche-capstone:environment:production`.
+  The trust policy only accepts tokens whose subject is
+  `repo:OlgaMorgunova@169389466/boreal-marche-capstone@1370564309:environment:production`.
+  **Gotcha (hit on 2026-10-25):** GitHub's `sub` claim carries the owner's and repository's numeric
+  IDs (`owner@id/repo@id`); a trust policy written as `repo:owner/repo:…` is rejected with
+  *Not authorized to perform sts:AssumeRoleWithWebIdentity*. Diagnose without guessing: CloudTrail
+  (us-east-1) → event `AssumeRoleWithWebIdentity` → `userIdentity.userName` is the subject GitHub sent:
+  `aws cloudtrail lookup-events --region us-east-1 --lookup-attributes AttributeKey=EventName,AttributeValue=AssumeRoleWithWebIdentity --max-results 3 --query "Events[].CloudTrailEvent" --output text`.
+  The IDs are immutable, so a deleted-and-recreated repository with the same name cannot deploy.
+- **Second gotcha (same day):** `UpdateService` failed with *not authorized to perform iam:PassRole on
+  BorealAppRunnerEcrAccess* although the policy allowed it: an `iam:PassedToService =
+  apprunner.amazonaws.com` condition did not match what App Runner sends for the ECR *access* role
+  (used by `build.apprunner.amazonaws.com`). The condition was removed; `PassRole` stays limited to
+  that one role, whose trust policy only lets App Runner's build service assume it.
+- **Re-runs:** ECR tags are immutable, so `cd.yml` skips build/push when `boreal-*:<sha>` already
+  exists (needs `ecr:DescribeImages`) and only redeploys. A GitHub *re-run* uses the workflow file of
+  the original commit — workflow fixes take effect from the next merge.
 - *Settings → Branches → Add rule* for `master`: require a pull request, require status checks
   `lint · types · tests · data quality · assistant eval`, `docker build · size · container smoke test`
   and `secret scan`, do not allow bypassing.
