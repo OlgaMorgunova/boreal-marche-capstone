@@ -23,11 +23,15 @@ pytestmark = pytest.mark.skipif(not HAS_ARTIFACTS, reason="artifacts not built")
 
 
 @pytest.fixture(scope="module")
-def client() -> Iterator[TestClient]:
+def client(tmp_path_factory: pytest.TempPathFactory) -> Iterator[TestClient]:
     os.environ["BOREAL_MODEL_SOURCE"] = "local"
-    from boreal_marche.api import app
+    os.environ["BOREAL_EMBEDDER"] = "hash"  # no model download in CI; retrieval quality is
+    os.environ["BOREAL_MONITOR_LOOP"] = "0"  # evaluated separately (assistant_eval.json)
+    os.environ["DATABASE_URL"] = f"sqlite:///{tmp_path_factory.mktemp('db') / 'log.db'}"
+    from boreal_marche import api
 
-    with TestClient(app) as c:
+    with TestClient(api.app) as c:
+        api.STATE["assistant"].toolbox.api = c  # the assistant's tools call this same app
         yield c
 
 
@@ -85,3 +89,75 @@ def test_recommend_strategies(client: TestClient) -> None:
     first = r["recommendations"][0]
     assert first["source"] == "rule" and first["because"] and first["lift"] >= 3.0
     assert client.post("/recommend", json={"basket": [], "k": 0}).status_code == 422
+
+
+# ----------------------------------------------------------------------------------- D4 ---
+
+ME = "BM-E9B033CE"
+
+
+def test_ready_reports_every_component(client: TestClient) -> None:
+    body = client.get("/ready").json()
+    assert body["assistant_loaded"] and body["model_loaded"] and body["rules_loaded"]
+    assert "image_tag" in client.get("/version").json()
+
+
+def test_customers_and_products(client: TestClient) -> None:
+    refs = client.get("/customers", params={"limit": 3}).json()["customers"]
+    assert len(refs) == 3 and refs[0]["ref"].startswith("BM-")
+    feats = client.get(f"/customers/{refs[0]['ref']}/features")
+    assert feats.status_code == 200 and "recency_days" in feats.json()
+    assert client.get("/customers/BM-00000000/features").status_code == 404
+    prods = client.get("/products", params={"q": "lunch bags"}).json()["products"]
+    assert prods and all("LUNCH BAG" in p["description"] for p in prods)
+    assert client.get("/products", params={"q": "22423"}).json()["products"][0]["sku"] == "22423"
+
+
+def test_chat_contract(client: TestClient) -> None:
+    r = client.post("/chat", json={"message": "Do my loyalty points expire?", "customer_ref": ME})
+    body = r.json()
+    assert r.status_code == 200 and body["tool"] == "policy_search" and body["citations"]
+    r = client.post("/chat", json={"message": "What is my retention score?", "customer_ref": ME})
+    body = r.json()  # the tool went through /customers and /predict of this API
+    assert body["tool_result"]["customer_ref"] == ME and 0 <= body["tool_result"]["p_return"] <= 1
+    oos = client.post("/chat", json={"message": "Write me a poem.", "customer_ref": ME}).json()
+    assert oos["refused"] and oos["refusal_reason"] == "out_of_scope"
+    assert client.post("/chat", json={"message": "hi", "oops": 1}).status_code == 422
+    assert client.post("/chat", json={"message": "hi", "provider": "gpt9"}).status_code == 422
+    assert client.post("/chat", json={"message": "hi", "customer_ref": "42"}).status_code == 422
+    status = {p["name"]: p for p in client.get("/chat/providers").json()}
+    if not status["openai"]["available"]:
+        assert client.post("/chat", json={"message": "hi", "provider": "openai"}).status_code == 503
+
+
+def test_chat_stream_sse(client: TestClient) -> None:
+    with client.stream(
+        "POST", "/chat/stream", json={"message": "How long do refunds take?", "customer_ref": ME}
+    ) as r:
+        assert r.headers["content-type"].startswith("text/event-stream")
+        events = [ln[7:] for ln in r.iter_lines() if ln.startswith("event: ")]
+    assert events[0] == "meta" and events[-1] == "done" and "token" in events
+
+
+def test_predictions_are_logged_and_monitored(client: TestClient) -> None:
+    from boreal_marche import api
+
+    store = api.STATE["store"]
+    store.flush()
+    before = store.count("prediction_log")
+    customers = json.loads((REPO / "artifacts" / "demo_customers.json").read_text("utf-8"))
+    items = [
+        {"customer_ref": c["ref"], "features": c["features"]} for c in customers["customers"][:120]
+    ]
+    assert client.post("/predict/batch", json={"items": items}).status_code == 200
+    store.flush()
+    assert store.count("prediction_log") == before + 120
+    report = client.get("/monitoring/report").json()
+    checks = {c["name"]: c for c in report["checks"]}
+    assert checks["input_drift"]["status"] != "insufficient_data"
+    assert set(checks) >= {"prediction_drift", "data_quality", "error_rate", "rule_fire_rate"}
+    assert isinstance(client.get("/monitoring/alerts").json(), list)
+    assert isinstance(client.get("/monitoring/timeseries").json(), list)
+    metrics = client.get("/metrics").text
+    assert "boreal_requests_total" in metrics and "boreal_monitoring_status" in metrics
+    assert client.get("/health").headers["X-Request-ID"]

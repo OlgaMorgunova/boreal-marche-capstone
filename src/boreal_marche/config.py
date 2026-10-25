@@ -117,6 +117,51 @@ class CloudParams(_Frozen):
     azure: AzureParams
 
 
+class TokenPrice(_Frozen):
+    input: float
+    output: float
+
+
+class AssistantParams(_Frozen):
+    corpus_dir: str
+    embedding_model: str
+    chunk_max_words: int
+    top_k: int
+    similarity_floor: float
+    ollama_model: str
+    openai_model: str
+    openai_price_per_mtok: TokenPrice
+    request_timeout_seconds: int
+
+
+class Band(_Frozen):
+    """Traffic-light band: value at which a check turns amber, and red."""
+
+    amber: float
+    red: float
+
+
+class MonitoringThresholds(_Frozen):
+    psi: Band
+    ks: Band
+    drifted_feature_share_red: float
+    prediction_psi: Band
+    missing_rate_delta: Band
+    error_rate: Band
+    p95_latency_ms: Band
+    rule_fire_rate: Band
+
+
+class MonitoringParams(_Frozen):
+    window_predictions: int
+    window_requests: int
+    min_predictions: int
+    check_interval_seconds: int
+    reference_sample_rows: int
+    exclude_features: list[str]
+    thresholds: MonitoringThresholds
+
+
 class Params(_Frozen):
     seed: int
     data: DataParams
@@ -128,6 +173,8 @@ class Params(_Frozen):
     recommend: RecommendParams
     mlflow: MlflowParams
     cloud: CloudParams
+    assistant: AssistantParams
+    monitoring: MonitoringParams
 
 
 @lru_cache(maxsize=4)
@@ -176,6 +223,22 @@ class Paths:
     @property
     def rules_file(self) -> Path:
         return self.artifacts / "rules.json"
+
+    @property
+    def reference_profile(self) -> Path:
+        return self.artifacts / "reference_profile.json"
+
+    @property
+    def demo_customers(self) -> Path:
+        return self.artifacts / "demo_customers.json"
+
+    @property
+    def catalogue(self) -> Path:
+        return self.artifacts / "catalogue.json"
+
+    @property
+    def index_dir(self) -> Path:
+        return self.artifacts / "index"
 
     def ensure(self) -> None:
         for d in (

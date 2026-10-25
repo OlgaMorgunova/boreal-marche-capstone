@@ -1,0 +1,643 @@
+{
+  "generated_at": 1792848756.7984004,
+  "status": "amber",
+  "window": {
+    "predictions": 500,
+    "requests": 1880,
+    "min_predictions": 100,
+    "from": 1792848737.7081976,
+    "to": 1792848756.5205271
+  },
+  "checks": [
+    {
+      "name": "input_drift",
+      "status": "amber",
+      "value": 0.0,
+      "unit": "share of features with PSI >= red",
+      "threshold": {
+        "amber": "any PSI >= 0.1",
+        "red": 0.1
+      },
+      "detail": "top drifted: lines_per_order_180d, aov_180d, mean_order_hour_180d"
+    },
+    {
+      "name": "prediction_drift",
+      "status": "green",
+      "value": 0.031610032315218965,
+      "unit": "PSI of p_return",
+      "threshold": {
+        "amber": 0.1,
+        "red": 0.25
+      }
+    },
+    {
+      "name": "data_quality",
+      "status": "green",
+      "value": 0.04219168787107719,
+      "unit": "max(missing-rate change, /predict 422 rate)",
+      "threshold": {
+        "amber": 0.05,
+        "red": 0.15
+      }
+    },
+    {
+      "name": "error_rate",
+      "status": "green",
+      "value": 0.0,
+      "unit": "share of 5xx responses",
+      "threshold": {
+        "amber": 0.01,
+        "red": 0.05
+      }
+    },
+    {
+      "name": "latency_p95_predict",
+      "status": "green",
+      "value": 67.31689999999999,
+      "unit": "ms, server-side",
+      "threshold": {
+        "amber": 150.0,
+        "red": 500.0
+      }
+    },
+    {
+      "name": "rule_fire_rate",
+      "status": "green",
+      "value": 1.0,
+      "unit": "share of non-empty baskets answered by a rule",
+      "threshold": {
+        "amber": 0.5,
+        "red": 0.3,
+        "direction": "lower is worse"
+      }
+    }
+  ],
+  "features": [
+    {
+      "feature": "lines_per_order_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.10033254458440125,
+      "ks": 0.0865,
+      "ks_pvalue": 0.004833970952738106,
+      "mean_ref": 20.86078781951393,
+      "mean_live": 17.41499655198602,
+      "status": "amber"
+    },
+    {
+      "feature": "aov_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.08258232287847142,
+      "ks": 0.1,
+      "ks_pvalue": 0.0006380385751415398,
+      "mean_ref": 369.2303395390866,
+      "mean_live": 341.84339189940005,
+      "status": "amber"
+    },
+    {
+      "feature": "mean_order_hour_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.07133848588236093,
+      "ks": 0.061,
+      "ks_pvalue": 0.0994134168270673,
+      "mean_ref": 12.431284191544833,
+      "mean_live": 12.35472522974102,
+      "status": "green"
+    },
+    {
+      "feature": "std_gap_days",
+      "missing_ref": 0.3061916878710772,
+      "missing_live": 0.264,
+      "missing_delta": 0.04219168787107719,
+      "psi": 0.06588446219430738,
+      "ks": 0.08008663761029021,
+      "ks_pvalue": 0.03978751640322624,
+      "mean_ref": 50.25317772308834,
+      "mean_live": 46.96147087634895,
+      "status": "green"
+    },
+    {
+      "feature": "max_order_value_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.0626899417480368,
+      "ks": 0.1055,
+      "ks_pvalue": 0.0002569648366233981,
+      "mean_ref": 495.9179007633587,
+      "mean_live": 467.46497999999997,
+      "status": "amber"
+    },
+    {
+      "feature": "overdue_ratio",
+      "missing_ref": 0.17514843087362172,
+      "missing_live": 0.14,
+      "missing_delta": 0.03514843087362171,
+      "psi": 0.06180290884348311,
+      "ks": 0.08507801757637352,
+      "ks_pvalue": 0.011401576796473654,
+      "mean_ref": 1.1381343902342351,
+      "mean_live": 1.285193697207333,
+      "status": "green"
+    },
+    {
+      "feature": "sku_repeat_rate_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.0582592275578378,
+      "ks": 0.0475,
+      "ks_pvalue": 0.32151469942988375,
+      "mean_ref": 0.09368094286957478,
+      "mean_live": 0.08398808973493581,
+      "status": "green"
+    },
+    {
+      "feature": "share_kitchen",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.05314235688972118,
+      "ks": 0.053,
+      "ks_pvalue": 0.2067626530683182,
+      "mean_ref": 0.2763414167076273,
+      "mean_live": 0.2645702123177167,
+      "status": "green"
+    },
+    {
+      "feature": "revenue_trend",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.05277634091621045,
+      "ks": 0.0595,
+      "ks_pvalue": 0.11495398239148337,
+      "mean_ref": 0.11564978117241753,
+      "mean_live": 0.0460595657478723,
+      "status": "green"
+    },
+    {
+      "feature": "revenue_90d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.05039756699338949,
+      "ks": 0.093,
+      "ks_pvalue": 0.0018915427633818553,
+      "mean_ref": 589.8106530958439,
+      "mean_live": 670.0133999999999,
+      "status": "green"
+    },
+    {
+      "feature": "mean_unit_price_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.04939363133040526,
+      "ks": 0.0425,
+      "ks_pvalue": 0.4579757604274794,
+      "mean_ref": 3.7289348524496417,
+      "mean_live": 3.2026930025373215,
+      "status": "green"
+    },
+    {
+      "feature": "share_seasonal",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.04749506830526724,
+      "ks": 0.071,
+      "ks_pvalue": 0.034408200637291074,
+      "mean_ref": 0.020131455259164384,
+      "mean_live": 0.02163632333998106,
+      "status": "green"
+    },
+    {
+      "feature": "mean_gap_days",
+      "missing_ref": 0.17514843087362172,
+      "missing_live": 0.14,
+      "missing_delta": 0.03514843087362171,
+      "psi": 0.04619044599070095,
+      "ks": 0.07905183236683207,
+      "ks_pvalue": 0.023019047498948612,
+      "mean_ref": 88.6613215079752,
+      "mean_live": 83.75101214155868,
+      "status": "green"
+    },
+    {
+      "feature": "share_lighting",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.04444430576052992,
+      "ks": 0.083,
+      "ks_pvalue": 0.007788649801662701,
+      "mean_ref": 0.09689357299138378,
+      "mean_live": 0.11556508298063528,
+      "status": "green"
+    },
+    {
+      "feature": "recency_days",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.04370370238253474,
+      "ks": 0.0555,
+      "ks_pvalue": 0.16633243704021491,
+      "mean_ref": 60.62083244981623,
+      "mean_live": 65.04337777777778,
+      "status": "green"
+    },
+    {
+      "feature": "revenue_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.039392261573620156,
+      "ks": 0.081,
+      "ks_pvalue": 0.010138847534844845,
+      "mean_ref": 1092.256675148431,
+      "mean_live": 1262.02954,
+      "status": "green"
+    },
+    {
+      "feature": "distinct_skus_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.03756351021428014,
+      "ks": 0.0695,
+      "ks_pvalue": 0.0407600995237385,
+      "mean_ref": 41.899491094147585,
+      "mean_live": 38.252,
+      "status": "green"
+    },
+    {
+      "feature": "share_bags_wrap",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.032851800620950194,
+      "ks": 0.0785,
+      "ks_pvalue": 0.013970481433318443,
+      "mean_ref": 0.09894516241280166,
+      "mean_live": 0.09715625283537849,
+      "status": "green"
+    },
+    {
+      "feature": "revenue_lifetime",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.03090397770386597,
+      "ks": 0.052,
+      "ks_pvalue": 0.22490794989785487,
+      "mean_ref": 3403.757553011026,
+      "mean_live": 4063.45358,
+      "status": "green"
+    },
+    {
+      "feature": "orders_lifetime",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.028863679441253544,
+      "ks": 0.048,
+      "ks_pvalue": 0.3095409469368976,
+      "mean_ref": 7.5716709075487705,
+      "mean_live": 8.226,
+      "status": "green"
+    },
+    {
+      "feature": "tenure_days",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.025805348860077584,
+      "ks": 0.067,
+      "ks_pvalue": 0.053624606389495205,
+      "mean_ref": 338.8947195127698,
+      "mean_live": 357.4228,
+      "status": "green"
+    },
+    {
+      "feature": "revenue_30d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.02013006492775738,
+      "ks": 0.0415,
+      "ks_pvalue": 0.4886236700327557,
+      "mean_ref": 229.3643638676845,
+      "mean_live": 287.28821999999997,
+      "status": "green"
+    },
+    {
+      "feature": "share_home_decor",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.01895853266908478,
+      "ks": 0.0665,
+      "ks_pvalue": 0.05658037836197732,
+      "mean_ref": 0.17366323158869262,
+      "mean_live": 0.1659876545790159,
+      "status": "green"
+    },
+    {
+      "feature": "orders_trend",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.01874849622602361,
+      "ks": 0.0345,
+      "ks_pvalue": 0.7198824856997894,
+      "mean_ref": 0.2625106022052587,
+      "mean_live": 0.178,
+      "status": "green"
+    },
+    {
+      "feature": "category_entropy_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.017677637853193373,
+      "ks": 0.044,
+      "ks_pvalue": 0.41396358523945426,
+      "mean_ref": 1.3600748927777166,
+      "mean_live": 1.355999637941988,
+      "status": "green"
+    },
+    {
+      "feature": "orders_90d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.01744652034920033,
+      "ks": 0.0375,
+      "ks_pvalue": 0.6190640609310396,
+      "mean_ref": 1.4631043256997456,
+      "mean_live": 1.492,
+      "status": "green"
+    },
+    {
+      "feature": "units_per_line_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.013786866864544759,
+      "ks": 0.058,
+      "ks_pvalue": 0.13244021627336944,
+      "mean_ref": 55.863654505176626,
+      "mean_live": 17.00032206870417,
+      "status": "green"
+    },
+    {
+      "feature": "tenure_censored",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.011851232340279108,
+      "ks": 0.0425,
+      "ks_pvalue": 0.4579757604274794,
+      "mean_ref": 0.2268871925360475,
+      "mean_live": 0.274,
+      "status": "green"
+    },
+    {
+      "feature": "region",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.006601655146395181,
+      "ks": null,
+      "ks_pvalue": null,
+      "status": "green"
+    },
+    {
+      "feature": "orders_30d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.004717515592449498,
+      "ks": 0.015,
+      "ks_pvalue": 0.9999862603713464,
+      "mean_ref": 0.5720949957591179,
+      "mean_live": 0.574,
+      "status": "green"
+    },
+    {
+      "feature": "cancel_lines_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.004473331115867252,
+      "ks": 0.0275,
+      "ks_pvalue": 0.9179818351215828,
+      "mean_ref": 1.2472434266327397,
+      "mean_live": 1.116,
+      "status": "green"
+    },
+    {
+      "feature": "orders_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.004468892552324487,
+      "ks": 0.03,
+      "ks_pvalue": 0.8579199482423322,
+      "mean_ref": 2.6636980491942324,
+      "mean_live": 2.806,
+      "status": "green"
+    },
+    {
+      "feature": "active_months_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.003679179934073689,
+      "ks": 0.03,
+      "ks_pvalue": 0.8579199482423322,
+      "mean_ref": 1.9346904156064462,
+      "mean_live": 1.966,
+      "status": "green"
+    },
+    {
+      "feature": "weekend_share_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.0007644114963526425,
+      "ks": 0.0225,
+      "ks_pvalue": 0.9858851384490938,
+      "mean_ref": 0.11595067090783903,
+      "mean_live": 0.10820850611376925,
+      "status": "green"
+    },
+    {
+      "feature": "cancel_rate_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.0001808676405969241,
+      "ks": 0.0265,
+      "ks_pvalue": 0.9373213867172837,
+      "mean_ref": 0.026843843785020978,
+      "mean_live": 0.023458359678688843,
+      "status": "green"
+    },
+    {
+      "feature": "outlier_line_share_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.0,
+      "ks": 0.0105,
+      "ks_pvalue": 0.9999999999745484,
+      "mean_ref": 0.007541527737160127,
+      "mean_live": 0.002129383013107894,
+      "status": "green"
+    }
+  ],
+  "excluded_features": [
+    "season_q"
+  ],
+  "prediction": {
+    "mean_ref": 0.4989369040481589,
+    "send_coupon_rate_ref": 0.6017811704834606,
+    "psi": 0.031610032315218965,
+    "mean_live": 0.5017827877883472,
+    "send_coupon_rate_live": 0.594,
+    "status": "green"
+  },
+  "data_quality": {
+    "max_missing_delta": 0.04219168787107719,
+    "worst_missing_feature": "std_gap_days",
+    "predict_validation_error_rate": 0.0,
+    "unknown_item_rate": 0.0
+  },
+  "operations": {
+    "request_count": 1873,
+    "rpm": 652.4184105595872,
+    "error_rate": 0.0,
+    "by_endpoint": {
+      "/chat": {
+        "count": 154,
+        "p50": 55.7445,
+        "p95": 69.91905,
+        "p99": 89.47911999999997,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/customers/{ref}/features": {
+        "count": 11,
+        "p50": 0.614,
+        "p95": 1.8655,
+        "p99": 1.9083,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/predict": {
+        "count": 922,
+        "p50": 52.356,
+        "p95": 67.31689999999999,
+        "p99": 83.25141999999997,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/predict/batch": {
+        "count": 155,
+        "p50": 53.123,
+        "p95": 72.38419999999999,
+        "p99": 147.54534000000015,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/products": {
+        "count": 6,
+        "p50": 9.337,
+        "p95": 9.847750000000001,
+        "p99": 9.873550000000002,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/recommend": {
+        "count": 474,
+        "p50": 43.966,
+        "p95": 54.723949999999995,
+        "p99": 62.294689999999974,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/version": {
+        "count": 151,
+        "p50": 0.656,
+        "p95": 1.686,
+        "p99": 9.8935,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      }
+    },
+    "from": 1792848584.3659823,
+    "to": 1792848756.617406
+  },
+  "recommend": {
+    "n": 474,
+    "rule_fire_rate": 1.0,
+    "rule_fire_rate_ref": 0.9172103813252138,
+    "strategies": {
+      "rules": 411,
+      "rules+popularity": 58,
+      "empty_basket": 5
+    }
+  },
+  "assistant": {
+    "n": 154,
+    "by_provider": {
+      "rule": {
+        "count": 154,
+        "median": 9.1
+      }
+    },
+    "refusal_rate": 0.16883116883116883,
+    "handoff_rate": 0.0,
+    "tools": {
+      "policy_search": 92,
+      "out_of_scope": 26,
+      "recommendations": 19,
+      "retention_score": 11,
+      "product_lookup": 6
+    }
+  },
+  "cohorts_in_window": {
+    "normal": 498,
+    "none": 2
+  },
+  "reference": {
+    "source": "data/gold/retention.parquet, calibration snapshot 2011-06-01 minus the 300 held-out demo customers",
+    "model_version": "0.3.0+xgboost",
+    "generated_at": "2026-10-24T13:02:56+00:00"
+  },
+  "ground_truth": {
+    "n_labelled": 0,
+    "label_window_days": 90,
+    "first_prediction_ts": 1792848585.759346,
+    "first_true_signal_ts": 1801229385.759346
+  },
+  "new_alerts": [
+    {
+      "ts": 1792848756.8017821,
+      "check_name": "input_drift",
+      "level": "amber",
+      "previous": "green",
+      "value": 0.0,
+      "message": "share of features with PSI >= red; thresholds {'amber': 'any PSI >= 0.1', 'red': 0.1}; top drifted: lines_per_order_180d, aov_180d, mean_order_hour_180d",
+      "notified": "log"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+# External alerting loop: polls the deployed service's monitoring report every hour and opens (or
+# comments on) a GitHub issue when the overall status is red. Complements the in-process alerts
+# (alert_log table, structured log line, optional ALERT_WEBHOOK_URL) — this one still fires if the
+# service itself is down.
+name: Monitoring alert
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    if: ${{ vars.API_URL != '' }}
+    steps:
+      - name: Fetch the monitoring report
+        id: report
+        run: |
+          if ! curl -fsS --max-time 60 "${{ vars.API_URL }}/monitoring/report" -o report.json; then
+            echo "status=down" >> "$GITHUB_OUTPUT"
+          else
+            echo "status=$(jq -r .status report.json)" >> "$GITHUB_OUTPUT"
+            jq -r '.checks[] | "| \(.name) | \(.status) | \(.value) |"' report.json > checks.md
+          fi
+      - name: Open or update the alert issue
+        if: steps.report.outputs.status == 'red' || steps.report.outputs.status == 'down'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STATUS: ${{ steps.report.outputs.status }}
+        run: |
+          {
+            echo "Monitoring status **$STATUS** at $(date -u +%FT%TZ) for ${{ vars.API_URL }}"
+            echo
+            if [ -f checks.md ]; then echo "| check | status | value |"; echo "|---|---|---|"; cat checks.md; fi
+            echo
+            echo "Runbook: docs/MONITORING.md (thresholds, what each alert means, the retraining rule)."
+          } > body.md
+          existing=$(gh issue list -R "$GITHUB_REPOSITORY" --label monitoring-alert --state open --json number -q '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" -R "$GITHUB_REPOSITORY" --body-file body.md
+          else
+            gh label create monitoring-alert -R "$GITHUB_REPOSITORY" --color d03b3b --force
+            gh issue create -R "$GITHUB_REPOSITORY" --title "Monitoring alert: service is $STATUS" \
+              --label monitoring-alert --body-file body.md
+          fi

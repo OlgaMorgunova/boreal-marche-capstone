@@ -50,3 +50,9 @@ reports/977_*.html
 .ipynb_checkpoints/
 .vscode/
 .idea/
+
+# D4: embedding-model download cache, local prediction-log databases, retraining PR body
+.cache/
+boreal.db*
+eval_chat.db*
+reports/retrain_summary.md

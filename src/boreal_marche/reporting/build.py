@@ -25,6 +25,7 @@ REPORTS = {
     "D1": ("D1_Project_Proposal_Charter.md", "977_D1_Morgunova_ProjectProposal"),
     "D2": ("D2_Design_Architecture.md", "977_D2_Morgunova_DesignArchitecture"),
     "D3": ("D3_Implementation_Validation.md", "977_D3_Morgunova_ImplementationValidation"),
+    "D4": ("D4_Deployment_Demonstration.md", "977_D4_Morgunova_DeploymentDemonstration"),
 }
 FAMILY_RATIONALE = {
     "recency": "Time since the last order is the classical strongest churn signal (the R of RFM).",
@@ -702,13 +703,17 @@ def to_pdf(html_path: Path, pdf_path: Path) -> None:
     )
 
 
-def run() -> None:
+def run(only: list[str] | None = None) -> None:
+    from boreal_marche.reporting.d4 import d4_context
+
     paths = Paths()
     src = paths.reports / "src"
-    ctx = context(paths)
+    ctx = context(paths) | d4_context(paths)
     from pypdf import PdfReader
 
     for code, (tpl, out) in REPORTS.items():
+        if only and code not in only:
+            continue
         text = render((src / tpl).read_text(encoding="utf-8"), ctx)
         md_path = paths.reports / f"{out}.md"
         md_path.write_text(text, encoding="utf-8")
@@ -727,4 +732,7 @@ def run() -> None:
 
 
 if __name__ == "__main__":
-    run()
+    import sys
+
+    # `python -m boreal_marche.reporting.build D4` rebuilds one report and leaves the others as is.
+    run(sys.argv[1:] or None)

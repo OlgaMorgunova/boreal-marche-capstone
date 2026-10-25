@@ -110,3 +110,40 @@ cloud:
     idle_seconds_before_scale_down: 120
     timeout_seconds: 1800
     experiment: boreal-retention-hpo
+
+assistant:
+  # Head C — retrieval-augmented, tool-calling bilingual assistant (Week 9-10, demonstrated in D4).
+  corpus_dir: "docs/corpus"
+  # Multilingual so a French question retrieves an English policy chunk (ONNX via fastembed: no torch).
+  embedding_model: "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+  chunk_max_words: 180
+  top_k: 4
+  # Cosine similarity below which a policy question is handed to a human instead of answered.
+  # Chosen on the golden set (reports/metrics/assistant_eval.json -> floor_sweep).
+  similarity_floor: 0.30
+  ollama_model: "llama3.1:8b"
+  openai_model: "gpt-4o-mini"
+  # Published list prices (USD per 1M tokens) used only to *estimate* hosted cost per query.
+  openai_price_per_mtok: {input: 0.15, output: 0.60}
+  request_timeout_seconds: 120
+
+monitoring:
+  # Live drift/quality/ops checks (GET /monitoring/report). Reference = training snapshots.
+  window_predictions: 500        # drift is computed on the most recent N logged predictions
+  window_requests: 2000          # operational metrics on the most recent N requests
+  min_predictions: 100           # below this the drift checks report "insufficient_data"
+  check_interval_seconds: 60     # background evaluation + alerting loop inside the API
+  reference_sample_rows: 2000    # training rows kept (per feature) for the KS test
+  # season_q is constant within a quarter by construction: live traffic is always one season while
+  # the training reference mixes four, so its PSI would be permanently red. It is excluded from
+  # drift and covered by the quarterly retraining instead.
+  exclude_features: ["season_q"]
+  thresholds:
+    psi: {amber: 0.10, red: 0.25}
+    ks: {amber: 0.10, red: 0.20}
+    drifted_feature_share_red: 0.10   # red when >= 10% of features have PSI >= psi.red
+    prediction_psi: {amber: 0.10, red: 0.25}
+    missing_rate_delta: {amber: 0.05, red: 0.15}
+    error_rate: {amber: 0.01, red: 0.05}
+    p95_latency_ms: {amber: 150, red: 500}
+    rule_fire_rate: {amber: 0.50, red: 0.30}   # lower is worse

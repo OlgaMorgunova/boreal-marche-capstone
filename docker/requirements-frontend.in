@@ -1,0 +1,5 @@
+# Interface image only (docker/frontend.Dockerfile).
+streamlit
+altair
+httpx
+pandas

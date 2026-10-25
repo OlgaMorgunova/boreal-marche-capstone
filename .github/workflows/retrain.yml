@@ -1,0 +1,66 @@
+# Weekly retraining. Re-runs ETL, re-mines the rules, retrains, logs to MLflow (runner-local), checks
+# the promotion policy (incl. the fairness gate) against the committed champion and, only if every
+# gate passes, opens a pull request with the new artifacts and metrics. It NEVER deploys: a human
+# reviews and merges the PR, and the merge triggers CD. (Law 25 design consequence + course §3.6.)
+name: Weekly retraining
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"     # Mondays 07:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install (Python 3.11, pinned)
+        run: |
+          uv venv .venv --python 3.11
+          uv pip install --python .venv/bin/python -r requirements-dev.txt
+          uv pip install --python .venv/bin/python -e . --no-deps
+      - name: Keep the current champion for comparison
+        run: cp artifacts/model.joblib /tmp/champion.joblib
+      - name: ETL, features, data quality (raw data downloaded from UCI, SHA-256 verified)
+        run: .venv/bin/python scripts/run.py data etl features dq
+      - name: Retrain (tuned hyper-parameters from reports/metrics/tuning.json), re-mine rules
+        run: .venv/bin/python scripts/run.py train rules rules-eval
+      - name: Promotion check (validation snapshot only; fairness gate)
+        id: gate
+        run: |
+          .venv/bin/python -m boreal_marche.retention.promote --champion /tmp/champion.joblib | tee gate.txt
+          grep '^promote=' gate.txt >> "$GITHUB_OUTPUT"
+          cat reports/retrain_summary.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Refresh the monitoring reference and run the tests on the candidate
+        if: steps.gate.outputs.promote == 'true'
+        run: |
+          .venv/bin/python scripts/run.py reference
+          BOREAL_EMBEDDER=hash BOREAL_MONITOR_LOOP=0 .venv/bin/python -m pytest -q
+      - name: Open a pull request for human review
+        if: steps.gate.outputs.promote == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: retrain/${{ github.run_id }}
+          title: "Retrained model candidate (${{ github.run_id }}) — review before merge"
+          body-path: reports/retrain_summary.md
+          commit-message: "Retrain: candidate model, rules and metrics (weekly workflow)"
+          add-paths: |
+            artifacts/model.joblib
+            artifacts/model_meta.json
+            artifacts/rules.json
+            artifacts/reference_profile.json
+            artifacts/demo_customers.json
+            tests/golden/golden_predictions.json
+            reports/metrics/*.json
+          labels: retraining
+      - name: No promotion
+        if: steps.gate.outputs.promote != 'true'
+        run: echo "Promotion gates not met — nothing to review. Details in the job summary."

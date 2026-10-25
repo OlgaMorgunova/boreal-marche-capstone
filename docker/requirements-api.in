@@ -1,0 +1,19 @@
+# Serving image only (docker/Dockerfile): what `boreal_marche.api` imports, nothing for training.
+# xgboost-cpu instead of xgboost: same `xgboost` module without the ~200 MB CUDA/NCCL wheels.
+# No pyarrow, openpyxl, mlflow, optuna, mlxtend, matplotlib (offline pipeline only).
+pandas
+numpy
+scipy
+scikit-learn
+xgboost-cpu==3.2.0
+lightgbm
+joblib
+pyyaml
+pydantic
+fastapi
+uvicorn[standard]
+sqlalchemy<2.1
+psycopg[binary]
+prometheus-client
+fastembed
+httpx

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -105,6 +105,7 @@ class RecommendResponse(BaseModel):
 class VersionResponse(BaseModel):
     api_version: str
     git_commit: str
+    image_tag: str | None
     model_version: str | None
     model_source: str | None
     rules_mined_at: str | None
@@ -115,4 +116,87 @@ class ReadyResponse(BaseModel):
     ready: bool
     model_loaded: bool
     rules_loaded: bool
+    assistant_loaded: bool
     errors: list[str]
+
+
+# ---------------------------------------------------------------- customers / products (D4) ---
+
+
+class CustomerSummary(BaseModel):
+    ref: str
+    region: str
+    orders_lifetime: int
+    recency_days: float
+
+
+class CustomerList(BaseModel):
+    customers: list[CustomerSummary]
+    source: str
+
+
+class ProductOut(BaseModel):
+    sku: str
+    description: str
+    category: str
+    median_price: float
+    n_orders: int
+
+
+class ProductList(BaseModel):
+    query: str
+    products: list[ProductOut]
+
+
+# ------------------------------------------------------------------------ assistant (Head C) ---
+
+ProviderName = Literal["rule", "ollama", "openai"]
+
+
+class ChatRequest(Strict):
+    message: str = Field(min_length=1, max_length=1000)
+    provider: ProviderName = "rule"
+    customer_ref: str | None = Field(
+        default=None,
+        pattern=r"^BM-[0-9A-F]{8}$",
+        description="Signed-in customer; the retention tool only ever scores this customer",
+    )
+    lang: Literal["en", "fr"] | None = Field(
+        default=None, description="Answer language; detected from the message when omitted"
+    )
+
+
+class Citation(BaseModel):
+    kind: Literal["policy", "tool"]
+    ref: str = Field(description="Policy chunk id, or the API endpoint a tool called")
+    title: str
+    section: str | None = None
+    score: float | None = None
+
+
+class ChatUsage(BaseModel):
+    prompt_tokens: int = 0
+    completion_tokens: int = 0
+    est_cost_usd: float = 0.0
+
+
+class ChatResponse(BaseModel):
+    answer: str
+    lang: Literal["en", "fr"]
+    provider: ProviderName
+    tool: str
+    refused: bool
+    refusal_reason: Literal["out_of_scope", "privacy"] | None = None
+    handoff: bool = Field(description="Passed to a human (no grounding, or a tool failed)")
+    citations: list[Citation]
+    tool_result: dict[str, Any] | None = None
+    guardrail_flags: list[str]
+    latency_ms: float
+    usage: ChatUsage
+
+
+class ProviderStatus(BaseModel):
+    name: ProviderName
+    available: bool
+    detail: str
+    model: str | None

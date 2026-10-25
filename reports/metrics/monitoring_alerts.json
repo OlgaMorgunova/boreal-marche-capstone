@@ -1,0 +1,72 @@
+[
+  {
+    "check_name": "rule_fire_rate",
+    "id": 7,
+    "level": "red",
+    "message": "share of non-empty baskets answered by a rule; thresholds {'amber': 0.5, 'red': 0.3, 'direction': 'lower is worse'}",
+    "notified": "log",
+    "previous": "green",
+    "ts": 1792848870.1459231,
+    "value": 0.2004048583
+  },
+  {
+    "check_name": "data_quality",
+    "id": 6,
+    "level": "red",
+    "message": "max(missing-rate change, /predict 422 rate); thresholds {'amber': 0.05, 'red': 0.15}",
+    "notified": "log",
+    "previous": "green",
+    "ts": 1792848810.0016909,
+    "value": 0.996
+  },
+  {
+    "check_name": "prediction_drift",
+    "id": 5,
+    "level": "red",
+    "message": "PSI of p_return; thresholds {'amber': 0.1, 'red': 0.25}",
+    "notified": "log",
+    "previous": "green",
+    "ts": 1792848810.0014951,
+    "value": 2.1217489818
+  },
+  {
+    "check_name": "input_drift",
+    "id": 4,
+    "level": "red",
+    "message": "share of features with PSI >= red; thresholds {'amber': 'any PSI >= 0.1', 'red': 0.1}; top drifted: revenue_trend, region, orders_trend",
+    "notified": "log",
+    "previous": "amber",
+    "ts": 1792848810.00128,
+    "value": 0.5277777778
+  },
+  {
+    "check_name": "input_drift",
+    "id": 3,
+    "level": "amber",
+    "message": "share of features with PSI >= red; thresholds {'amber': 'any PSI >= 0.1', 'red': 0.1}; top drifted: lines_per_order_180d, aov_180d, mean_order_hour_180d",
+    "notified": "log",
+    "previous": "green",
+    "ts": 1792848756.8017821,
+    "value": 0.0
+  },
+  {
+    "check_name": "data_quality",
+    "id": 2,
+    "level": "green",
+    "message": "max(missing-rate change, /predict 422 rate); thresholds {'amber': 0.05, 'red': 0.15}",
+    "notified": "log",
+    "previous": "amber",
+    "ts": 1792848755.9131627,
+    "value": 0.0321916879
+  },
+  {
+    "check_name": "data_quality",
+    "id": 1,
+    "level": "amber",
+    "message": "max(missing-rate change, /predict 422 rate); thresholds {'amber': 0.05, 'red': 0.15}",
+    "notified": "log",
+    "previous": "green",
+    "ts": 1792848689.762249,
+    "value": 0.0621916879
+  }
+]

@@ -15,7 +15,7 @@ Olga Morgunova (individual project) · 420-977-VA AI Development Project · Inst
 | Coupon policy, test quarter | −$7 vs. −$55,176 for "coupon to everyone" (**$55,169** better) | status quo | §7–8 |
 | Head B hit-rate@5, holdout | **0.145** (8.6× popularity), basket coverage 91.7% | 0.017 popularity | §10 |
 | Leakage demonstrated | PR-AUC 0.8070 → 1.0000 when features see the label window | — | §3 |
-| MLflow | 196 + 2 runs, 4 registry versions, alias `champion` | — | §12 |
+| MLflow | 278 + 2 runs, 4 registry versions, alias `champion` | — | §12 |
 | SageMaker HPO | **Verification required** — managed run to be evidenced (script mode verified locally) | local Optuna | §11 |
 
 **Reproduce everything** (≈ 12 min on a 16-core laptop, the source workbook in `doc/` or network):
@@ -408,7 +408,7 @@ exercised to demonstrate the workflow and its cost discipline.
 ## 12. MLflow evidence and promotion policy
 
 Tracking: SQLite backend (`mlflow.db`), artifacts in `mlruns/`, every run tagged with git commit,
-raw-data SHA-256 and gold-table SHA-256. **196 runs** in
+raw-data SHA-256 and gold-table SHA-256. **278 runs** in
 `boreal-retention` (spot-check parent and per-family runs, 80 tuning trials with
 their parents, final fits) and **2** in `boreal-recommend`. Registry
 `boreal-retention`: 4 versions — **XGBoost** as `champion`

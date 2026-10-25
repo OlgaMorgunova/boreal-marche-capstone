@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-29T23:36:19+00:00",
+  "generated_at": "2026-09-30T02:11:01+00:00",
   "results": {
     "extra_trees": {
       "model": "extra_trees",
@@ -19,25 +19,25 @@
         "pr_auc_std": 0.011598504486948638,
         "roc_auc_mean": 0.7801702082396542,
         "roc_auc_std": 0.004911318682227277,
-        "brier_mean": 0.18928753113160068,
-        "brier_std": 0.0019210501772037208,
+        "brier_mean": 0.18928753113160066,
+        "brier_std": 0.0019210501772037203,
         "recall_top_decile_mean": 0.19658472347193617,
         "recall_top_decile_std": 0.0021781248065931313,
         "precision_top_decile_mean": 0.930633618140288,
         "precision_top_decile_std": 0.018267554257390604,
         "pr_auc_lapse_mean": 0.7757490123061854,
         "pr_auc_lapse_std": 0.006627785692968807,
-        "fit_seconds_mean": 0.6097077400423586,
-        "fit_seconds_std": 0.032869418848108345
+        "fit_seconds_mean": 1.136464719986543,
+        "fit_seconds_std": 0.03318488003883592
       },
       "default_value": 0.7772441192115778,
       "improvement": 0.0006739651549626524,
       "importances": {
-        "min_samples_leaf": 0.6868741702049709,
-        "max_depth": 0.19396970476507286,
-        "max_features": 0.04865202716602369,
-        "n_estimators": 0.03908463929599557,
-        "criterion": 0.03141945856793702
+        "min_samples_leaf": 0.6861016365076408,
+        "max_depth": 0.1940518834031833,
+        "max_features": 0.04908653355071112,
+        "n_estimators": 0.03926538102224984,
+        "criterion": 0.03149456551621504
       },
       "history": [
         {
@@ -67,7 +67,7 @@
         {
           "number": 2,
           "state": "COMPLETE",
-          "value": 0.7604751286527882,
+          "value": 0.7604754948608238,
           "params": {
             "max_depth": 28,
             "n_estimators": 250,
@@ -552,8 +552,8 @@
         "precision_top_decile_std": 0.02276947234588753,
         "pr_auc_lapse_mean": 0.7766452654571363,
         "pr_auc_lapse_std": 0.008385093426154308,
-        "fit_seconds_mean": 0.6899033000227064,
-        "fit_seconds_std": 0.009326998821515442
+        "fit_seconds_mean": 1.2479813399724662,
+        "fit_seconds_std": 0.06876327801996165
       },
       "default_value": 0.7760441684817789,
       "improvement": 0.004818280643765327,

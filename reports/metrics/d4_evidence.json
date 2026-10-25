@@ -1,0 +1,26 @@
+{
+  "collected_at": "2026-10-24T13:37:03+00:00",
+  "images": {
+    "boreal-api:v0.3": {
+      "compressed_bytes": 719076668,
+      "unpacked_mb": 1437
+    },
+    "boreal-api:d4": {
+      "compressed_bytes": 407429719,
+      "unpacked_mb": 823
+    },
+    "boreal-ui:d4": {
+      "compressed_bytes": 154624198,
+      "unpacked_mb": 500
+    }
+  },
+  "tests": {
+    "passed": 80,
+    "skipped": 0,
+    "coverage_pct": 84
+  },
+  "corpus": {
+    "documents": 6,
+    "words": 4995
+  }
+}
