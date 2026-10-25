@@ -28,14 +28,30 @@ env:
 jobs:
   deploy:
     name: build · push · deploy · smoke test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 40
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+
+      # Diagnostics: the claims AWS compares with the role's trust policy. Only the decoded claims
+      # are printed, never the token. Remove once the first deployment has succeeded.
+      - name: Show the OIDC claims GitHub presents to AWS
+        run: |
+          TOKEN=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r .value)
+          python3 - "$TOKEN" <<'PY'
+          import base64, json, sys
+          p = sys.argv[1].split(".")[1]
+          claims = json.loads(base64.urlsafe_b64decode(p + "=" * (-len(p) % 4)))
+          keys = ["sub", "aud", "iss", "repository", "ref", "environment", "job_workflow_ref"]
+          print(json.dumps({k: claims.get(k) for k in keys}, indent=1))
+          PY
+          echo "role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}"
+          echo "region:         ${{ env.AWS_REGION }}"
 
       - name: Authenticate to AWS with OIDC (no stored credentials)
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v5
         with:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
           role-session-name: gh-cd-${{ github.run_id }}
@@ -54,11 +70,20 @@ jobs:
         run: |
           API_IMAGE="$REGISTRY/boreal-api:$GITHUB_SHA"
           UI_IMAGE="$REGISTRY/boreal-ui:$GITHUB_SHA"
-          docker build -f docker/Dockerfile --build-arg GIT_SHA=$GITHUB_SHA --build-arg IMAGE_TAG=$GITHUB_SHA -t "$API_IMAGE" .
-          docker build -f docker/frontend.Dockerfile -t "$UI_IMAGE" .
-          docker push "$API_IMAGE"
-          docker push "$UI_IMAGE"
-          docker image ls --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep "$GITHUB_SHA" | tee -a "$GITHUB_STEP_SUMMARY"
+          # Tags are immutable: a re-run of this job reuses the image already pushed for this commit
+          # (same SHA = same code) and only redeploys.
+          build_push() {  # repo image dockerfile [build args...]
+            local repo=$1 image=$2 file=$3; shift 3
+            if aws ecr describe-images --repository-name "$repo" --image-ids imageTag="$GITHUB_SHA" >/dev/null 2>&1; then
+              echo "$image already in ECR (re-run): not rebuilt" | tee -a "$GITHUB_STEP_SUMMARY"
+            else
+              docker build -f "$file" "$@" -t "$image" .
+              docker push "$image"
+              docker image ls --format '{{.Repository}}:{{.Tag}} {{.Size}}' "$image" | tee -a "$GITHUB_STEP_SUMMARY"
+            fi
+          }
+          build_push boreal-api "$API_IMAGE" docker/Dockerfile --build-arg GIT_SHA=$GITHUB_SHA --build-arg IMAGE_TAG=$GITHUB_SHA
+          build_push boreal-ui "$UI_IMAGE" docker/frontend.Dockerfile
           echo "API_IMAGE=$API_IMAGE" >> "$GITHUB_ENV"
           echo "UI_IMAGE=$UI_IMAGE" >> "$GITHUB_ENV"
 
