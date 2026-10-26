@@ -1,11 +1,14 @@
-# Continuous deployment: every merge to master builds SHA-tagged images, pushes them to Amazon ECR
-# and deploys them to AWS App Runner, then smoke-tests the live service.
+# Continuous deployment of the API: every merge to master builds a SHA-tagged image, pushes it to
+# Amazon ECR and deploys it to AWS App Runner, then smoke-tests the live service.
 #
 # Authentication is GitHub OIDC -> IAM role (aws-actions/configure-aws-credentials). No AWS access
-# key is stored in GitHub: the role trusts only this repository's master branch and the
-# "production" environment, and every credential expires with the job (infra/aws/, runbook
-# docs/runbooks/AWS_APPRUNNER_DEPLOY.md). The values below are repository *variables* (not secrets:
-# ARNs are identifiers, not credentials).
+# key is stored in GitHub: the role trusts only this repository's "production" environment, and every
+# credential expires with the job (infra/aws/, runbook docs/runbooks/AWS_APPRUNNER_DEPLOY.md). The
+# values below are repository *variables* (not secrets: ARNs are identifiers, not credentials).
+#
+# The Streamlit interface is NOT deployed here: App Runner's proxy rejects WebSocket upgrades (403
+# from envoy, measured 2026-10-25) and Streamlit needs one. The interface runs on Streamlit Community
+# Cloud, which redeploys it from master on the same merge (frontend/requirements.txt).
 name: CD
 
 on:
@@ -22,7 +25,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  # App Runner is not offered in ca-central-1; the serving stack runs in us-east-1 (D4 §6).
+  # App Runner is not offered in ca-central-1; the API runs in us-east-1 (D4 §6).
   AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
 
 jobs:
@@ -35,7 +38,7 @@ jobs:
       - uses: actions/checkout@v5
 
       # Diagnostics: the claims AWS compares with the role's trust policy. Only the decoded claims
-      # are printed, never the token. Remove once the first deployment has succeeded.
+      # are printed, never the token.
       - name: Show the OIDC claims GitHub presents to AWS
         run: |
           TOKEN=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
@@ -64,28 +67,21 @@ jobs:
         id: ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build and push images tagged with the commit SHA
+      - name: Build and push the API image tagged with the commit SHA
         env:
           REGISTRY: ${{ steps.ecr.outputs.registry }}
         run: |
           API_IMAGE="$REGISTRY/boreal-api:$GITHUB_SHA"
-          UI_IMAGE="$REGISTRY/boreal-ui:$GITHUB_SHA"
           # Tags are immutable: a re-run of this job reuses the image already pushed for this commit
           # (same SHA = same code) and only redeploys.
-          build_push() {  # repo image dockerfile [build args...]
-            local repo=$1 image=$2 file=$3; shift 3
-            if aws ecr describe-images --repository-name "$repo" --image-ids imageTag="$GITHUB_SHA" >/dev/null 2>&1; then
-              echo "$image already in ECR (re-run): not rebuilt" | tee -a "$GITHUB_STEP_SUMMARY"
-            else
-              docker build -f "$file" "$@" -t "$image" .
-              docker push "$image"
-              docker image ls --format '{{.Repository}}:{{.Tag}} {{.Size}}' "$image" | tee -a "$GITHUB_STEP_SUMMARY"
-            fi
-          }
-          build_push boreal-api "$API_IMAGE" docker/Dockerfile --build-arg GIT_SHA=$GITHUB_SHA --build-arg IMAGE_TAG=$GITHUB_SHA
-          build_push boreal-ui "$UI_IMAGE" docker/frontend.Dockerfile
+          if aws ecr describe-images --repository-name boreal-api --image-ids imageTag="$GITHUB_SHA" >/dev/null 2>&1; then
+            echo "$API_IMAGE already in ECR (re-run): not rebuilt" | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            docker build -f docker/Dockerfile --build-arg GIT_SHA=$GITHUB_SHA --build-arg IMAGE_TAG=$GITHUB_SHA -t "$API_IMAGE" .
+            docker push "$API_IMAGE"
+            docker image ls --format '{{.Repository}}:{{.Tag}} {{.Size}}' "$API_IMAGE" | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
           echo "API_IMAGE=$API_IMAGE" >> "$GITHUB_ENV"
-          echo "UI_IMAGE=$UI_IMAGE" >> "$GITHUB_ENV"
 
       - name: Deploy API to App Runner
         run: |
@@ -93,14 +89,7 @@ jobs:
             --image "$API_IMAGE" --port 8000 --access-role-arn "${{ vars.APPRUNNER_ECR_ROLE_ARN }}" \
             --env GIT_SHA=$GITHUB_SHA --env IMAGE_TAG=$GITHUB_SHA --env BOREAL_API_URL=http://127.0.0.1:8000
 
-      - name: Deploy interface to App Runner
-        run: |
-          python3 scripts/apprunner_deploy.py --service-arn "${{ vars.APPRUNNER_UI_ARN }}" \
-            --image "$UI_IMAGE" --port 8501 --access-role-arn "${{ vars.APPRUNNER_ECR_ROLE_ARN }}" \
-            --env API_URL=${{ vars.API_URL }} --env PUBLIC_API_URL=${{ vars.API_URL }}
-
       - name: Post-deploy smoke test (deployed version must equal this commit)
         run: |
-          python3 scripts/smoke_test.py --api "${{ vars.API_URL }}" --ui "${{ vars.UI_URL }}" \
-            --expect-sha "$GITHUB_SHA" | tee smoke.txt
+          python3 scripts/smoke_test.py --api "${{ vars.API_URL }}" --expect-sha "$GITHUB_SHA" | tee smoke.txt
           { echo '### Smoke test'; echo '```'; cat smoke.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"

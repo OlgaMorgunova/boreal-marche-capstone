@@ -1,12 +1,12 @@
 {
-  "generated_at": 1792848756.7984004,
+  "generated_at": 1792972356.8313699,
   "status": "amber",
   "window": {
     "predictions": 500,
-    "requests": 1880,
+    "requests": 2000,
     "min_predictions": 100,
-    "from": 1792848737.7081976,
-    "to": 1792848756.5205271
+    "from": 1792972306.9570265,
+    "to": 1792972356.1155722
   },
   "checks": [
     {
@@ -18,12 +18,12 @@
         "amber": "any PSI >= 0.1",
         "red": 0.1
       },
-      "detail": "top drifted: lines_per_order_180d, aov_180d, mean_order_hour_180d"
+      "detail": "top drifted: overdue_ratio, std_gap_days, share_kitchen"
     },
     {
       "name": "prediction_drift",
       "status": "green",
-      "value": 0.031610032315218965,
+      "value": 0.030571480787216238,
       "unit": "PSI of p_return",
       "threshold": {
         "amber": 0.1,
@@ -33,7 +33,7 @@
     {
       "name": "data_quality",
       "status": "green",
-      "value": 0.04219168787107719,
+      "value": 0.04819168787107719,
       "unit": "max(missing-rate change, /predict 422 rate)",
       "threshold": {
         "amber": 0.05,
@@ -53,7 +53,7 @@
     {
       "name": "latency_p95_predict",
       "status": "green",
-      "value": 67.31689999999999,
+      "value": 21.574499999999993,
       "unit": "ms, server-side",
       "threshold": {
         "amber": 150.0,
@@ -63,7 +63,7 @@
     {
       "name": "rule_fire_rate",
       "status": "green",
-      "value": 1.0,
+      "value": 0.6175869120654397,
       "unit": "share of non-empty baskets answered by a rule",
       "threshold": {
         "amber": 0.5,
@@ -74,87 +74,27 @@
   ],
   "features": [
     {
-      "feature": "lines_per_order_180d",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.10033254458440125,
-      "ks": 0.0865,
-      "ks_pvalue": 0.004833970952738106,
-      "mean_ref": 20.86078781951393,
-      "mean_live": 17.41499655198602,
+      "feature": "overdue_ratio",
+      "missing_ref": 0.17514843087362172,
+      "missing_live": 0.132,
+      "missing_delta": 0.04314843087362172,
+      "psi": 0.10771751832389527,
+      "ks": 0.11317924964164287,
+      "ks_pvalue": 0.00020321739973536162,
+      "mean_ref": 1.1381343902342351,
+      "mean_live": 1.1808331955192817,
       "status": "amber"
-    },
-    {
-      "feature": "aov_180d",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.08258232287847142,
-      "ks": 0.1,
-      "ks_pvalue": 0.0006380385751415398,
-      "mean_ref": 369.2303395390866,
-      "mean_live": 341.84339189940005,
-      "status": "amber"
-    },
-    {
-      "feature": "mean_order_hour_180d",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.07133848588236093,
-      "ks": 0.061,
-      "ks_pvalue": 0.0994134168270673,
-      "mean_ref": 12.431284191544833,
-      "mean_live": 12.35472522974102,
-      "status": "green"
     },
     {
       "feature": "std_gap_days",
       "missing_ref": 0.3061916878710772,
-      "missing_live": 0.264,
-      "missing_delta": 0.04219168787107719,
-      "psi": 0.06588446219430738,
-      "ks": 0.08008663761029021,
-      "ks_pvalue": 0.03978751640322624,
+      "missing_live": 0.258,
+      "missing_delta": 0.04819168787107719,
+      "psi": 0.09165928248314432,
+      "ks": 0.08671468772036194,
+      "ks_pvalue": 0.019739169386009447,
       "mean_ref": 50.25317772308834,
-      "mean_live": 46.96147087634895,
-      "status": "green"
-    },
-    {
-      "feature": "max_order_value_180d",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.0626899417480368,
-      "ks": 0.1055,
-      "ks_pvalue": 0.0002569648366233981,
-      "mean_ref": 495.9179007633587,
-      "mean_live": 467.46497999999997,
-      "status": "amber"
-    },
-    {
-      "feature": "overdue_ratio",
-      "missing_ref": 0.17514843087362172,
-      "missing_live": 0.14,
-      "missing_delta": 0.03514843087362171,
-      "psi": 0.06180290884348311,
-      "ks": 0.08507801757637352,
-      "ks_pvalue": 0.011401576796473654,
-      "mean_ref": 1.1381343902342351,
-      "mean_live": 1.285193697207333,
-      "status": "green"
-    },
-    {
-      "feature": "sku_repeat_rate_180d",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.0582592275578378,
-      "ks": 0.0475,
-      "ks_pvalue": 0.32151469942988375,
-      "mean_ref": 0.09368094286957478,
-      "mean_live": 0.08398808973493581,
+      "mean_live": 49.36280840125502,
       "status": "green"
     },
     {
@@ -162,11 +102,35 @@
       "missing_ref": 0.0,
       "missing_live": 0.0,
       "missing_delta": 0.0,
-      "psi": 0.05314235688972118,
-      "ks": 0.053,
-      "ks_pvalue": 0.2067626530683182,
+      "psi": 0.07306021593007797,
+      "ks": 0.052,
+      "ks_pvalue": 0.22490794989785487,
       "mean_ref": 0.2763414167076273,
-      "mean_live": 0.2645702123177167,
+      "mean_live": 0.2652403781503519,
+      "status": "green"
+    },
+    {
+      "feature": "lines_per_order_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.06509821934437514,
+      "ks": 0.0575,
+      "ks_pvalue": 0.13872849902968543,
+      "mean_ref": 20.86078781951393,
+      "mean_live": 19.047036512836343,
+      "status": "green"
+    },
+    {
+      "feature": "max_order_value_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.06285432452287405,
+      "ks": 0.0545,
+      "ks_pvalue": 0.1816828496031049,
+      "mean_ref": 495.9179007633587,
+      "mean_live": 590.1775,
       "status": "green"
     },
     {
@@ -174,95 +138,35 @@
       "missing_ref": 0.0,
       "missing_live": 0.0,
       "missing_delta": 0.0,
-      "psi": 0.05277634091621045,
-      "ks": 0.0595,
-      "ks_pvalue": 0.11495398239148337,
+      "psi": 0.05060434428917461,
+      "ks": 0.0535,
+      "ks_pvalue": 0.19812221771295221,
       "mean_ref": 0.11564978117241753,
-      "mean_live": 0.0460595657478723,
+      "mean_live": 0.05656708221715845,
       "status": "green"
     },
     {
-      "feature": "revenue_90d",
+      "feature": "mean_order_hour_180d",
       "missing_ref": 0.0,
       "missing_live": 0.0,
       "missing_delta": 0.0,
-      "psi": 0.05039756699338949,
-      "ks": 0.093,
-      "ks_pvalue": 0.0018915427633818553,
-      "mean_ref": 589.8106530958439,
-      "mean_live": 670.0133999999999,
-      "status": "green"
-    },
-    {
-      "feature": "mean_unit_price_180d",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.04939363133040526,
-      "ks": 0.0425,
-      "ks_pvalue": 0.4579757604274794,
-      "mean_ref": 3.7289348524496417,
-      "mean_live": 3.2026930025373215,
-      "status": "green"
-    },
-    {
-      "feature": "share_seasonal",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.04749506830526724,
-      "ks": 0.071,
-      "ks_pvalue": 0.034408200637291074,
-      "mean_ref": 0.020131455259164384,
-      "mean_live": 0.02163632333998106,
+      "psi": 0.049805364321250024,
+      "ks": 0.058,
+      "ks_pvalue": 0.13244021627336944,
+      "mean_ref": 12.431284191544833,
+      "mean_live": 12.367652464372073,
       "status": "green"
     },
     {
       "feature": "mean_gap_days",
       "missing_ref": 0.17514843087362172,
-      "missing_live": 0.14,
-      "missing_delta": 0.03514843087362171,
-      "psi": 0.04619044599070095,
-      "ks": 0.07905183236683207,
-      "ks_pvalue": 0.023019047498948612,
+      "missing_live": 0.132,
+      "missing_delta": 0.04314843087362172,
+      "psi": 0.04968383215691914,
+      "ks": 0.05992204992122067,
+      "ks_pvalue": 0.14924129217293688,
       "mean_ref": 88.6613215079752,
-      "mean_live": 83.75101214155868,
-      "status": "green"
-    },
-    {
-      "feature": "share_lighting",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.04444430576052992,
-      "ks": 0.083,
-      "ks_pvalue": 0.007788649801662701,
-      "mean_ref": 0.09689357299138378,
-      "mean_live": 0.11556508298063528,
-      "status": "green"
-    },
-    {
-      "feature": "recency_days",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.04370370238253474,
-      "ks": 0.0555,
-      "ks_pvalue": 0.16633243704021491,
-      "mean_ref": 60.62083244981623,
-      "mean_live": 65.04337777777778,
-      "status": "green"
-    },
-    {
-      "feature": "revenue_180d",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.039392261573620156,
-      "ks": 0.081,
-      "ks_pvalue": 0.010138847534844845,
-      "mean_ref": 1092.256675148431,
-      "mean_live": 1262.02954,
+      "mean_live": 81.92287524489775,
       "status": "green"
     },
     {
@@ -270,35 +174,11 @@
       "missing_ref": 0.0,
       "missing_live": 0.0,
       "missing_delta": 0.0,
-      "psi": 0.03756351021428014,
-      "ks": 0.0695,
-      "ks_pvalue": 0.0407600995237385,
+      "psi": 0.04940103075172783,
+      "ks": 0.0505,
+      "ks_pvalue": 0.25434757461746127,
       "mean_ref": 41.899491094147585,
-      "mean_live": 38.252,
-      "status": "green"
-    },
-    {
-      "feature": "share_bags_wrap",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.032851800620950194,
-      "ks": 0.0785,
-      "ks_pvalue": 0.013970481433318443,
-      "mean_ref": 0.09894516241280166,
-      "mean_live": 0.09715625283537849,
-      "status": "green"
-    },
-    {
-      "feature": "revenue_lifetime",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.03090397770386597,
-      "ks": 0.052,
-      "ks_pvalue": 0.22490794989785487,
-      "mean_ref": 3403.757553011026,
-      "mean_live": 4063.45358,
+      "mean_live": 40.678,
       "status": "green"
     },
     {
@@ -306,35 +186,11 @@
       "missing_ref": 0.0,
       "missing_live": 0.0,
       "missing_delta": 0.0,
-      "psi": 0.028863679441253544,
-      "ks": 0.048,
-      "ks_pvalue": 0.3095409469368976,
+      "psi": 0.04849918323242944,
+      "ks": 0.0735,
+      "ks_pvalue": 0.025736321590721433,
       "mean_ref": 7.5716709075487705,
-      "mean_live": 8.226,
-      "status": "green"
-    },
-    {
-      "feature": "tenure_days",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.025805348860077584,
-      "ks": 0.067,
-      "ks_pvalue": 0.053624606389495205,
-      "mean_ref": 338.8947195127698,
-      "mean_live": 357.4228,
-      "status": "green"
-    },
-    {
-      "feature": "revenue_30d",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.02013006492775738,
-      "ks": 0.0415,
-      "ks_pvalue": 0.4886236700327557,
-      "mean_ref": 229.3643638676845,
-      "mean_live": 287.28821999999997,
+      "mean_live": 9.288,
       "status": "green"
     },
     {
@@ -342,47 +198,23 @@
       "missing_ref": 0.0,
       "missing_live": 0.0,
       "missing_delta": 0.0,
-      "psi": 0.01895853266908478,
-      "ks": 0.0665,
-      "ks_pvalue": 0.05658037836197732,
+      "psi": 0.04681492354257414,
+      "ks": 0.0465,
+      "ks_pvalue": 0.34639865156650773,
       "mean_ref": 0.17366323158869262,
-      "mean_live": 0.1659876545790159,
+      "mean_live": 0.16830952041978997,
       "status": "green"
     },
     {
-      "feature": "orders_trend",
+      "feature": "recency_days",
       "missing_ref": 0.0,
       "missing_live": 0.0,
       "missing_delta": 0.0,
-      "psi": 0.01874849622602361,
-      "ks": 0.0345,
-      "ks_pvalue": 0.7198824856997894,
-      "mean_ref": 0.2625106022052587,
-      "mean_live": 0.178,
-      "status": "green"
-    },
-    {
-      "feature": "category_entropy_180d",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.017677637853193373,
-      "ks": 0.044,
-      "ks_pvalue": 0.41396358523945426,
-      "mean_ref": 1.3600748927777166,
-      "mean_live": 1.355999637941988,
-      "status": "green"
-    },
-    {
-      "feature": "orders_90d",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.01744652034920033,
-      "ks": 0.0375,
-      "ks_pvalue": 0.6190640609310396,
-      "mean_ref": 1.4631043256997456,
-      "mean_live": 1.492,
+      "psi": 0.038437589010400536,
+      "ks": 0.0645,
+      "ks_pvalue": 0.0698433929076762,
+      "mean_ref": 60.62083244981623,
+      "mean_live": 65.34543611111111,
       "status": "green"
     },
     {
@@ -390,23 +222,143 @@
       "missing_ref": 0.0,
       "missing_live": 0.0,
       "missing_delta": 0.0,
-      "psi": 0.013786866864544759,
-      "ks": 0.058,
-      "ks_pvalue": 0.13244021627336944,
+      "psi": 0.03673764312046766,
+      "ks": 0.054,
+      "ks_pvalue": 0.18976388784353593,
       "mean_ref": 55.863654505176626,
-      "mean_live": 17.00032206870417,
+      "mean_live": 26.21880170397551,
       "status": "green"
     },
     {
-      "feature": "tenure_censored",
+      "feature": "revenue_90d",
       "missing_ref": 0.0,
       "missing_live": 0.0,
       "missing_delta": 0.0,
-      "psi": 0.011851232340279108,
-      "ks": 0.0425,
-      "ks_pvalue": 0.4579757604274794,
-      "mean_ref": 0.2268871925360475,
-      "mean_live": 0.274,
+      "psi": 0.03545633965445673,
+      "ks": 0.065,
+      "ks_pvalue": 0.06630138991478811,
+      "mean_ref": 589.8106530958439,
+      "mean_live": 992.30734,
+      "status": "green"
+    },
+    {
+      "feature": "mean_unit_price_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.03428697684325373,
+      "ks": 0.042,
+      "ks_pvalue": 0.47317668444623323,
+      "mean_ref": 3.7289348524496417,
+      "mean_live": 4.466004618930014,
+      "status": "green"
+    },
+    {
+      "feature": "share_seasonal",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.0326660916122335,
+      "ks": 0.095,
+      "ks_pvalue": 0.001397900910316557,
+      "mean_ref": 0.020131455259164384,
+      "mean_live": 0.027534983011697635,
+      "status": "green"
+    },
+    {
+      "feature": "sku_repeat_rate_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.02786443936414818,
+      "ks": 0.0645,
+      "ks_pvalue": 0.0698433929076762,
+      "mean_ref": 0.09368094286957478,
+      "mean_live": 0.0962064323985004,
+      "status": "green"
+    },
+    {
+      "feature": "share_lighting",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.027353160592479317,
+      "ks": 0.078,
+      "ks_pvalue": 0.0148775487856502,
+      "mean_ref": 0.09689357299138378,
+      "mean_live": 0.11457941492887869,
+      "status": "green"
+    },
+    {
+      "feature": "category_entropy_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.02574007207084738,
+      "ks": 0.052,
+      "ks_pvalue": 0.22490794989785487,
+      "mean_ref": 1.3600748927777166,
+      "mean_live": 1.3763370617157882,
+      "status": "green"
+    },
+    {
+      "feature": "orders_trend",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.025211257523428576,
+      "ks": 0.041,
+      "ks_pvalue": 0.5043030516047972,
+      "mean_ref": 0.2625106022052587,
+      "mean_live": 0.298,
+      "status": "green"
+    },
+    {
+      "feature": "aov_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.024734456064565955,
+      "ks": 0.0315,
+      "ks_pvalue": 0.8151778486530862,
+      "mean_ref": 369.2303395390866,
+      "mean_live": 406.1150540598399,
+      "status": "green"
+    },
+    {
+      "feature": "tenure_days",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.02418090423329951,
+      "ks": 0.0685,
+      "ks_pvalue": 0.0455418630966445,
+      "mean_ref": 338.8947195127698,
+      "mean_live": 359.2600513888889,
+      "status": "green"
+    },
+    {
+      "feature": "revenue_lifetime",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.023418643253307204,
+      "ks": 0.062,
+      "ks_pvalue": 0.09005647807058112,
+      "mean_ref": 3403.757553011026,
+      "mean_live": 6040.38214,
+      "status": "green"
+    },
+    {
+      "feature": "cancel_rate_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.020930602829420393,
+      "ks": 0.043,
+      "ks_pvalue": 0.4430330372845452,
+      "mean_ref": 0.026843843785020978,
+      "mean_live": 0.03043356221574444,
       "status": "green"
     },
     {
@@ -414,9 +366,33 @@
       "missing_ref": 0.0,
       "missing_live": 0.0,
       "missing_delta": 0.0,
-      "psi": 0.006601655146395181,
+      "psi": 0.019144908533712948,
       "ks": null,
       "ks_pvalue": null,
+      "status": "green"
+    },
+    {
+      "feature": "revenue_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.01412423997320313,
+      "ks": 0.0425,
+      "ks_pvalue": 0.4579757604274794,
+      "mean_ref": 1092.256675148431,
+      "mean_live": 1887.94348,
+      "status": "green"
+    },
+    {
+      "feature": "tenure_censored",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.013880603029265599,
+      "ks": 0.0465,
+      "ks_pvalue": 0.34639865156650773,
+      "mean_ref": 0.2268871925360475,
+      "mean_live": 0.278,
       "status": "green"
     },
     {
@@ -424,23 +400,11 @@
       "missing_ref": 0.0,
       "missing_live": 0.0,
       "missing_delta": 0.0,
-      "psi": 0.004717515592449498,
-      "ks": 0.015,
-      "ks_pvalue": 0.9999862603713464,
+      "psi": 0.011322367371462534,
+      "ks": 0.028,
+      "ks_pvalue": 0.9072549969795604,
       "mean_ref": 0.5720949957591179,
-      "mean_live": 0.574,
-      "status": "green"
-    },
-    {
-      "feature": "cancel_lines_180d",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.004473331115867252,
-      "ks": 0.0275,
-      "ks_pvalue": 0.9179818351215828,
-      "mean_ref": 1.2472434266327397,
-      "mean_live": 1.116,
+      "mean_live": 0.642,
       "status": "green"
     },
     {
@@ -448,11 +412,59 @@
       "missing_ref": 0.0,
       "missing_live": 0.0,
       "missing_delta": 0.0,
-      "psi": 0.004468892552324487,
+      "psi": 0.011009634910802726,
+      "ks": 0.04,
+      "ks_pvalue": 0.5362962564058529,
+      "mean_ref": 2.6636980491942324,
+      "mean_live": 2.974,
+      "status": "green"
+    },
+    {
+      "feature": "share_bags_wrap",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.009173434497558908,
+      "ks": 0.031,
+      "ks_pvalue": 0.8298908380764453,
+      "mean_ref": 0.09894516241280166,
+      "mean_live": 0.10091788295433969,
+      "status": "green"
+    },
+    {
+      "feature": "orders_90d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.008904235514938326,
       "ks": 0.03,
       "ks_pvalue": 0.8579199482423322,
-      "mean_ref": 2.6636980491942324,
-      "mean_live": 2.806,
+      "mean_ref": 1.4631043256997456,
+      "mean_live": 1.636,
+      "status": "green"
+    },
+    {
+      "feature": "cancel_lines_180d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.007776237599115684,
+      "ks": 0.027,
+      "ks_pvalue": 0.9280103169410475,
+      "mean_ref": 1.2472434266327397,
+      "mean_live": 1.638,
+      "status": "green"
+    },
+    {
+      "feature": "revenue_30d",
+      "missing_ref": 0.0,
+      "missing_live": 0.0,
+      "missing_delta": 0.0,
+      "psi": 0.00170718203473799,
+      "ks": 0.0305,
+      "ks_pvalue": 0.8441524946572289,
+      "mean_ref": 229.3643638676845,
+      "mean_live": 461.71221999999995,
       "status": "green"
     },
     {
@@ -460,11 +472,11 @@
       "missing_ref": 0.0,
       "missing_live": 0.0,
       "missing_delta": 0.0,
-      "psi": 0.003679179934073689,
-      "ks": 0.03,
-      "ks_pvalue": 0.8579199482423322,
+      "psi": 0.001115140055717148,
+      "ks": 0.014,
+      "ks_pvalue": 0.9999978850790109,
       "mean_ref": 1.9346904156064462,
-      "mean_live": 1.966,
+      "mean_live": 1.936,
       "status": "green"
     },
     {
@@ -473,22 +485,10 @@
       "missing_live": 0.0,
       "missing_delta": 0.0,
       "psi": 0.0007644114963526425,
-      "ks": 0.0225,
-      "ks_pvalue": 0.9858851384490938,
-      "mean_ref": 0.11595067090783903,
-      "mean_live": 0.10820850611376925,
-      "status": "green"
-    },
-    {
-      "feature": "cancel_rate_180d",
-      "missing_ref": 0.0,
-      "missing_live": 0.0,
-      "missing_delta": 0.0,
-      "psi": 0.0001808676405969241,
       "ks": 0.0265,
       "ks_pvalue": 0.9373213867172837,
-      "mean_ref": 0.026843843785020978,
-      "mean_live": 0.023458359678688843,
+      "mean_ref": 0.11595067090783903,
+      "mean_live": 0.11376972012141791,
       "status": "green"
     },
     {
@@ -497,10 +497,10 @@
       "missing_live": 0.0,
       "missing_delta": 0.0,
       "psi": 0.0,
-      "ks": 0.0105,
-      "ks_pvalue": 0.9999999999745484,
+      "ks": 0.015,
+      "ks_pvalue": 0.9999862603713464,
       "mean_ref": 0.007541527737160127,
-      "mean_live": 0.002129383013107894,
+      "mean_live": 0.013619027866801078,
       "status": "green"
     }
   ],
@@ -510,113 +510,130 @@
   "prediction": {
     "mean_ref": 0.4989369040481589,
     "send_coupon_rate_ref": 0.6017811704834606,
-    "psi": 0.031610032315218965,
-    "mean_live": 0.5017827877883472,
-    "send_coupon_rate_live": 0.594,
+    "psi": 0.030571480787216238,
+    "mean_live": 0.5147685540001848,
+    "send_coupon_rate_live": 0.574,
     "status": "green"
   },
   "data_quality": {
-    "max_missing_delta": 0.04219168787107719,
+    "max_missing_delta": 0.04819168787107719,
     "worst_missing_feature": "std_gap_days",
     "predict_validation_error_rate": 0.0,
-    "unknown_item_rate": 0.0
+    "unknown_item_rate": 0.3538062283737024
   },
   "operations": {
-    "request_count": 1873,
-    "rpm": 652.4184105595872,
+    "request_count": 1692,
+    "rpm": 50.55383117373716,
     "error_rate": 0.0,
     "by_endpoint": {
       "/chat": {
-        "count": 154,
-        "p50": 55.7445,
-        "p95": 69.91905,
-        "p99": 89.47911999999997,
+        "count": 146,
+        "p50": 13.962,
+        "p95": 21.3505,
+        "p99": 26.076700000000017,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/chat/providers": {
+        "count": 3,
+        "p50": 6.178,
+        "p95": 6.2104,
+        "p99": 6.21328,
+        "error_rate": 0.0,
+        "client_error_rate": 0.0
+      },
+      "/customers": {
+        "count": 1,
+        "p50": 1.816,
+        "p95": 1.816,
+        "p99": 1.816,
         "error_rate": 0.0,
         "client_error_rate": 0.0
       },
       "/customers/{ref}/features": {
-        "count": 11,
-        "p50": 0.614,
-        "p95": 1.8655,
-        "p99": 1.9083,
+        "count": 9,
+        "p50": 0.485,
+        "p95": 1.1671999999999998,
+        "p99": 1.4510399999999999,
         "error_rate": 0.0,
         "client_error_rate": 0.0
       },
       "/predict": {
-        "count": 922,
-        "p50": 52.356,
-        "p95": 67.31689999999999,
-        "p99": 83.25141999999997,
+        "count": 792,
+        "p50": 11.2925,
+        "p95": 21.574499999999993,
+        "p99": 29.352210000000024,
         "error_rate": 0.0,
         "client_error_rate": 0.0
       },
       "/predict/batch": {
-        "count": 155,
-        "p50": 53.123,
-        "p95": 72.38419999999999,
-        "p99": 147.54534000000015,
+        "count": 145,
+        "p50": 18.447,
+        "p95": 67.58179999999999,
+        "p99": 123.08912000000001,
         "error_rate": 0.0,
         "client_error_rate": 0.0
       },
       "/products": {
-        "count": 6,
-        "p50": 9.337,
-        "p95": 9.847750000000001,
-        "p99": 9.873550000000002,
+        "count": 15,
+        "p50": 9.366,
+        "p95": 11.306899999999999,
+        "p99": 12.165379999999999,
         "error_rate": 0.0,
         "client_error_rate": 0.0
       },
       "/recommend": {
-        "count": 474,
-        "p50": 43.966,
-        "p95": 54.723949999999995,
-        "p99": 62.294689999999974,
+        "count": 447,
+        "p50": 1.744,
+        "p95": 8.6772,
+        "p99": 12.752980000000012,
         "error_rate": 0.0,
         "client_error_rate": 0.0
       },
       "/version": {
-        "count": 151,
-        "p50": 0.656,
-        "p95": 1.686,
-        "p99": 9.8935,
+        "count": 134,
+        "p50": 0.524,
+        "p95": 1.5484499999999943,
+        "p99": 9.620399999999991,
         "error_rate": 0.0,
         "client_error_rate": 0.0
       }
     },
-    "from": 1792848584.3659823,
-    "to": 1792848756.617406
+    "from": 1792970347.960076,
+    "to": 1792972356.1164837
   },
   "recommend": {
-    "n": 474,
-    "rule_fire_rate": 1.0,
+    "n": 500,
+    "rule_fire_rate": 0.6175869120654397,
     "rule_fire_rate_ref": 0.9172103813252138,
     "strategies": {
-      "rules": 411,
-      "rules+popularity": 58,
-      "empty_basket": 5
+      "rules": 267,
+      "popularity_fallback": 187,
+      "rules+popularity": 35,
+      "empty_basket": 11
     }
   },
   "assistant": {
-    "n": 154,
+    "n": 222,
     "by_provider": {
       "rule": {
-        "count": 154,
-        "median": 9.1
+        "count": 222,
+        "median": 12.350000000000001
       }
     },
-    "refusal_rate": 0.16883116883116883,
+    "refusal_rate": 0.1981981981981982,
     "handoff_rate": 0.0,
     "tools": {
-      "policy_search": 92,
-      "out_of_scope": 26,
-      "recommendations": 19,
-      "retention_score": 11,
-      "product_lookup": 6
+      "policy_search": 107,
+      "out_of_scope": 44,
+      "recommendations": 36,
+      "product_lookup": 23,
+      "retention_score": 12
     }
   },
   "cohorts_in_window": {
-    "normal": 498,
-    "none": 2
+    "normal": 499,
+    "none": 1
   },
   "reference": {
     "source": "data/gold/retention.parquet, calibration snapshot 2011-06-01 minus the 300 held-out demo customers",
@@ -626,17 +643,17 @@
   "ground_truth": {
     "n_labelled": 0,
     "label_window_days": 90,
-    "first_prediction_ts": 1792848585.759346,
-    "first_true_signal_ts": 1801229385.759346
+    "first_prediction_ts": 1792944534.1466482,
+    "first_true_signal_ts": 1801325334.1466482
   },
   "new_alerts": [
     {
-      "ts": 1792848756.8017821,
-      "check_name": "input_drift",
-      "level": "amber",
-      "previous": "green",
-      "value": 0.0,
-      "message": "share of features with PSI >= red; thresholds {'amber': 'any PSI >= 0.1', 'red': 0.1}; top drifted: lines_per_order_180d, aov_180d, mean_order_hour_180d",
+      "ts": 1792972356.835412,
+      "check_name": "data_quality",
+      "level": "green",
+      "previous": "amber",
+      "value": 0.04819168787107719,
+      "message": "max(missing-rate change, /predict 422 rate); thresholds {'amber': 0.05, 'red': 0.15}",
       "notified": "log"
     }
   ]

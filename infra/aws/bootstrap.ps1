@@ -6,12 +6,14 @@ One-time AWS setup for D4 continuous deployment (run by a human, once, from the 
 
 Creates, in us-east-1 (App Runner is not offered in ca-central-1; SageMaker stays in ca-central-1):
   1. the GitHub OIDC identity provider (if missing);
-  2. ECR repositories boreal-api and boreal-ui (scan on push, keep last 10 images);
+  2. ECR repository boreal-api (scan on push, immutable tags, keep last 10 images);
   3. role BorealAppRunnerEcrAccess (App Runner pulls private ECR images);
   4. role BorealGithubDeploy, trusted ONLY by this repository's "production" environment via OIDC,
-     with a least-privilege inline policy (push to the two repos, update the two services);
-  5. a first image of each service (built and pushed from this machine) and the two App Runner
-     services (single instance: the SQLite prediction log lives on the instance).
+     with a least-privilege inline policy (push to boreal-api, update the boreal-api service);
+  5. a first API image (built and pushed from this machine) and the App Runner service boreal-api
+     (single instance: the SQLite prediction log lives on the instance).
+The Streamlit interface is not on App Runner (its proxy rejects WebSockets): it runs on Streamlit
+Community Cloud (runbook section 2b).
 Then prints the GitHub repository variables to set. Idempotent where AWS allows it.
 
 Prerequisites: AWS CLI v2 signed in with an administrator identity (an IAM Identity Center user or
@@ -24,9 +26,7 @@ param(
     # numeric IDs (seen in CloudTrail, 2026-10-25). Find yours in the AccessDenied event's userName.
     [string]$Repo = "OlgaMorgunova@169389466/boreal-marche-capstone@1370564309",
     [string]$ApiCpu = "1 vCPU",
-    [string]$ApiMemory = "2 GB",
-    [string]$UiCpu = "0.25 vCPU",
-    [string]$UiMemory = "0.5 GB"
+    [string]$ApiMemory = "2 GB"
 )
 $ErrorActionPreference = "Stop"
 $env:AWS_PROFILE = $AwsProfile       # never the [default] profile (root login on this PC)
@@ -55,7 +55,7 @@ if (-not (Exists { aws iam get-open-id-connect-provider --open-id-connect-provid
 }
 
 # 2. ECR ------------------------------------------------------------------------------------------
-foreach ($r in "boreal-api", "boreal-ui") {
+foreach ($r in @("boreal-api")) {
     if (-not (Exists { aws ecr describe-repositories --repository-names $r --region $Region })) {
         aws ecr create-repository --repository-name $r --region $Region `
             --image-scanning-configuration scanOnPush=true --image-tag-mutability IMMUTABLE | Out-Null
@@ -92,9 +92,7 @@ $sha = (git rev-parse HEAD).Trim()
 $tag = "$sha-bootstrap"   # tags are immutable; CD later pushes the bare commit SHA
 aws ecr get-login-password --region $Region | docker login --username AWS --password-stdin $Registry
 docker build -f docker/Dockerfile --build-arg GIT_SHA=$sha --build-arg IMAGE_TAG=$tag -t "$Registry/boreal-api:$tag" .
-docker build -f docker/frontend.Dockerfile -t "$Registry/boreal-ui:$tag" .
 docker push "$Registry/boreal-api:$tag"
-docker push "$Registry/boreal-ui:$tag"
 
 $asName = "boreal-single-instance"
 $asArn = aws apprunner list-auto-scaling-configurations --region $Region `
@@ -126,9 +124,6 @@ function Ensure-Service($name, $image, $port, $cpu, $mem, $healthPath, $envVars)
 $apiArn = Ensure-Service "boreal-api" "$Registry/boreal-api:$tag" 8000 $ApiCpu $ApiMemory "/ready" @{ GIT_SHA = $sha; IMAGE_TAG = $tag; BOREAL_API_URL = "http://127.0.0.1:8000" }
 do { Start-Sleep 20; $st = aws apprunner describe-service --region $Region --service-arn $apiArn --query "Service.Status" --output text; Write-Host "  boreal-api: $st" } while ($st -eq "OPERATION_IN_PROGRESS")
 $apiUrl = "https://" + (aws apprunner describe-service --region $Region --service-arn $apiArn --query "Service.ServiceUrl" --output text)
-$uiArn = Ensure-Service "boreal-ui" "$Registry/boreal-ui:$tag" 8501 $UiCpu $UiMemory "/_stcore/health" @{ API_URL = $apiUrl; PUBLIC_API_URL = $apiUrl }
-do { Start-Sleep 20; $st = aws apprunner describe-service --region $Region --service-arn $uiArn --query "Service.Status" --output text; Write-Host "  boreal-ui: $st" } while ($st -eq "OPERATION_IN_PROGRESS")
-$uiUrl = "https://" + (aws apprunner describe-service --region $Region --service-arn $uiArn --query "Service.ServiceUrl" --output text)
 
 Write-Host ""
 Write-Host "Done. Set these GitHub repository variables (Settings -> Secrets and variables -> Actions -> Variables):"
@@ -136,8 +131,7 @@ Write-Host "  AWS_REGION             = $Region"
 Write-Host "  AWS_DEPLOY_ROLE_ARN    = arn:aws:iam::${Account}:role/BorealGithubDeploy"
 Write-Host "  APPRUNNER_ECR_ROLE_ARN = $EcrRole"
 Write-Host "  APPRUNNER_API_ARN      = $apiArn"
-Write-Host "  APPRUNNER_UI_ARN       = $uiArn"
 Write-Host "  API_URL                = $apiUrl"
-Write-Host "  UI_URL                 = $uiUrl"
+Write-Host "  UI_URL                 = <your app URL on Streamlit Community Cloud (runbook 2b)>"
 Write-Host "and create the environment 'production' (Settings -> Environments) limited to the master branch."
-Write-Host "Live: $uiUrl   API docs: $apiUrl/docs"
+Write-Host "API docs: $apiUrl/docs   -- next: deploy the interface on Streamlit Community Cloud with API_URL=$apiUrl"

@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-10-24T13:37:03+00:00",
+  "collected_at": "2026-10-26T00:19:52+00:00",
   "images": {
     "boreal-api:v0.3": {
       "compressed_bytes": 719076668,
@@ -22,5 +22,20 @@
   "corpus": {
     "documents": 6,
     "words": 4995
-  }
+  },
+  "live": {
+    "api_url": "https://padp32qm6p.us-east-1.awsapprunner.com",
+    "ui_url": "https://boreal-marche-capstone-4ay3m2fn6qdo4jtgy72vpr.streamlit.app",
+    "version": {
+      "api_version": "0.9.0",
+      "git_commit": "b132bac5979db5a6791dfeef335050d7c3416557",
+      "image_tag": "b132bac5979db5a6791dfeef335050d7c3416557",
+      "model_version": "0.3.0+xgboost",
+      "model_source": "artifacts/model.joblib",
+      "rules_mined_at": "2026-09-29T23:17:42+00:00",
+      "rule_count": 7512
+    },
+    "checked_at": "2026-10-26T00:19:52+00:00"
+  },
+  "video_url": "https://youtu.be/C_Qv7lu3cpY"
 }
