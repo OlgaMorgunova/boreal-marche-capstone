@@ -47,7 +47,8 @@ changes (`docs/MONITORING.md`).
 
 ```
 PR ─► ci.yml: ruff · mypy · pytest+coverage · DQ · assistant tool-choice · docker build + container smoke · gitleaks
-merge ─► cd.yml: OIDC → role BorealGithubDeploy → ECR boreal-api:<sha>, boreal-ui:<sha> → App Runner → smoke test (/version == sha)
+merge ─► cd.yml: OIDC → role BorealGithubDeploy → ECR boreal-api:<sha> → App Runner (us-east-1) → smoke test (/version == sha)
+merge ─► Streamlit Community Cloud redeploys frontend/app.py (App Runner rejects WebSockets)
 Mondays ─► retrain.yml: ETL → train → rules → promotion + fairness gate → pull request (human merges)
 hourly ─► monitor.yml: GET /monitoring/report → GitHub issue when red or down
 local ─► docker/compose.yml: api + frontend (Streamlit) + Postgres + Ollama

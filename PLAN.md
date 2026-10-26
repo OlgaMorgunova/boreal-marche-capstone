@@ -135,3 +135,6 @@ Nothing committed, pushed or tagged. Commit/tag plan: [docs/COMMIT_PLAN_D4.md](d
 | 2026-10-24 | Paraphrase set written after the rule keywords | Rule baseline 100% golden vs 35% paraphrases: overfitting made visible |
 | 2026-10-24 | `xgboost-cpu` in the image; numpy tests kept | −200 MB of CUDA wheels; deleting numpy/_core/tests crashed start-up |
 | 2026-10-24 | Fairness gate = non-regression while a gap exists | Top-spend-quartile lapser recall 0.32 vs 0.82 overall (D5) |
+| 2026-10-24 | API on App Runner in us-east-1 | App Runner is not offered in ca-central-1; public pseudonymised data only (D4 §6) |
+| 2026-10-25 | OIDC trust subject `owner@id/repo@id`; PassRole without service condition; re-run-safe push | Found in CloudTrail / CD logs (runbook §3 gotchas) |
+| 2026-10-25 | Interface on Streamlit Community Cloud, not App Runner | App Runner's proxy returns 403 to the WebSocket upgrade Streamlit needs (probed) |

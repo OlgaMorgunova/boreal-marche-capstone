@@ -8,7 +8,7 @@
       "Resource": "*"
     },
     {
-      "Sid": "PushToTheTwoRepositoriesOnly",
+      "Sid": "PushToTheApiRepositoryOnly",
       "Effect": "Allow",
       "Action": [
         "ecr:BatchCheckLayerAvailability",
@@ -20,23 +20,17 @@
         "ecr:PutImage",
         "ecr:UploadLayerPart"
       ],
-      "Resource": [
-        "arn:aws:ecr:__REGION__:__ACCOUNT_ID__:repository/boreal-api",
-        "arn:aws:ecr:__REGION__:__ACCOUNT_ID__:repository/boreal-ui"
-      ]
+      "Resource": "arn:aws:ecr:__REGION__:__ACCOUNT_ID__:repository/boreal-api"
     },
     {
-      "Sid": "DeployTheTwoAppRunnerServicesOnly",
+      "Sid": "DeployTheApiServiceOnly",
       "Effect": "Allow",
       "Action": [
         "apprunner:UpdateService",
         "apprunner:DescribeService",
         "apprunner:ListOperations"
       ],
-      "Resource": [
-        "arn:aws:apprunner:__REGION__:__ACCOUNT_ID__:service/boreal-api/*",
-        "arn:aws:apprunner:__REGION__:__ACCOUNT_ID__:service/boreal-ui/*"
-      ]
+      "Resource": "arn:aws:apprunner:__REGION__:__ACCOUNT_ID__:service/boreal-api/*"
     },
     {
       "Sid": "LetAppRunnerPullFromEcr",

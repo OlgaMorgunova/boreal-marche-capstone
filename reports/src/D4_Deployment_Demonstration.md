@@ -10,8 +10,8 @@ Olga Morgunova (individual project) · 420-977-VA AI Development Project · Inst
 
 | Item | Where | Status |
 |---|---|---|
-| Application (5 sections, EN/FR toggle) | {{ live_ui_url }} | App Runner service `boreal-ui` |
-| API documentation (OpenAPI) | {{ live_api_docs }} | App Runner service `boreal-api` |
+| Application (5 sections, EN/FR toggle) | {{ live_ui_url }} | Streamlit Community Cloud (§6) |
+| API documentation (OpenAPI) | {{ live_api_docs }} | AWS App Runner service `boreal-api` |
 | `/version` = deployed commit | {{ live_version }} | asserted by the CD smoke test (§5) |
 | Screen recording, 3–5 min (prediction, recommendation, assistant) | {{ video_url }} | link also in `README.md` |
 | CI: pull request with all checks green; workflow file | PR `feat/d4` → `master`; `.github/workflows/ci.yml` | §4 |
@@ -25,8 +25,8 @@ exist (`python scripts/collect_d4_evidence.py --api-url … --ui-url … --video
 
 ## 2. What is deployed
 
-One API container serves all three heads and the monitoring endpoints; one interface container talks
-to it over HTTP only. Offline artifacts (model, rules, retrieval index, reference profile) are baked
+One API container (AWS App Runner) serves all three heads and the monitoring endpoints; the Streamlit
+interface (Streamlit Community Cloud; also an image for the Compose stack) talks to it over HTTP only. Offline artifacts (model, rules, retrieval index, reference profile) are baked
 into the API image at build time, so a deployed version is exactly one image digest.
 
 | Endpoint | Purpose |
@@ -112,22 +112,27 @@ download; retrieval *quality* is measured by the evaluation in Table 1, not by C
 
 On merge to `master`, `.github/workflows/cd.yml`: (1) requests a GitHub OIDC token and exchanges it
 for one-hour credentials of role `BorealGithubDeploy`
-(`aws-actions/configure-aws-credentials`); (2) prints the assumed identity; (3) builds both images
-tagged with the **commit SHA** and pushes them to ECR (immutable tags, scan on push); (4) points the
-two App Runner services at the new tags (`scripts/apprunner_deploy.py`) and waits for success;
-(5) runs `scripts/smoke_test.py`, which fails the job unless `/version` equals the merged commit, the
-golden prediction is reproduced, a rule fires and the assistant cites a source.
+(`aws-actions/configure-aws-credentials`); (2) prints the assumed identity; (3) builds the API image
+tagged with the **commit SHA** and pushes it to ECR (immutable tags, scan on push; a re-run reuses the
+image of the same commit); (4) points the App Runner service at the new tag
+(`scripts/apprunner_deploy.py`) and waits for success; (5) runs `scripts/smoke_test.py`, which fails
+the job unless `/version` equals the merged commit, the golden prediction is reproduced, a rule fires
+and the assistant cites a source. The interface is redeployed from the same merge by Streamlit
+Community Cloud (§6).
 
 **Why OIDC.** No AWS key exists in GitHub: the role's trust policy (`infra/aws/github-oidc-trust.json`)
 accepts only tokens whose subject is
 `repo:OlgaMorgunova@169389466/boreal-marche-capstone@1370564309:environment:production`, and the
 environment is restricted to `master`. Its permissions (`infra/aws/github-deploy-policy.json`)
-are push to two repositories, update/describe two services, pass one role to App Runner. A leaked log
-or fork cannot deploy, and nothing needs rotating. *Debugged in practice:* the first CD run was
-refused (`AccessDenied`) because I had written the subject as `repo:owner/repo:…`; CloudTrail's
-`AssumeRoleWithWebIdentity` event showed that GitHub's subject carries the immutable owner and
-repository IDs, so the trust policy now matches that form — which also means a recreated repository
-with the same name could not deploy.
+are push to one repository, update/describe one service, pass one role to App Runner. A leaked log
+or fork cannot deploy, and nothing needs rotating. *Debugged in practice*, each from the evidence
+rather than by guessing: (a) the first run was refused (`AccessDenied`) because I had written the
+subject as `repo:owner/repo:…` — CloudTrail's `AssumeRoleWithWebIdentity` event showed GitHub's
+subject carries the immutable owner and repository IDs, so the trust policy now matches that form
+(a recreated repository with the same name cannot deploy); (b) `UpdateService` was then denied
+`iam:PassRole` because my `iam:PassedToService` condition did not match what App Runner sends for its
+ECR access role — removed, with `PassRole` still limited to that single role; (c) a re-run failed on
+the immutable image tag, so the push step now skips images that already exist.
 
 **Scheduled retraining.** `.github/workflows/retrain.yml` (Mondays) re-runs ETL, retrains, re-mines
 rules, logs to MLflow, and evaluates the promotion policy against the committed champion on the
@@ -139,8 +144,14 @@ receive the offer far less often than average (documented in `docs/MLFLOW_PROMOT
 
 ## 6. Hosting and cost
 
-App Runner was chosen over Render because it deploys straight from ECR with the OIDC role and needs
-no second account. **Region deviation:** App Runner is not offered in `ca-central-1` (console message,
+The API runs on AWS App Runner, chosen over Render because it deploys straight from ECR with the OIDC
+role. **The interface could not follow it:** Streamlit's browser client needs a WebSocket, and App
+Runner's proxy rejects the upgrade — a handshake probe returned `403` from `envoy` with no upstream
+timing header, i.e. the request never reached the container, while plain HTTP to the same service
+returned 200. The interface therefore runs on Streamlit Community Cloud (free, WebSocket-native,
+redeployed from `master` on every merge, `API_URL` as a secret); it holds no data and calls the API
+server-side. The interface image is still built and tested in CI and runs in the Compose stack.
+**Region deviation:** App Runner is not offered in `ca-central-1` (console message,
 checked 2026-10-24), so ECR and App Runner run in `us-east-1`, the closest supported region; the
 SageMaker job stays in `ca-central-1`. This is acceptable for the demonstration because the deployed
 service only processes the public, pseudonymised UCI data. For real customers it would be a transfer
@@ -148,8 +159,8 @@ of personal information outside Québec (Law 25, s. 17: prior assessment, adequa
 would deploy the same image to ECS Fargate behind an Application Load Balancer in `ca-central-1`
 (≈ $30/month more, mostly the load balancer) — the cost of data residency, stated rather than hidden.
 The API needs ~750 MiB at idle (measured with `docker stats`), so
-it runs at 1 vCPU / 2 GB; the interface at 0.25 vCPU / 0.5 GB. Estimated ≈ $13/month while running, $0
-while paused; both services are paused between grading windows (runbook §4). Single instance by design:
+it runs at 1 vCPU / 2 GB: ≈ $10/month while running, $0 while paused (paused between grading windows,
+runbook §4); the interface costs $0. Single instance by design:
 the SQLite prediction log lives on the instance and is lost on redeploy — the Compose stack shows the
 production design (Postgres). Ollama is not deployed (an 8B model needs a GPU instance); the live
 assistant offers the rule provider.

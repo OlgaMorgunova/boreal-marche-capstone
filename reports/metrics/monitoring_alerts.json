@@ -1,72 +1,182 @@
 [
   {
-    "check_name": "rule_fire_rate",
-    "id": 7,
-    "level": "red",
-    "message": "share of non-empty baskets answered by a rule; thresholds {'amber': 0.5, 'red': 0.3, 'direction': 'lower is worse'}",
-    "notified": "log",
-    "previous": "green",
-    "ts": 1792848870.1459231,
-    "value": 0.2004048583
-  },
-  {
-    "check_name": "data_quality",
-    "id": 6,
-    "level": "red",
-    "message": "max(missing-rate change, /predict 422 rate); thresholds {'amber': 0.05, 'red': 0.15}",
-    "notified": "log",
-    "previous": "green",
-    "ts": 1792848810.0016909,
-    "value": 0.996
-  },
-  {
     "check_name": "prediction_drift",
-    "id": 5,
+    "id": 18,
     "level": "red",
     "message": "PSI of p_return; thresholds {'amber': 0.1, 'red': 0.25}",
     "notified": "log",
     "previous": "green",
-    "ts": 1792848810.0014951,
-    "value": 2.1217489818
+    "ts": 1792972379.1473322,
+    "value": 0.2798124571
   },
   {
     "check_name": "input_drift",
-    "id": 4,
+    "id": 17,
     "level": "red",
-    "message": "share of features with PSI >= red; thresholds {'amber': 'any PSI >= 0.1', 'red': 0.1}; top drifted: revenue_trend, region, orders_trend",
+    "message": "share of features with PSI >= red; thresholds {'amber': 'any PSI >= 0.1', 'red': 0.1}; top drifted: revenue_trend, region, tenure_days",
     "notified": "log",
     "previous": "amber",
-    "ts": 1792848810.00128,
-    "value": 0.5277777778
-  },
-  {
-    "check_name": "input_drift",
-    "id": 3,
-    "level": "amber",
-    "message": "share of features with PSI >= red; thresholds {'amber': 'any PSI >= 0.1', 'red': 0.1}; top drifted: lines_per_order_180d, aov_180d, mean_order_hour_180d",
-    "notified": "log",
-    "previous": "green",
-    "ts": 1792848756.8017821,
-    "value": 0.0
+    "ts": 1792972379.1469085,
+    "value": 0.4166666667
   },
   {
     "check_name": "data_quality",
-    "id": 2,
+    "id": 16,
+    "level": "red",
+    "message": "max(missing-rate change, /predict 422 rate); thresholds {'amber': 0.05, 'red': 0.15}",
+    "notified": "log",
+    "previous": "amber",
+    "ts": 1792972362.0682626,
+    "value": 0.164
+  },
+  {
+    "check_name": "data_quality",
+    "id": 15,
+    "level": "amber",
+    "message": "max(missing-rate change, /predict 422 rate); thresholds {'amber': 0.05, 'red': 0.15}",
+    "notified": "log",
+    "previous": "green",
+    "ts": 1792972359.0977845,
+    "value": 0.054
+  },
+  {
+    "check_name": "data_quality",
+    "id": 14,
     "level": "green",
     "message": "max(missing-rate change, /predict 422 rate); thresholds {'amber': 0.05, 'red': 0.15}",
     "notified": "log",
     "previous": "amber",
-    "ts": 1792848755.9131627,
-    "value": 0.0321916879
+    "ts": 1792972356.835412,
+    "value": 0.0481916879
   },
   {
     "check_name": "data_quality",
-    "id": 1,
+    "id": 13,
     "level": "amber",
     "message": "max(missing-rate change, /predict 422 rate); thresholds {'amber': 0.05, 'red': 0.15}",
     "notified": "log",
     "previous": "green",
-    "ts": 1792848689.762249,
-    "value": 0.0621916879
+    "ts": 1792972339.121124,
+    "value": 0.0661916879
+  },
+  {
+    "check_name": "input_drift",
+    "id": 12,
+    "level": "amber",
+    "message": "share of features with PSI >= red; thresholds {'amber': 'any PSI >= 0.1', 'red': 0.1}; top drifted: share_kitchen, mean_unit_price_180d, overdue_ratio",
+    "notified": "log",
+    "previous": "green",
+    "ts": 1792972318.8789196,
+    "value": 0.0
+  },
+  {
+    "check_name": "data_quality",
+    "id": 11,
+    "level": "green",
+    "message": "max(missing-rate change, /predict 422 rate); thresholds {'amber': 0.05, 'red': 0.15}",
+    "notified": "log",
+    "previous": "red",
+    "ts": 1792972278.8663087,
+    "value": 0.0431484309
+  },
+  {
+    "check_name": "prediction_drift",
+    "id": 10,
+    "level": "green",
+    "message": "PSI of p_return; thresholds {'amber': 0.1, 'red': 0.25}",
+    "notified": "log",
+    "previous": "amber",
+    "ts": 1792972278.8660333,
+    "value": 0.0413503973
+  },
+  {
+    "check_name": "input_drift",
+    "id": 9,
+    "level": "green",
+    "message": "share of features with PSI >= red; thresholds {'amber': 'any PSI >= 0.1', 'red': 0.1}; top drifted: revenue_trend, lines_per_order_180d, share_kitchen",
+    "notified": "log",
+    "previous": "red",
+    "ts": 1792972278.865641,
+    "value": 0.0
+  },
+  {
+    "check_name": "prediction_drift",
+    "id": 8,
+    "level": "amber",
+    "message": "PSI of p_return; thresholds {'amber': 0.1, 'red': 0.25}",
+    "notified": "log",
+    "previous": "red",
+    "ts": 1792972261.1681452,
+    "value": 0.1670197868
+  },
+  {
+    "check_name": "data_quality",
+    "id": 7,
+    "level": "red",
+    "message": "max(missing-rate change, /predict 422 rate); thresholds {'amber': 0.05, 'red': 0.15}",
+    "notified": "log",
+    "previous": "green",
+    "ts": 1792970376.0326855,
+    "value": 0.828
+  },
+  {
+    "check_name": "prediction_drift",
+    "id": 6,
+    "level": "red",
+    "message": "PSI of p_return; thresholds {'amber': 0.1, 'red': 0.25}",
+    "notified": "log",
+    "previous": "green",
+    "ts": 1792970376.0324144,
+    "value": 0.7274006527
+  },
+  {
+    "check_name": "input_drift",
+    "id": 5,
+    "level": "red",
+    "message": "share of features with PSI >= red; thresholds {'amber': 'any PSI >= 0.1', 'red': 0.1}; top drifted: revenue_trend, region, tenure_days",
+    "notified": "log",
+    "previous": "green",
+    "ts": 1792970376.0320442,
+    "value": 0.5277777778
+  },
+  {
+    "check_name": "data_quality",
+    "id": 4,
+    "level": "green",
+    "message": "max(missing-rate change, /predict 422 rate); thresholds {'amber': 0.05, 'red': 0.15}",
+    "notified": "log",
+    "previous": "amber",
+    "ts": 1792970340.156288,
+    "value": 0.0481916879
+  },
+  {
+    "check_name": "data_quality",
+    "id": 3,
+    "level": "amber",
+    "message": "max(missing-rate change, /predict 422 rate); thresholds {'amber': 0.05, 'red': 0.15}",
+    "notified": "log",
+    "previous": "green",
+    "ts": 1792970315.8970644,
+    "value": 0.0551484309
+  },
+  {
+    "check_name": "input_drift",
+    "id": 2,
+    "level": "green",
+    "message": "share of features with PSI >= red; thresholds {'amber': 'any PSI >= 0.1', 'red': 0.1}; top drifted: share_kitchen, lines_per_order_180d, std_gap_days",
+    "notified": "log",
+    "previous": "amber",
+    "ts": 1792970315.8967116,
+    "value": 0.0
+  },
+  {
+    "check_name": "input_drift",
+    "id": 1,
+    "level": "amber",
+    "message": "share of features with PSI >= red; thresholds {'amber': 'any PSI >= 0.1', 'red': 0.1}; top drifted: share_kitchen, units_per_line_180d, max_order_value_180d",
+    "notified": "log",
+    "previous": "green",
+    "ts": 1792970255.824721,
+    "value": 0.0
   }
 ]
