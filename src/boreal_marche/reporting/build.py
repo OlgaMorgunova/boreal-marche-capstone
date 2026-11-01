@@ -31,6 +31,8 @@ REPORTS = {
     "D6-ES": ("D6_Executive_Summary.md", "977_D6_Morgunova_ExecutiveSummary"),
     "D6-DECK": ("D6_Presentation.md", "977_D6_Morgunova_Presentation"),
     "D6-CARDS": ("D6_Demo_Cards.md", "977_D6_Morgunova_DemoVideoCards"),
+    "D7": ("D7_Defence_Brief.md", "977_D7_Morgunova_DefenceBrief"),
+    "D7-REFL": ("D7_Reflection.md", "977_Reflection_Morgunova"),
 }
 FAMILY_RATIONALE = {
     "recency": "Time since the last order is the classical strongest churn signal (the R of RFM).",
@@ -704,7 +706,16 @@ body { margin: 0; font-family: 'DejaVu Sans', Arial, sans-serif; color: #0b0b0b;
 blockquote { border-left: 4px solid #eb6834; margin: 8pt 0; padding: 4pt 12pt;
   background: #fdf5f1; }
 """
-STYLES = {"D6-ES": CSS_ES, "D6-DECK": CSS_DECK, "D6-CARDS": CSS_DECK}
+# Two-page reflection: the same report style, slightly tighter so it holds to two pages.
+CSS_REFL = (
+    CSS
+    + """
+@page { margin: 15mm 18mm 13mm 18mm; }
+body { font-size: 9.8pt; line-height: 1.36; }
+h2 { font-size: 11.5pt; margin: 9pt 0 3pt; }
+"""
+)
+STYLES = {"D6-ES": CSS_ES, "D6-DECK": CSS_DECK, "D6-CARDS": CSS_DECK, "D7-REFL": CSS_REFL}
 
 
 def find_browser() -> str:
@@ -757,11 +768,13 @@ def run(only: list[str] | None = None) -> None:
     from boreal_marche.reporting.d4 import d4_context
     from boreal_marche.reporting.d5 import d5_context
     from boreal_marche.reporting.d6 import d6_context
+    from boreal_marche.reporting.d7 import d7_context
 
     paths = Paths()
     src = paths.reports / "src"
     ctx = context(paths) | d4_context(paths) | d5_context(paths)
     ctx |= d6_context(paths, ctx)
+    ctx |= d7_context(paths, ctx)
     from pypdf import PdfReader
 
     for code, (tpl, out) in REPORTS.items():
@@ -788,5 +801,5 @@ if __name__ == "__main__":
     import sys
 
     # `python -m boreal_marche.reporting.build D4` rebuilds one report and leaves the others as is;
-    # `... build D6 D6-ES D6-DECK D6-CARDS` rebuilds the D6 documents.
+    # `... build D6 D6-ES D6-DECK D6-CARDS` rebuilds the D6 documents; `... build D7 D7-REFL` D7.
     run(sys.argv[1:] or None)
