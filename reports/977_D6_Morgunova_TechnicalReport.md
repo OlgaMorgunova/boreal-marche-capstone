@@ -18,7 +18,7 @@ document: where a later deliverable changed an earlier result, only the current 
 here and the change is listed in §11.
 
 **The system is live.** Interface: https://boreal-marche-capstone-4ay3m2fn6qdo4jtgy72vpr.streamlit.app · API documentation: https://padp32qm6p.us-east-1.awsapprunner.com/docs · deployed
-commit `422bbab`, API 0.9.5, model `0.9.5+xgboost` (checked
+commit `7e67601`, API 0.9.6, model `0.9.5+xgboost` (checked
 2026-11-01, `/ready` = 200). Demonstration video: https://youtu.be/C_Qv7lu3cpY. Recorded D6
 presentation (15 minutes, demonstration first): https://youtu.be/2bcNpRwMQxE.
 
