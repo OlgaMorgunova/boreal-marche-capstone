@@ -4,7 +4,7 @@
 
 # Boréal Marché — the system in 75 seconds
 
-<p class="fr">Le système en 75 secondes · démonstration du service en ligne, commit 422bbab</p>
+<p class="fr">Le système en 75 secondes · démonstration du service en ligne, commit 7e67601</p>
 
 <div style="height:0.3in"></div>
 

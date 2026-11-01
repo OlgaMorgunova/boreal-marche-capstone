@@ -3,9 +3,9 @@
     "api_url": "https://padp32qm6p.us-east-1.awsapprunner.com",
     "ui_url": "https://boreal-marche-capstone-4ay3m2fn6qdo4jtgy72vpr.streamlit.app",
     "version": {
-      "api_version": "0.9.5",
-      "git_commit": "422bbab4d3c556b5da2f156e54b19db202f490f6",
-      "image_tag": "422bbab4d3c556b5da2f156e54b19db202f490f6",
+      "api_version": "0.9.6",
+      "git_commit": "7e676010633f3e6f7daa3b515dd40af504919e0e",
+      "image_tag": "7e676010633f3e6f7daa3b515dd40af504919e0e",
       "model_version": "0.9.5+xgboost",
       "model_source": "artifacts/model.joblib",
       "rules_mined_at": "2026-09-29T23:17:42+00:00",
@@ -13,7 +13,7 @@
     },
     "ready_status": 200,
     "ui_status": 303,
-    "checked_at": "2026-11-01T19:26:17+00:00"
+    "checked_at": "2026-11-01T19:43:42+00:00"
   },
   "tests": {
     "passed": 89,
@@ -27,7 +27,7 @@
     "v0.9",
     "v0.9.5"
   ],
-  "collected_at": "2026-11-01T19:26:17+00:00",
+  "collected_at": "2026-11-01T19:43:42+00:00",
   "presentation_video": {
     "url": "https://youtu.be/2bcNpRwMQxE",
     "title": "Bor\u00e9al March\u00e9 AI Platform",

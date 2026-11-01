@@ -21,7 +21,7 @@ Recorded talk: https://youtu.be/2bcNpRwMQxE
 
 ## Demonstration first
 
-<p class="fr">Démonstration d'abord — le système en service, commit 422bbab</p>
+<p class="fr">Démonstration d'abord — le système en service, commit 7e67601</p>
 
 <div class="cols" markdown="1"><div markdown="1">
 
@@ -37,7 +37,7 @@ Recorded talk: https://youtu.be/2bcNpRwMQxE
 
 | Check before the talk | |
 |---|---|
-| `/version` = deployed commit | `422bbab` |
+| `/version` = deployed commit | `7e67601` |
 | `/ready` | 200 |
 | Tests in CI | 89, coverage 82% |
 | Fallback video | https://youtu.be/C_Qv7lu3cpY |
