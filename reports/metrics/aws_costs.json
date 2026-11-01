@@ -1,0 +1,28 @@
+{
+  "collected_at": "2026-11-01",
+  "period": {
+    "start": "2026-09-01",
+    "end_exclusive": "2026-11-01"
+  },
+  "currency": "USD",
+  "total": 3.05,
+  "by_service": {
+    "AWS App Runner": 2.61,
+    "Tax": 0.4,
+    "Amazon EC2 Container Registry (ECR)": 0.04
+  },
+  "months": [
+    {
+      "start": "2026-09-01",
+      "services": {}
+    },
+    {
+      "start": "2026-10-01",
+      "services": {
+        "AWS App Runner": 2.61,
+        "Amazon EC2 Container Registry (ECR)": 0.04,
+        "Tax": 0.4
+      }
+    }
+  ]
+}
