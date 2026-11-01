@@ -157,6 +157,7 @@ class MonitoringParams(_Frozen):
     window_requests: int
     min_predictions: int
     check_interval_seconds: int
+    report_cache_seconds: int
     reference_sample_rows: int
     exclude_features: list[str]
     thresholds: MonitoringThresholds

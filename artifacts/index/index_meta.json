@@ -1,11 +1,11 @@
 {
-  "built_at": "2026-10-24T12:50:58+00:00",
+  "built_at": "2026-11-01T16:06:04+00:00",
   "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
   "dim": 384,
   "n_chunks": 66,
   "n_documents": 6,
   "chunk_max_words": 180,
-  "corpus_sha256": "0d21b261b931f35787cec1e566194befa230c05dfdc0bde5dd268419811d12f0",
+  "corpus_sha256": "1ddd3fe48dd560dac44636a0b6831c21dae4359c58b968569de77fd57021e576",
   "chunks_per_document": {
     "allergens": 10,
     "delivery": 12,

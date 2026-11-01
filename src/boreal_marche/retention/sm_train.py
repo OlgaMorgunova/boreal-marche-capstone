@@ -28,7 +28,7 @@ import joblib
 import numpy as np
 import pandas as pd
 
-from boreal_marche.features import FEATURES, TARGET
+from boreal_marche.features import MODEL_FEATURES, TARGET
 from boreal_marche.retention.cv import cross_validate, make_folds
 from boreal_marche.retention.models import build
 
@@ -63,7 +63,7 @@ def main(argv: list[str] | None = None) -> float:
     a = parse_args(argv)
     gold = pd.read_parquet(Path(a.train) / "retention.parquet")
     train = gold[gold["split"] == "train"].reset_index(drop=True)
-    X, y = train[FEATURES], train[TARGET].to_numpy()
+    X, y = train[MODEL_FEATURES], train[TARGET].to_numpy()
     est = build("xgboost", a.seed)
     est.set_params(
         model__n_estimators=a.n_estimators,

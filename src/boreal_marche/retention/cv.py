@@ -14,7 +14,7 @@ from sklearn.base import clone
 from sklearn.model_selection import StratifiedGroupKFold
 
 from boreal_marche.config import Paths
-from boreal_marche.features import FEATURES, TARGET
+from boreal_marche.features import FEATURES, MODEL_FEATURES, TARGET
 from boreal_marche.retention.models import score_all
 
 Folds = list[tuple[np.ndarray, np.ndarray]]
@@ -25,7 +25,7 @@ def load_gold(paths: Paths) -> pd.DataFrame:
 
 
 def split_xy(df: pd.DataFrame) -> tuple[pd.DataFrame, np.ndarray]:
-    return df[FEATURES].reset_index(drop=True), df[TARGET].to_numpy()
+    return df[MODEL_FEATURES].reset_index(drop=True), df[TARGET].to_numpy()
 
 
 def make_folds(train: pd.DataFrame, n_folds: int, seed: int) -> Folds:

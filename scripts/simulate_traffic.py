@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def report(host: str) -> dict:  # type: ignore[type-arg]
-    with urllib.request.urlopen(f"{host}/monitoring/report", timeout=60) as r:  # noqa: S310
+    with urllib.request.urlopen(f"{host}/monitoring/report?fresh=true", timeout=60) as r:  # noqa: S310
         return json.loads(r.read())
 
 

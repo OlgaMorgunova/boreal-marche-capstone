@@ -1,11 +1,11 @@
 {
-  "model_version": "0.3.0+xgboost",
+  "model_version": "0.9.5+xgboost",
   "registry": {
     "name": "boreal-retention",
-    "version": 3,
-    "alias": "challenger"
+    "version": 7,
+    "alias": "champion"
   },
-  "trained_at": "2026-09-29T23:10:11+00:00",
+  "trained_at": "2026-11-01T15:43:03+00:00",
   "n_train_rows": 12277,
   "n_calibration_rows": 2658,
   "train_cutoffs": [
@@ -24,12 +24,10 @@
     "orders_30d",
     "orders_90d",
     "orders_180d",
-    "orders_lifetime",
     "active_months_180d",
     "revenue_30d",
     "revenue_90d",
     "revenue_180d",
-    "revenue_lifetime",
     "aov_180d",
     "max_order_value_180d",
     "mean_unit_price_180d",
@@ -38,23 +36,27 @@
     "overdue_ratio",
     "orders_trend",
     "revenue_trend",
-    "lines_per_order_180d",
-    "units_per_line_180d",
-    "distinct_skus_180d",
-    "sku_repeat_rate_180d",
+    "season_q"
+  ],
+  "excluded_features": [
+    "weekend_share_180d",
+    "mean_order_hour_180d",
+    "region",
+    "cancel_lines_180d",
+    "cancel_rate_180d",
     "share_seasonal",
     "share_kitchen",
     "share_home_decor",
     "share_bags_wrap",
     "share_lighting",
     "category_entropy_180d",
-    "cancel_lines_180d",
-    "cancel_rate_180d",
-    "weekend_share_180d",
-    "mean_order_hour_180d",
+    "lines_per_order_180d",
+    "units_per_line_180d",
+    "distinct_skus_180d",
+    "sku_repeat_rate_180d",
     "outlier_line_share_180d",
-    "region",
-    "season_q"
+    "revenue_lifetime",
+    "orders_lifetime"
   ],
   "estimator": "xgboost",
   "hyperparameters": {
@@ -69,17 +71,31 @@
     "gamma": 3.8333695334557767
   },
   "calibration_method": "sigmoid",
-  "decision_threshold": 0.53,
+  "decision_threshold": 0.61,
   "decision_rule": "contact (send coupon) if calibrated P(return) <= threshold",
   "validation_metrics_calibrated": {
-    "pr_auc": 0.8090817107098067,
-    "roc_auc": 0.7877259036144579,
-    "brier": 0.186107269176348,
-    "recall_top_decile": 0.1927710843373494,
-    "precision_top_decile": 0.9624060150375939,
-    "pr_auc_lapse": 0.7517096635663719
+    "pr_auc": 0.8047394187330436,
+    "roc_auc": 0.782581076184437,
+    "brier": 0.1878872288399776,
+    "recall_top_decile": 0.19352409638554216,
+    "precision_top_decile": 0.9661654135338346,
+    "pr_auc_lapse": 0.7474540493960752
   },
-  "test_metrics": null,
+  "test_metrics": {
+    "cutoff": "2011-09-01",
+    "pr_auc": 0.8472418513123395,
+    "roc_auc": 0.767492231267507,
+    "brier": 0.19159443392796338,
+    "recall_top_decile": 0.16071428571428573,
+    "precision_top_decile": 0.9747292418772563,
+    "pr_auc_lapse": 0.6437545970550063,
+    "ece": 0.041354966128352655,
+    "pr_auc_ci95": {
+      "lo": 0.8317218255474641,
+      "hi": 0.862591152216654
+    },
+    "evaluated_at": "2026-11-01T15:43:39+00:00"
+  },
   "library_versions": {
     "python": "3.11.16",
     "scikit-learn": "1.7.2",
@@ -90,17 +106,23 @@
     "joblib": "1.6.0",
     "mlflow": "2.22.5"
   },
-  "git_commit": "a803635a95302521a822367dddea6c36f28f354e-dirty",
-  "mlflow_run_id": "8b2c7d272eef4760b3078dd15dace21f",
+  "git_commit": "b296495e77bfa736385021854d97e2b0650fce20-dirty",
+  "mlflow_run_id": "4a7e648928034e7d84980921ffc11eb3",
   "raw_sha256": "bcbe73b35f5b7babf197fb0cb983a11f5d9ff929078d4aa53d171b1f2df2e980",
   "promotion": {
     "checks": {
       "beats_best_baseline_by_0.05_pr_auc": true,
       "calibrated_brier_not_worse_than_raw": true,
       "ece_at_most_0.05": true,
-      "beats_current_champion_by_0.005": false
+      "beats_current_champion_by_0.005_or_minimises": false
     },
     "promote": false,
-    "best_baseline_pr_auc": 0.6167017688601416
+    "best_baseline_pr_auc": 0.6167017688601416,
+    "human_override": {
+      "at": "2026-11-01T15:43:25+00:00",
+      "previous_champion_version": 1,
+      "reason": "D5 data-minimisation decision (human, 2026-11-01): 19 of 37 features; all gates pass against the served v0.9 artifact (reports/metrics/retrain_decision.json); the registry alias pointed at v1, an older model than the served artifact, which the candidate trails by 0.0055",
+      "evidence": "reports/metrics/retrain_decision.json"
+    }
   }
 }

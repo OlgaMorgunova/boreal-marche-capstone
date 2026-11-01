@@ -31,7 +31,13 @@ from sklearn.model_selection import StratifiedKFold
 import boreal_marche
 from boreal_marche import tracking
 from boreal_marche.config import Params, Paths, load_params
-from boreal_marche.features import CATEGORICAL, FEATURES
+from boreal_marche.features import (
+    COLLECTED,
+    EXCLUDED_FROM_MODEL,
+    FEATURES,
+    MODEL_CATEGORICAL,
+    MODEL_FEATURES,
+)
 from boreal_marche.reporting import style
 from boreal_marche.retention.artifact import Calibrator, RetentionModel
 from boreal_marche.retention.cv import load_gold, split_xy
@@ -164,17 +170,27 @@ def fit_candidate(
 
 
 def promotion_decision(
-    cand: dict[str, Any], baseline_val: dict[str, dict[str, float]], current: float | None
+    cand: dict[str, Any],
+    baseline_val: dict[str, dict[str, float]],
+    current: tuple[float, int] | None,
 ) -> dict[str, Any]:
-    """Written promotion policy (docs/MLFLOW_PROMOTION_POLICY.md), evaluated mechanically."""
+    """Written promotion policy (docs/MLFLOW_PROMOTION_POLICY.md), evaluated mechanically.
+
+    ``current`` = (validation PR-AUC, number of input features) of the registry champion. Gate 4
+    has a data-minimisation clause (D5): a candidate on strictly fewer features may replace the
+    champion if it loses at most 0.005 PR-AUC — necessity outranks a marginal metric gain."""
     best_base = max(v["pr_auc"] for v in baseline_val.values())
     m = cand["val_metrics_cal"]
+    beats = current is None or m["pr_auc"] >= current[0] + 0.005
+    minimises = current is not None and (
+        len(MODEL_FEATURES) < current[1] and m["pr_auc"] >= current[0] - 0.005
+    )
     checks = {
         "beats_best_baseline_by_0.05_pr_auc": m["pr_auc"] >= best_base + 0.05,
         "calibrated_brier_not_worse_than_raw": cand["calibration"][cand["method"]]["brier"]
         <= cand["calibration"]["none"]["brier"],
         "ece_at_most_0.05": cand["calibration"][cand["method"]]["ece"] <= 0.05,
-        "beats_current_champion_by_0.005": current is None or m["pr_auc"] >= current + 0.005,
+        "beats_current_champion_by_0.005_or_minimises": beats or minimises,
     }
     return {"checks": checks, "promote": all(checks.values()), "best_baseline_pr_auc": best_base}
 
@@ -191,7 +207,7 @@ def write_golden(paths: Paths, val: pd.DataFrame, n: int = 8) -> None:
     for (_, row), pi in zip(sample.iterrows(), p, strict=True):
         feats = {
             k: (None if pd.isna(v) else (v.item() if hasattr(v, "item") else v))
-            for k, v in row[FEATURES].items()
+            for k, v in row[COLLECTED].items()  # what the API stores; the rest is optional
         }
         cases.append(
             {"ref": f"val-{int(row['customer_id'])}", "features": feats, "p_return": float(pi)}
@@ -202,14 +218,16 @@ def write_golden(paths: Paths, val: pd.DataFrame, n: int = 8) -> None:
     )
 
 
-def registry_champion_pr_auc(client: MlflowClient, name: str) -> float | None:
-    """Validation PR-AUC of the model currently holding the ``champion`` alias, if any."""
+def registry_champion(client: MlflowClient, name: str) -> tuple[float, int] | None:
+    """(validation PR-AUC, number of input features) of the ``champion`` alias, if any. Runs
+    logged before D5 have no ``n_features`` parameter: they used all 37 features."""
     try:
         mv = client.get_model_version_by_alias(name, "champion")
     except mlflow.exceptions.MlflowException:
         return None
     run = client.get_run(mv.run_id)
-    return run.data.metrics.get("val_cal_pr_auc")
+    pr = run.data.metrics.get("val_cal_pr_auc")
+    return None if pr is None else (pr, int(run.data.params.get("n_features", len(FEATURES))))
 
 
 def run(params: Params | None = None, paths: Paths | None = None) -> dict[str, Any]:
@@ -286,13 +304,13 @@ def run(params: Params | None = None, paths: Paths | None = None) -> dict[str, A
         "horizon_90_negative_result": horizon90,
         "profit_curve": base_curve.to_dict("records"),
     }
-    current_champion = registry_champion_pr_auc(client, reg_name)
+    current_champion = registry_champion(client, reg_name)
     for rank, cand in enumerate(candidates):
         final_cal = Calibrator(cand["method"]).fit(cand["p_raw"], yva)
         model = RetentionModel(
             pipeline=cand["pipeline"],
             calibrator=final_cal,
-            feature_names=list(FEATURES),
+            feature_names=list(MODEL_FEATURES),
             threshold=threshold,
             version=f"{boreal_marche.__version__}+{cand['name']}",
         )
@@ -312,6 +330,7 @@ def run(params: Params | None = None, paths: Paths | None = None) -> dict[str, A
                     "threshold": threshold,
                     "n_train_rows": len(train),
                     "n_val_rows": len(val),
+                    "n_features": len(MODEL_FEATURES),
                     **{
                         f"hp_{k}": v
                         for k, v in tuning["results"][cand["name"]]["best_params"].items()
@@ -328,14 +347,14 @@ def run(params: Params | None = None, paths: Paths | None = None) -> dict[str, A
                 "model",
                 python_model=RetentionPyfunc(),
                 artifacts={"model": str(out_path)},
-                input_example=Xva.head(3).astype({c: "object" for c in CATEGORICAL}),
+                input_example=Xva.head(3).astype({c: "object" for c in MODEL_CATEGORICAL}),
             )
             run_id = run.info.run_id
         mv = mlflow.register_model(info.model_uri, reg_name)
         alias = "champion" if is_champion and decision["promote"] else "challenger"
         client.set_registered_model_alias(reg_name, alias, mv.version)
         if alias == "champion":
-            current_champion = cand["val_metrics_cal"]["pr_auc"]
+            current_champion = (cand["val_metrics_cal"]["pr_auc"], len(MODEL_FEATURES))
         meta = {
             "model_version": model.version,
             "registry": {"name": reg_name, "version": int(mv.version), "alias": alias},
@@ -344,7 +363,8 @@ def run(params: Params | None = None, paths: Paths | None = None) -> dict[str, A
             "n_calibration_rows": len(val),
             "train_cutoffs": params.windows.cutoffs.train,
             "calibration_cutoffs": params.windows.cutoffs.validation,
-            "feature_names": list(FEATURES),
+            "feature_names": list(MODEL_FEATURES),
+            "excluded_features": list(EXCLUDED_FROM_MODEL),
             "estimator": cand["name"],
             "hyperparameters": tuning["results"][cand["name"]]["best_params"],
             "calibration_method": cand["method"],

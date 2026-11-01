@@ -133,6 +133,9 @@ monitoring:
   window_requests: 2000          # operational metrics on the most recent N requests
   min_predictions: 100           # below this the drift checks report "insufficient_data"
   check_interval_seconds: 60     # background evaluation + alerting loop inside the API
+  # GET /monitoring/report serves a report younger than this as is (one costs ~110 ms to compute
+  # and the dashboard polls it, D5 §2); ?fresh=true recomputes.
+  report_cache_seconds: 10
   reference_sample_rows: 2000    # training rows kept (per feature) for the KS test
   # season_q is constant within a quarter by construction: live traffic is always one season while
   # the training reference mixes four, so its PSI would be permanently red. It is excluded from

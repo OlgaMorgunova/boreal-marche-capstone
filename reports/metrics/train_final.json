@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-29T23:10:05+00:00",
+  "generated_at": "2026-11-01T15:42:57+00:00",
   "baselines_validation": {
     "baseline_dummy_prior": {
       "pr_auc": 0.4996237772761475,
@@ -30,131 +30,131 @@
     "xgboost": {
       "calibration": {
         "none": {
-          "brier": 0.18847414048183847,
-          "log_loss": 0.5541839894972198,
-          "ece": 0.05039455922722726
+          "brier": 0.18900260532089355,
+          "log_loss": 0.5557798862951125,
+          "ece": 0.036391651668523456
         },
         "sigmoid": {
-          "brier": 0.18610726923730828,
-          "log_loss": 0.5475960592445067,
-          "ece": 0.010050120214778191
+          "brier": 0.18788722894608864,
+          "log_loss": 0.552169102779171,
+          "ece": 0.01210671125093379
         },
         "isotonic": {
-          "brier": 0.18706488722565306,
-          "log_loss": 0.556617285781007,
-          "ece": 0.015755640105971545
+          "brier": 0.18894015307701417,
+          "log_loss": 0.5580701273467749,
+          "ece": 0.016522367932659238
         }
       },
       "method": "sigmoid",
       "val_metrics_raw": {
-        "pr_auc": 0.8093592444825716,
-        "roc_auc": 0.7878448002536461,
-        "brier": 0.1884741406000148,
-        "recall_top_decile": 0.1927710843373494,
-        "precision_top_decile": 0.9624060150375939,
-        "pr_auc_lapse": 0.7519023282485972
+        "pr_auc": 0.805173566517175,
+        "roc_auc": 0.7827928254370866,
+        "brier": 0.18900260538211333,
+        "recall_top_decile": 0.19352409638554216,
+        "precision_top_decile": 0.9661654135338346,
+        "pr_auc_lapse": 0.7477163582985067
       },
       "val_metrics_cal": {
-        "pr_auc": 0.8090817107098067,
-        "roc_auc": 0.7877259036144579,
-        "brier": 0.186107269176348,
-        "recall_top_decile": 0.1927710843373494,
-        "precision_top_decile": 0.9624060150375939,
-        "pr_auc_lapse": 0.7517096635663719
+        "pr_auc": 0.8047394187330436,
+        "roc_auc": 0.782581076184437,
+        "brier": 0.1878872288399776,
+        "recall_top_decile": 0.19352409638554216,
+        "precision_top_decile": 0.9661654135338346,
+        "pr_auc_lapse": 0.7474540493960752
       },
       "promotion": {
         "checks": {
           "beats_best_baseline_by_0.05_pr_auc": true,
           "calibrated_brier_not_worse_than_raw": true,
           "ece_at_most_0.05": true,
-          "beats_current_champion_by_0.005": false
+          "beats_current_champion_by_0.005_or_minimises": false
         },
         "promote": false,
         "best_baseline_pr_auc": 0.6167017688601416
       },
-      "alias": "challenger",
-      "registry_version": 3,
-      "mlflow_run_id": "8b2c7d272eef4760b3078dd15dace21f"
+      "alias": "champion",
+      "registry_version": 7,
+      "mlflow_run_id": "4a7e648928034e7d84980921ffc11eb3"
     },
     "extra_trees": {
       "calibration": {
         "none": {
-          "brier": 0.19411099384971686,
-          "log_loss": 0.5669614058819097,
-          "ece": 0.06516924680394792
+          "brier": 0.19548565676771615,
+          "log_loss": 0.5710297276239095,
+          "ece": 0.06385976536590515
         },
         "sigmoid": {
-          "brier": 0.18927666663171722,
-          "log_loss": 0.5544786932589288,
-          "ece": 0.015589152458443768
+          "brier": 0.19097891548768656,
+          "log_loss": 0.5583841969873207,
+          "ece": 0.01466824183102674
         },
         "isotonic": {
-          "brier": 0.1906164177333905,
-          "log_loss": 0.5604546217247961,
-          "ece": 0.016366611911976574
+          "brier": 0.19225269890992158,
+          "log_loss": 0.5682395838625103,
+          "ece": 0.009697320233640493
         }
       },
       "method": "sigmoid",
       "val_metrics_raw": {
-        "pr_auc": 0.80422450753549,
-        "roc_auc": 0.7795678956427212,
-        "brier": 0.19411099384971686,
-        "recall_top_decile": 0.19578313253012047,
-        "precision_top_decile": 0.9774436090225563,
-        "pr_auc_lapse": 0.7413432800107355
+        "pr_auc": 0.800047825241347,
+        "roc_auc": 0.7746959643083612,
+        "brier": 0.19548565676771615,
+        "recall_top_decile": 0.19503012048192772,
+        "precision_top_decile": 0.9736842105263158,
+        "pr_auc_lapse": 0.738512993120046
       },
       "val_metrics_cal": {
-        "pr_auc": 0.8038052206072683,
-        "roc_auc": 0.7793465214240419,
-        "brier": 0.18927666663171722,
-        "recall_top_decile": 0.19578313253012047,
-        "precision_top_decile": 0.9774436090225563,
-        "pr_auc_lapse": 0.7410754537289812
+        "pr_auc": 0.7994448900372382,
+        "roc_auc": 0.7742769951988404,
+        "brier": 0.19097891548768656,
+        "recall_top_decile": 0.19427710843373494,
+        "precision_top_decile": 0.9699248120300752,
+        "pr_auc_lapse": 0.7379788665980525
       },
       "promotion": {
         "checks": {
           "beats_best_baseline_by_0.05_pr_auc": true,
           "calibrated_brier_not_worse_than_raw": true,
           "ece_at_most_0.05": true,
-          "beats_current_champion_by_0.005": false
+          "beats_current_champion_by_0.005_or_minimises": false
         },
         "promote": false,
         "best_baseline_pr_auc": 0.6167017688601416
       },
       "alias": "challenger",
-      "registry_version": 4,
-      "mlflow_run_id": "d18944fc7644495893585ac9e88cc182"
+      "registry_version": 8,
+      "mlflow_run_id": "5da2be89acef4d8bb6407b997b726958"
     }
   },
-  "threshold": 0.53,
+  "threshold": 0.61,
   "threshold_sensitivity": {
     "save_rate=0.10": {
       "best_threshold": 0.0,
       "max_profit": 0.0
     },
     "save_rate=0.20": {
-      "best_threshold": 0.53,
-      "max_profit": 7978.929783333335
+      "best_threshold": 0.61,
+      "max_profit": 7421.4899464285745
     },
     "save_rate=0.30": {
-      "best_threshold": 0.83,
-      "max_profit": 34529.54148446428
+      "best_threshold": 0.78,
+      "max_profit": 33796.98808589285
     }
   },
   "validation_policy": {
     "n_customers": 2658,
-    "threshold": 0.53,
-    "model_contacted": 1599,
-    "model_profit": 7978.929783333335,
-    "ev_policy_contacted": 1185,
-    "ev_policy_profit": 13420.418031071431,
+    "threshold": 0.61,
+    "model_contacted": 1811,
+    "model_profit": 7421.4899464285745,
+    "ev_policy_contacted": 1174,
+    "ev_policy_profit": 12521.745858214286,
     "everyone_profit": -22564.60440765474,
     "nobody_profit": 0.0,
-    "model_vs_everyone": 30543.534190988074,
-    "model_profit_per_1000": 3001.85469651367,
+    "model_vs_everyone": 29986.094354083314,
+    "model_profit_per_1000": 2792.133162689456,
     "everyone_profit_per_1000": -8489.31693290246,
     "lapsers_total": 1330,
-    "lapsers_contacted_model": 1088
+    "lapsers_contacted_model": 1178
   },
   "horizon_90_negative_result": {
     "best_threshold": 0.0,
@@ -244,714 +244,714 @@
     },
     {
       "threshold": 0.1,
-      "n_contacted": 3,
-      "share_contacted": 0.001128668171557562,
-      "realised_profit": 6.090416666666668,
-      "expected_profit": 1.4982554575180027,
-      "lapsers_contacted": 3
+      "n_contacted": 0,
+      "share_contacted": 0.0,
+      "realised_profit": 0.0,
+      "expected_profit": 0.0,
+      "lapsers_contacted": 0
     },
     {
       "threshold": 0.11,
-      "n_contacted": 8,
-      "share_contacted": 0.0030097817908201654,
-      "realised_profit": 10.409916666666668,
-      "expected_profit": 5.052184729109208,
-      "lapsers_contacted": 7
+      "n_contacted": 0,
+      "share_contacted": 0.0,
+      "realised_profit": 0.0,
+      "expected_profit": 0.0,
+      "lapsers_contacted": 0
     },
     {
       "threshold": 0.12,
-      "n_contacted": 21,
-      "share_contacted": 0.007900677200902935,
-      "realised_profit": 44.12775000000001,
-      "expected_profit": 24.089743946275373,
-      "lapsers_contacted": 19
+      "n_contacted": 7,
+      "share_contacted": 0.0026335590669676447,
+      "realised_profit": -12.744583333333331,
+      "expected_profit": 2.487141568666945,
+      "lapsers_contacted": 5
     },
     {
       "threshold": 0.13,
-      "n_contacted": 32,
-      "share_contacted": 0.012039127163280662,
-      "realised_profit": 6.594916666666684,
-      "expected_profit": 41.08169920743507,
-      "lapsers_contacted": 26
+      "n_contacted": 11,
+      "share_contacted": 0.004138449962377728,
+      "realised_profit": -8.790416666666662,
+      "expected_profit": 4.531034939332557,
+      "lapsers_contacted": 8
     },
     {
       "threshold": 0.14,
-      "n_contacted": 60,
-      "share_contacted": 0.022573363431151242,
-      "realised_profit": -32.62666666666664,
-      "expected_profit": 151.0221126852384,
-      "lapsers_contacted": 46
+      "n_contacted": 36,
+      "share_contacted": 0.013544018058690745,
+      "realised_profit": 55.7760166666667,
+      "expected_profit": 50.18124800982752,
+      "lapsers_contacted": 31
     },
     {
       "threshold": 0.15,
-      "n_contacted": 90,
-      "share_contacted": 0.033860045146726865,
-      "realised_profit": 127.99291666666667,
-      "expected_profit": 235.1142349281746,
-      "lapsers_contacted": 73
+      "n_contacted": 45,
+      "share_contacted": 0.016930022573363433,
+      "realised_profit": 101.44568333333338,
+      "expected_profit": 81.55107682888882,
+      "lapsers_contacted": 38
     },
     {
       "threshold": 0.16,
-      "n_contacted": 129,
-      "share_contacted": 0.04853273137697517,
-      "realised_profit": 324.57150000000007,
-      "expected_profit": 413.60063747141146,
-      "lapsers_contacted": 105
+      "n_contacted": 79,
+      "share_contacted": 0.029721595184349133,
+      "realised_profit": 198.71460000000005,
+      "expected_profit": 178.670541511715,
+      "lapsers_contacted": 67
     },
     {
       "threshold": 0.17,
-      "n_contacted": 173,
-      "share_contacted": 0.06508653122648608,
-      "realised_profit": 646.7735833333335,
-      "expected_profit": 580.0192660473201,
-      "lapsers_contacted": 145
+      "n_contacted": 133,
+      "share_contacted": 0.05003762227238525,
+      "realised_profit": 446.2917666666667,
+      "expected_profit": 317.2641200304856,
+      "lapsers_contacted": 115
     },
     {
       "threshold": 0.18,
-      "n_contacted": 212,
-      "share_contacted": 0.0797592174567344,
-      "realised_profit": 934.8052500000001,
-      "expected_profit": 773.1825900099712,
-      "lapsers_contacted": 179
+      "n_contacted": 178,
+      "share_contacted": 0.06696764484574869,
+      "realised_profit": 524.5429333333335,
+      "expected_profit": 477.5417516235358,
+      "lapsers_contacted": 147
     },
     {
       "threshold": 0.19,
-      "n_contacted": 250,
-      "share_contacted": 0.09405568096313018,
-      "realised_profit": 1087.4000500000002,
-      "expected_profit": 939.2058685840491,
-      "lapsers_contacted": 208
+      "n_contacted": 208,
+      "share_contacted": 0.0782543265613243,
+      "realised_profit": 702.4666000000002,
+      "expected_profit": 614.822491122387,
+      "lapsers_contacted": 172
     },
     {
       "threshold": 0.2,
-      "n_contacted": 286,
-      "share_contacted": 0.10759969902182091,
-      "realised_profit": 1224.7433,
-      "expected_profit": 1102.7621072271409,
-      "lapsers_contacted": 238
+      "n_contacted": 254,
+      "share_contacted": 0.09556057185854025,
+      "realised_profit": 839.7301000000002,
+      "expected_profit": 760.5765343441026,
+      "lapsers_contacted": 210
     },
     {
       "threshold": 0.21,
-      "n_contacted": 335,
-      "share_contacted": 0.12603461249059444,
-      "realised_profit": 1489.3985500000001,
-      "expected_profit": 1298.9397329355922,
-      "lapsers_contacted": 277
+      "n_contacted": 292,
+      "share_contacted": 0.10985703536493605,
+      "realised_profit": 886.1076,
+      "expected_profit": 880.6406222989516,
+      "lapsers_contacted": 238
     },
     {
       "threshold": 0.22,
-      "n_contacted": 373,
-      "share_contacted": 0.1403310759969902,
-      "realised_profit": 1601.798416666667,
-      "expected_profit": 1482.8126235696784,
-      "lapsers_contacted": 308
+      "n_contacted": 338,
+      "share_contacted": 0.127163280662152,
+      "realised_profit": 1225.3392500000002,
+      "expected_profit": 1060.2488012618116,
+      "lapsers_contacted": 279
     },
     {
       "threshold": 0.23,
-      "n_contacted": 408,
-      "share_contacted": 0.15349887133182843,
-      "realised_profit": 1813.9740666666669,
-      "expected_profit": 1658.2891488306393,
-      "lapsers_contacted": 335
+      "n_contacted": 383,
+      "share_contacted": 0.14409330323551542,
+      "realised_profit": 1490.1514166666668,
+      "expected_profit": 1265.756571725955,
+      "lapsers_contacted": 313
     },
     {
       "threshold": 0.24,
-      "n_contacted": 446,
-      "share_contacted": 0.16779533483822423,
-      "realised_profit": 1760.491066666667,
-      "expected_profit": 1850.892387727887,
-      "lapsers_contacted": 362
+      "n_contacted": 426,
+      "share_contacted": 0.16027088036117382,
+      "realised_profit": 1584.9003000000002,
+      "expected_profit": 1437.5792747052533,
+      "lapsers_contacted": 346
     },
     {
       "threshold": 0.25,
-      "n_contacted": 491,
-      "share_contacted": 0.18472535741158766,
-      "realised_profit": 2167.301316666667,
-      "expected_profit": 2118.5306544318964,
-      "lapsers_contacted": 397
+      "n_contacted": 468,
+      "share_contacted": 0.17607223476297967,
+      "realised_profit": 1806.3696,
+      "expected_profit": 1576.1082287849035,
+      "lapsers_contacted": 378
     },
     {
       "threshold": 0.26,
-      "n_contacted": 540,
-      "share_contacted": 0.20316027088036118,
-      "realised_profit": 2529.9400333333333,
-      "expected_profit": 2382.569329950657,
-      "lapsers_contacted": 435
+      "n_contacted": 520,
+      "share_contacted": 0.19563581640331076,
+      "realised_profit": 2049.1341500000003,
+      "expected_profit": 1789.5192259127907,
+      "lapsers_contacted": 417
     },
     {
       "threshold": 0.27,
-      "n_contacted": 596,
-      "share_contacted": 0.22422874341610233,
-      "realised_profit": 3599.700500000001,
-      "expected_profit": 2739.6415877114323,
-      "lapsers_contacted": 483
+      "n_contacted": 566,
+      "share_contacted": 0.2129420617005267,
+      "realised_profit": 2391.766516666667,
+      "expected_profit": 2020.9585525157038,
+      "lapsers_contacted": 453
     },
     {
       "threshold": 0.28,
-      "n_contacted": 644,
-      "share_contacted": 0.24228743416102333,
-      "realised_profit": 4099.9212566666665,
-      "expected_profit": 2983.974486348758,
-      "lapsers_contacted": 521
+      "n_contacted": 619,
+      "share_contacted": 0.2328818660647103,
+      "realised_profit": 2637.085133333334,
+      "expected_profit": 2284.7063418309826,
+      "lapsers_contacted": 487
     },
     {
       "threshold": 0.29,
-      "n_contacted": 686,
-      "share_contacted": 0.2580887885628292,
-      "realised_profit": 4515.152306666667,
-      "expected_profit": 3301.4448147403973,
-      "lapsers_contacted": 548
+      "n_contacted": 676,
+      "share_contacted": 0.254326561324304,
+      "realised_profit": 2796.393816666667,
+      "expected_profit": 2508.8448025123084,
+      "lapsers_contacted": 526
     },
     {
       "threshold": 0.3,
-      "n_contacted": 722,
-      "share_contacted": 0.27163280662151995,
-      "realised_profit": 4200.199198333334,
-      "expected_profit": 3471.5163872670655,
-      "lapsers_contacted": 567
+      "n_contacted": 718,
+      "share_contacted": 0.27012791572610984,
+      "realised_profit": 3061.2752733333336,
+      "expected_profit": 2806.9734142463917,
+      "lapsers_contacted": 555
     },
     {
       "threshold": 0.31,
-      "n_contacted": 769,
-      "share_contacted": 0.28931527464258844,
-      "realised_profit": 4797.463348333334,
-      "expected_profit": 3734.0873471623922,
-      "lapsers_contacted": 605
+      "n_contacted": 756,
+      "share_contacted": 0.28442437923250563,
+      "realised_profit": 3319.2420066666673,
+      "expected_profit": 2918.407700786874,
+      "lapsers_contacted": 582
     },
     {
       "threshold": 0.32,
-      "n_contacted": 813,
-      "share_contacted": 0.3058690744920993,
-      "realised_profit": 4980.955115000001,
-      "expected_profit": 3969.418105522692,
-      "lapsers_contacted": 631
+      "n_contacted": 806,
+      "share_contacted": 0.30323551542513166,
+      "realised_profit": 3411.3577233333335,
+      "expected_profit": 3069.968739449934,
+      "lapsers_contacted": 616
     },
     {
       "threshold": 0.33,
-      "n_contacted": 851,
-      "share_contacted": 0.3201655379984951,
-      "realised_profit": 5320.184131666667,
-      "expected_profit": 4109.093175813788,
-      "lapsers_contacted": 656
+      "n_contacted": 847,
+      "share_contacted": 0.318660647103085,
+      "realised_profit": 3591.9911900000006,
+      "expected_profit": 3167.027680713149,
+      "lapsers_contacted": 645
     },
     {
       "threshold": 0.34,
-      "n_contacted": 893,
-      "share_contacted": 0.335966892400301,
-      "realised_profit": 5378.758315000001,
-      "expected_profit": 4350.78294032986,
-      "lapsers_contacted": 680
+      "n_contacted": 892,
+      "share_contacted": 0.33559066967644846,
+      "realised_profit": 3612.349723333334,
+      "expected_profit": 3254.6535071395465,
+      "lapsers_contacted": 671
     },
     {
       "threshold": 0.35,
-      "n_contacted": 937,
-      "share_contacted": 0.35252069224981186,
-      "realised_profit": 5397.5784650000005,
-      "expected_profit": 4370.134044697508,
-      "lapsers_contacted": 706
+      "n_contacted": 945,
+      "share_contacted": 0.35553047404063204,
+      "realised_profit": 4086.2616900000003,
+      "expected_profit": 3381.5233439263206,
+      "lapsers_contacted": 704
     },
     {
       "threshold": 0.36,
-      "n_contacted": 980,
-      "share_contacted": 0.3686982693754703,
-      "realised_profit": 5459.334548333334,
-      "expected_profit": 4452.98684317705,
-      "lapsers_contacted": 734
+      "n_contacted": 1004,
+      "share_contacted": 0.37772761474793076,
+      "realised_profit": 4031.9559400000007,
+      "expected_profit": 3422.9632291583926,
+      "lapsers_contacted": 740
     },
     {
       "threshold": 0.37,
-      "n_contacted": 1026,
-      "share_contacted": 0.3860045146726862,
-      "realised_profit": 5881.345975,
-      "expected_profit": 4640.91075632602,
-      "lapsers_contacted": 766
+      "n_contacted": 1041,
+      "share_contacted": 0.39164785553047404,
+      "realised_profit": 4165.783023333334,
+      "expected_profit": 3382.1288325933974,
+      "lapsers_contacted": 764
     },
     {
       "threshold": 0.38,
-      "n_contacted": 1071,
-      "share_contacted": 0.40293453724604966,
-      "realised_profit": 5515.082558333335,
-      "expected_profit": 4531.078434587751,
-      "lapsers_contacted": 794
+      "n_contacted": 1079,
+      "share_contacted": 0.40594431903686984,
+      "realised_profit": 4535.133733333334,
+      "expected_profit": 3396.352741818526,
+      "lapsers_contacted": 791
     },
     {
       "threshold": 0.39,
-      "n_contacted": 1107,
-      "share_contacted": 0.4164785553047404,
-      "realised_profit": 5354.176008333335,
-      "expected_profit": 4511.338019646326,
-      "lapsers_contacted": 815
+      "n_contacted": 1120,
+      "share_contacted": 0.4213694507148232,
+      "realised_profit": 3639.3178500000013,
+      "expected_profit": 3371.1131605054757,
+      "lapsers_contacted": 818
     },
     {
       "threshold": 0.4,
-      "n_contacted": 1148,
-      "share_contacted": 0.43190368698269377,
-      "realised_profit": 5886.075275000001,
-      "expected_profit": 4541.350715132791,
-      "lapsers_contacted": 843
+      "n_contacted": 1167,
+      "share_contacted": 0.43905191873589167,
+      "realised_profit": 3480.0156166666684,
+      "expected_profit": 3246.4637581109046,
+      "lapsers_contacted": 848
     },
     {
       "threshold": 0.41,
-      "n_contacted": 1182,
-      "share_contacted": 0.44469525959367945,
-      "realised_profit": 5866.805475000001,
-      "expected_profit": 4511.537414415127,
-      "lapsers_contacted": 862
+      "n_contacted": 1203,
+      "share_contacted": 0.4525959367945824,
+      "realised_profit": 3738.781441666668,
+      "expected_profit": 3263.3151863090707,
+      "lapsers_contacted": 870
     },
     {
       "threshold": 0.42,
-      "n_contacted": 1217,
-      "share_contacted": 0.4578630549285177,
-      "realised_profit": 6106.541083333335,
-      "expected_profit": 4513.735749957417,
-      "lapsers_contacted": 881
+      "n_contacted": 1232,
+      "share_contacted": 0.4635063957863055,
+      "realised_profit": 4182.827508333334,
+      "expected_profit": 3266.177089466246,
+      "lapsers_contacted": 888
     },
     {
       "threshold": 0.43,
-      "n_contacted": 1248,
-      "share_contacted": 0.46952595936794583,
-      "realised_profit": 6239.685691666668,
-      "expected_profit": 4426.88523903062,
-      "lapsers_contacted": 898
+      "n_contacted": 1267,
+      "share_contacted": 0.47667419112114373,
+      "realised_profit": 4139.7631083333345,
+      "expected_profit": 3336.0276492206644,
+      "lapsers_contacted": 906
     },
     {
       "threshold": 0.44,
-      "n_contacted": 1291,
-      "share_contacted": 0.4857035364936042,
-      "realised_profit": 5904.183808333334,
-      "expected_profit": 4387.818394534954,
-      "lapsers_contacted": 923
+      "n_contacted": 1298,
+      "share_contacted": 0.48833709556057187,
+      "realised_profit": 4144.162491666667,
+      "expected_profit": 3406.0078043458648,
+      "lapsers_contacted": 921
     },
     {
       "threshold": 0.45,
-      "n_contacted": 1318,
-      "share_contacted": 0.4958615500376223,
-      "realised_profit": 6204.968866666668,
-      "expected_profit": 4405.792470156054,
-      "lapsers_contacted": 939
+      "n_contacted": 1333,
+      "share_contacted": 0.5015048908954101,
+      "realised_profit": 4407.1494250000005,
+      "expected_profit": 3230.6637818920494,
+      "lapsers_contacted": 942
     },
     {
       "threshold": 0.46,
-      "n_contacted": 1350,
-      "share_contacted": 0.5079006772009029,
-      "realised_profit": 6252.642916666668,
-      "expected_profit": 4397.130512793508,
-      "lapsers_contacted": 954
+      "n_contacted": 1369,
+      "share_contacted": 0.5150489089541008,
+      "realised_profit": 4033.3775750000013,
+      "expected_profit": 3095.6245078450115,
+      "lapsers_contacted": 960
     },
     {
       "threshold": 0.47,
-      "n_contacted": 1388,
-      "share_contacted": 0.5221971407072987,
-      "realised_profit": 5509.153225000002,
-      "expected_profit": 4239.176152653422,
-      "lapsers_contacted": 980
+      "n_contacted": 1403,
+      "share_contacted": 0.5278404815650866,
+      "realised_profit": 4931.487000000001,
+      "expected_profit": 2848.8517246984975,
+      "lapsers_contacted": 977
     },
     {
       "threshold": 0.48,
-      "n_contacted": 1424,
-      "share_contacted": 0.5357411587659895,
-      "realised_profit": 6561.780466666668,
-      "expected_profit": 3905.6373595246505,
+      "n_contacted": 1437,
+      "share_contacted": 0.5406320541760722,
+      "realised_profit": 5564.460675000001,
+      "expected_profit": 2861.0982433175545,
       "lapsers_contacted": 1000
     },
     {
       "threshold": 0.49,
-      "n_contacted": 1462,
-      "share_contacted": 0.5500376222723853,
-      "realised_profit": 6232.306466666668,
-      "expected_profit": 3759.635390089529,
-      "lapsers_contacted": 1016
+      "n_contacted": 1472,
+      "share_contacted": 0.5537998495109104,
+      "realised_profit": 6510.634075000003,
+      "expected_profit": 2742.1889321465624,
+      "lapsers_contacted": 1021
     },
     {
       "threshold": 0.5,
       "n_contacted": 1498,
       "share_contacted": 0.563581640331076,
-      "realised_profit": 6622.328566666669,
-      "expected_profit": 3889.949458359402,
-      "lapsers_contacted": 1032
+      "realised_profit": 6350.402591666669,
+      "expected_profit": 2701.8166326154223,
+      "lapsers_contacted": 1033
     },
     {
       "threshold": 0.51,
-      "n_contacted": 1524,
-      "share_contacted": 0.5733634311512416,
-      "realised_profit": 6778.234350000002,
-      "expected_profit": 3850.335187194529,
-      "lapsers_contacted": 1047
+      "n_contacted": 1531,
+      "share_contacted": 0.5759969902182092,
+      "realised_profit": 6427.350200000001,
+      "expected_profit": 2638.392159881577,
+      "lapsers_contacted": 1049
     },
     {
       "threshold": 0.52,
-      "n_contacted": 1558,
-      "share_contacted": 0.5861550037622273,
-      "realised_profit": 7110.749450000001,
-      "expected_profit": 3635.8580155691334,
-      "lapsers_contacted": 1065
+      "n_contacted": 1570,
+      "share_contacted": 0.5906696764484575,
+      "realised_profit": 6332.959600000001,
+      "expected_profit": 2229.9660630644844,
+      "lapsers_contacted": 1069
     },
     {
       "threshold": 0.53,
-      "n_contacted": 1599,
-      "share_contacted": 0.6015801354401806,
-      "realised_profit": 7978.929783333335,
-      "expected_profit": 3479.579153980043,
-      "lapsers_contacted": 1088
+      "n_contacted": 1597,
+      "share_contacted": 0.6008276899924756,
+      "realised_profit": 6855.746950000002,
+      "expected_profit": 2167.810388842016,
+      "lapsers_contacted": 1085
     },
     {
       "threshold": 0.54,
-      "n_contacted": 1625,
-      "share_contacted": 0.6113619262603461,
-      "realised_profit": 7892.8988333333355,
-      "expected_profit": 3215.3862463333808,
-      "lapsers_contacted": 1100
+      "n_contacted": 1626,
+      "share_contacted": 0.6117381489841986,
+      "realised_profit": 6424.732033333334,
+      "expected_profit": 1863.5038907695111,
+      "lapsers_contacted": 1098
     },
     {
       "threshold": 0.55,
       "n_contacted": 1654,
       "share_contacted": 0.6222723852520692,
-      "realised_profit": 7005.411191666668,
-      "expected_profit": 3081.7276228830106,
-      "lapsers_contacted": 1111
+      "realised_profit": 6690.518483333335,
+      "expected_profit": 1900.8109198716115,
+      "lapsers_contacted": 1109
     },
     {
       "threshold": 0.56,
-      "n_contacted": 1693,
-      "share_contacted": 0.6369450714823175,
-      "realised_profit": 7257.173891666667,
-      "expected_profit": 2793.204113176604,
-      "lapsers_contacted": 1129
+      "n_contacted": 1688,
+      "share_contacted": 0.6350639578630549,
+      "realised_profit": 6563.966300000002,
+      "expected_profit": 1652.0269971063722,
+      "lapsers_contacted": 1126
     },
     {
       "threshold": 0.57,
-      "n_contacted": 1721,
-      "share_contacted": 0.6474793077501881,
-      "realised_profit": 7358.3199416666685,
-      "expected_profit": 2583.2988864932745,
-      "lapsers_contacted": 1143
+      "n_contacted": 1708,
+      "share_contacted": 0.6425884123401053,
+      "realised_profit": 6030.927716666669,
+      "expected_profit": 1339.256650437781,
+      "lapsers_contacted": 1135
     },
     {
       "threshold": 0.58,
-      "n_contacted": 1756,
-      "share_contacted": 0.6606471030850264,
-      "realised_profit": 6512.108958333336,
-      "expected_profit": 2162.8568152552116,
-      "lapsers_contacted": 1155
+      "n_contacted": 1741,
+      "share_contacted": 0.6550037622272386,
+      "realised_profit": 6939.136213095239,
+      "expected_profit": 1418.4001486118132,
+      "lapsers_contacted": 1148
     },
     {
       "threshold": 0.59,
-      "n_contacted": 1772,
-      "share_contacted": 0.6666666666666666,
-      "realised_profit": 6730.859341666669,
-      "expected_profit": 2172.9056929304156,
+      "n_contacted": 1771,
+      "share_contacted": 0.6662904439428141,
+      "realised_profit": 7284.529329761906,
+      "expected_profit": 1386.3245680722262,
       "lapsers_contacted": 1162
     },
     {
       "threshold": 0.6,
-      "n_contacted": 1798,
-      "share_contacted": 0.6764484574868322,
-      "realised_profit": 7566.11586309524,
-      "expected_profit": 2197.5997680189275,
-      "lapsers_contacted": 1172
+      "n_contacted": 1792,
+      "share_contacted": 0.674191121143717,
+      "realised_profit": 7322.70106309524,
+      "expected_profit": 1283.6740272662082,
+      "lapsers_contacted": 1170
     },
     {
       "threshold": 0.61,
-      "n_contacted": 1821,
-      "share_contacted": 0.6851015801354402,
-      "realised_profit": 6896.791963095241,
-      "expected_profit": 1952.009091159192,
-      "lapsers_contacted": 1179
+      "n_contacted": 1811,
+      "share_contacted": 0.6813393528969149,
+      "realised_profit": 7421.4899464285745,
+      "expected_profit": 1147.1064891340702,
+      "lapsers_contacted": 1178
     },
     {
       "threshold": 0.62,
-      "n_contacted": 1845,
-      "share_contacted": 0.6941309255079007,
-      "realised_profit": 6931.49163309524,
-      "expected_profit": 1680.2076859704307,
-      "lapsers_contacted": 1191
+      "n_contacted": 1841,
+      "share_contacted": 0.6926260346124906,
+      "realised_profit": 7247.294479761907,
+      "expected_profit": 1028.1005141664104,
+      "lapsers_contacted": 1189
     },
     {
       "threshold": 0.63,
-      "n_contacted": 1863,
-      "share_contacted": 0.7009029345372461,
-      "realised_profit": 6763.25265809524,
-      "expected_profit": 1585.0537139500707,
-      "lapsers_contacted": 1196
+      "n_contacted": 1867,
+      "share_contacted": 0.7024078254326561,
+      "realised_profit": 6141.414404761906,
+      "expected_profit": 703.9227181119936,
+      "lapsers_contacted": 1194
     },
     {
       "threshold": 0.64,
-      "n_contacted": 1879,
-      "share_contacted": 0.7069224981188864,
-      "realised_profit": 6733.904116428573,
-      "expected_profit": 1554.2196654399368,
-      "lapsers_contacted": 1201
+      "n_contacted": 1885,
+      "share_contacted": 0.7091798344620015,
+      "realised_profit": 5844.741629761907,
+      "expected_profit": 332.77741920639255,
+      "lapsers_contacted": 1200
     },
     {
       "threshold": 0.65,
-      "n_contacted": 1900,
-      "share_contacted": 0.7148231753197893,
-      "realised_profit": 6586.404866428574,
-      "expected_profit": 1301.585626063466,
-      "lapsers_contacted": 1208
+      "n_contacted": 1907,
+      "share_contacted": 0.717456734386757,
+      "realised_profit": 5501.327071428573,
+      "expected_profit": 130.06947373130834,
+      "lapsers_contacted": 1207
     },
     {
       "threshold": 0.66,
-      "n_contacted": 1925,
-      "share_contacted": 0.7242287434161023,
-      "realised_profit": 6067.05875809524,
-      "expected_profit": 1082.1863016927928,
-      "lapsers_contacted": 1216
+      "n_contacted": 1931,
+      "share_contacted": 0.7264860797592174,
+      "realised_profit": 5291.445104761906,
+      "expected_profit": 28.92913133655111,
+      "lapsers_contacted": 1214
     },
     {
       "threshold": 0.67,
-      "n_contacted": 1941,
-      "share_contacted": 0.7302483069977427,
-      "realised_profit": 6126.142024761907,
-      "expected_profit": 948.9230369004231,
+      "n_contacted": 1957,
+      "share_contacted": 0.736267870579383,
+      "realised_profit": 5352.147421428574,
+      "expected_profit": -234.05732855392534,
       "lapsers_contacted": 1222
     },
     {
       "threshold": 0.68,
-      "n_contacted": 1957,
-      "share_contacted": 0.736267870579383,
-      "realised_profit": 5348.395941428573,
-      "expected_profit": 779.2976546520545,
-      "lapsers_contacted": 1226
+      "n_contacted": 1970,
+      "share_contacted": 0.7411587659894657,
+      "realised_profit": 5935.541054761905,
+      "expected_profit": -461.2034375827848,
+      "lapsers_contacted": 1228
     },
     {
       "threshold": 0.69,
-      "n_contacted": 1979,
-      "share_contacted": 0.7445447705041385,
-      "realised_profit": 4423.782699761907,
-      "expected_profit": 572.2811912340212,
-      "lapsers_contacted": 1231
+      "n_contacted": 1998,
+      "share_contacted": 0.7516930022573364,
+      "realised_profit": 5259.945158095241,
+      "expected_profit": -743.280967326983,
+      "lapsers_contacted": 1236
     },
     {
       "threshold": 0.7,
-      "n_contacted": 2001,
-      "share_contacted": 0.7528216704288939,
-      "realised_profit": 4806.073878095239,
-      "expected_profit": 341.11896201435593,
-      "lapsers_contacted": 1239
+      "n_contacted": 2011,
+      "share_contacted": 0.7565838976674191,
+      "realised_profit": 5015.601999761906,
+      "expected_profit": -820.6933946785011,
+      "lapsers_contacted": 1238
     },
     {
       "threshold": 0.71,
-      "n_contacted": 2027,
-      "share_contacted": 0.7626034612490594,
-      "realised_profit": 3508.2631780952406,
-      "expected_profit": 109.83165949146314,
-      "lapsers_contacted": 1241
+      "n_contacted": 2032,
+      "share_contacted": 0.764484574868322,
+      "realised_profit": 4349.330683095239,
+      "expected_profit": -1033.1202223953287,
+      "lapsers_contacted": 1243
     },
     {
       "threshold": 0.72,
-      "n_contacted": 2043,
-      "share_contacted": 0.7686230248306998,
-      "realised_profit": 3344.523494761907,
-      "expected_profit": -145.2364279113549,
-      "lapsers_contacted": 1246
+      "n_contacted": 2053,
+      "share_contacted": 0.7723852520692249,
+      "realised_profit": 4855.846536428573,
+      "expected_profit": -1401.2269809904942,
+      "lapsers_contacted": 1254
     },
     {
       "threshold": 0.73,
-      "n_contacted": 2064,
-      "share_contacted": 0.7765237020316027,
-      "realised_profit": 4288.220474761907,
-      "expected_profit": -511.861673941768,
-      "lapsers_contacted": 1255
-    },
-    {
-      "threshold": 0.74,
-      "n_contacted": 2082,
-      "share_contacted": 0.7832957110609481,
-      "realised_profit": 4450.278391428574,
-      "expected_profit": -713.1805756694766,
+      "n_contacted": 2078,
+      "share_contacted": 0.781790820165538,
+      "realised_profit": 4532.26382809524,
+      "expected_profit": -1794.4289598398905,
       "lapsers_contacted": 1262
     },
     {
+      "threshold": 0.74,
+      "n_contacted": 2095,
+      "share_contacted": 0.7881866064710309,
+      "realised_profit": 4114.760928095241,
+      "expected_profit": -1974.939696893694,
+      "lapsers_contacted": 1267
+    },
+    {
       "threshold": 0.75,
-      "n_contacted": 2100,
-      "share_contacted": 0.7900677200902935,
-      "realised_profit": 3992.648416428574,
-      "expected_profit": -1049.8115938684782,
-      "lapsers_contacted": 1266
+      "n_contacted": 2118,
+      "share_contacted": 0.7968397291196389,
+      "realised_profit": 3947.2514239285715,
+      "expected_profit": -2234.4290507357227,
+      "lapsers_contacted": 1272
     },
     {
       "threshold": 0.76,
-      "n_contacted": 2121,
-      "share_contacted": 0.7979683972911964,
-      "realised_profit": 4000.549937261906,
-      "expected_profit": -1313.1998955132635,
-      "lapsers_contacted": 1271
+      "n_contacted": 2133,
+      "share_contacted": 0.8024830699774267,
+      "realised_profit": 3311.276993928574,
+      "expected_profit": -2509.1192023876447,
+      "lapsers_contacted": 1275
     },
     {
       "threshold": 0.77,
-      "n_contacted": 2137,
-      "share_contacted": 0.8039879608728367,
-      "realised_profit": 4208.560248928576,
-      "expected_profit": -1561.8355900678052,
-      "lapsers_contacted": 1277
+      "n_contacted": 2151,
+      "share_contacted": 0.809255079006772,
+      "realised_profit": 3156.0285605952395,
+      "expected_profit": -2744.7170678503517,
+      "lapsers_contacted": 1279
     },
     {
       "threshold": 0.78,
-      "n_contacted": 2151,
-      "share_contacted": 0.809255079006772,
-      "realised_profit": 4101.427757261909,
-      "expected_profit": -1731.0017091140878,
-      "lapsers_contacted": 1280
-    },
-    {
-      "threshold": 0.79,
       "n_contacted": 2171,
       "share_contacted": 0.8167795334838224,
-      "realised_profit": 3369.5601715476205,
-      "expected_profit": -2131.1110523625116,
+      "realised_profit": 3101.48291559524,
+      "expected_profit": -3270.0584921426844,
       "lapsers_contacted": 1284
     },
     {
+      "threshold": 0.79,
+      "n_contacted": 2184,
+      "share_contacted": 0.8216704288939052,
+      "realised_profit": 2593.45944059524,
+      "expected_profit": -3441.39849133249,
+      "lapsers_contacted": 1285
+    },
+    {
       "threshold": 0.8,
-      "n_contacted": 2190,
-      "share_contacted": 0.8239277652370203,
-      "realised_profit": 3050.542593214288,
-      "expected_profit": -2757.2173084138735,
-      "lapsers_contacted": 1287
+      "n_contacted": 2201,
+      "share_contacted": 0.828066215199398,
+      "realised_profit": 2132.300891785718,
+      "expected_profit": -3812.7821537198124,
+      "lapsers_contacted": 1288
     },
     {
       "threshold": 0.81,
-      "n_contacted": 2206,
-      "share_contacted": 0.8299473288186606,
-      "realised_profit": 1811.6395265476212,
-      "expected_profit": -3437.270284035303,
-      "lapsers_contacted": 1291
+      "n_contacted": 2218,
+      "share_contacted": 0.8344620015048909,
+      "realised_profit": 1720.9311501190514,
+      "expected_profit": -4183.814769027294,
+      "lapsers_contacted": 1292
     },
     {
       "threshold": 0.82,
-      "n_contacted": 2229,
-      "share_contacted": 0.8386004514672686,
-      "realised_profit": 985.9612932142882,
-      "expected_profit": -4000.197681142059,
-      "lapsers_contacted": 1295
+      "n_contacted": 2228,
+      "share_contacted": 0.8382242287434161,
+      "realised_profit": 1052.5970132142875,
+      "expected_profit": -4607.292198232815,
+      "lapsers_contacted": 1294
     },
     {
       "threshold": 0.83,
-      "n_contacted": 2246,
-      "share_contacted": 0.8449962377727614,
-      "realised_profit": 2352.6640694047637,
-      "expected_profit": -4360.558251155268,
-      "lapsers_contacted": 1305
+      "n_contacted": 2254,
+      "share_contacted": 0.8480060195635817,
+      "realised_profit": 320.3712382142885,
+      "expected_profit": -5348.4410422586425,
+      "lapsers_contacted": 1301
     },
     {
       "threshold": 0.84,
-      "n_contacted": 2257,
-      "share_contacted": 0.8491346877351392,
-      "realised_profit": 2008.3153027380977,
-      "expected_profit": -4723.8568829411,
-      "lapsers_contacted": 1308
+      "n_contacted": 2272,
+      "share_contacted": 0.8547780285929271,
+      "realised_profit": -52.366378452377376,
+      "expected_profit": -5790.07411098052,
+      "lapsers_contacted": 1305
     },
     {
       "threshold": 0.85,
-      "n_contacted": 2276,
-      "share_contacted": 0.8562829194883371,
-      "realised_profit": 807.1448377380984,
-      "expected_profit": -5597.687017003374,
-      "lapsers_contacted": 1311
+      "n_contacted": 2291,
+      "share_contacted": 0.8619262603461249,
+      "realised_profit": -538.3756639285689,
+      "expected_profit": -6416.40174779159,
+      "lapsers_contacted": 1310
     },
     {
       "threshold": 0.86,
-      "n_contacted": 2291,
-      "share_contacted": 0.8619262603461249,
-      "realised_profit": 246.2944472619074,
-      "expected_profit": -5888.094929656028,
+      "n_contacted": 2303,
+      "share_contacted": 0.8664409330323551,
+      "realised_profit": -810.1816472619021,
+      "expected_profit": -6717.215506875378,
       "lapsers_contacted": 1312
     },
     {
       "threshold": 0.87,
-      "n_contacted": 2305,
-      "share_contacted": 0.8671933784800602,
-      "realised_profit": -54.591246785711974,
-      "expected_profit": -6222.641240936766,
+      "n_contacted": 2315,
+      "share_contacted": 0.8709556057185854,
+      "realised_profit": -1017.4451313095224,
+      "expected_profit": -6993.867505076974,
       "lapsers_contacted": 1314
     },
     {
       "threshold": 0.88,
-      "n_contacted": 2320,
-      "share_contacted": 0.872836719337848,
-      "realised_profit": -849.433763452379,
-      "expected_profit": -6830.484698063576,
-      "lapsers_contacted": 1316
+      "n_contacted": 2325,
+      "share_contacted": 0.8747178329571106,
+      "realised_profit": -1384.3476563095207,
+      "expected_profit": -7287.718742133361,
+      "lapsers_contacted": 1315
     },
     {
       "threshold": 0.89,
-      "n_contacted": 2340,
-      "share_contacted": 0.8803611738148984,
-      "realised_profit": -1679.3027241666637,
-      "expected_profit": -7423.059055360857,
+      "n_contacted": 2347,
+      "share_contacted": 0.882994732881866,
+      "realised_profit": -2290.1818182142824,
+      "expected_profit": -8062.667644977546,
       "lapsers_contacted": 1317
     },
     {
       "threshold": 0.9,
-      "n_contacted": 2364,
-      "share_contacted": 0.8893905191873589,
-      "realised_profit": -2630.612306309519,
-      "expected_profit": -8244.938088909676,
-      "lapsers_contacted": 1319
-    },
-    {
-      "threshold": 0.91,
-      "n_contacted": 2385,
-      "share_contacted": 0.8972911963882618,
-      "realised_profit": -3980.6486118506473,
-      "expected_profit": -9171.40248684174,
+      "n_contacted": 2373,
+      "share_contacted": 0.8927765237020316,
+      "realised_profit": -3357.521035660169,
+      "expected_profit": -8946.173737217267,
       "lapsers_contacted": 1320
     },
     {
+      "threshold": 0.91,
+      "n_contacted": 2390,
+      "share_contacted": 0.8991723100075244,
+      "realised_profit": -4019.1016368506466,
+      "expected_profit": -9560.973656423961,
+      "lapsers_contacted": 1321
+    },
+    {
       "threshold": 0.92,
-      "n_contacted": 2403,
-      "share_contacted": 0.9040632054176072,
-      "realised_profit": -4954.6848900974,
-      "expected_profit": -9882.307555223477,
+      "n_contacted": 2411,
+      "share_contacted": 0.9070729872084274,
+      "realised_profit": -5198.986706493504,
+      "expected_profit": -10236.860019619713,
       "lapsers_contacted": 1321
     },
     {
       "threshold": 0.93,
-      "n_contacted": 2424,
-      "share_contacted": 0.9119638826185101,
-      "realised_profit": -5594.42327992424,
-      "expected_profit": -10577.387969623922,
-      "lapsers_contacted": 1323
+      "n_contacted": 2433,
+      "share_contacted": 0.9153498871331829,
+      "realised_profit": -7578.437548160169,
+      "expected_profit": -11820.597251663601,
+      "lapsers_contacted": 1322
     },
     {
       "threshold": 0.94,
-      "n_contacted": 2455,
-      "share_contacted": 0.9236267870579383,
-      "realised_profit": -8160.515633185234,
-      "expected_profit": -12785.679482041243,
-      "lapsers_contacted": 1325
+      "n_contacted": 2470,
+      "share_contacted": 0.9292701279157262,
+      "realised_profit": -10245.086504870125,
+      "expected_profit": -13828.23090322447,
+      "lapsers_contacted": 1323
     },
     {
       "threshold": 0.95,
-      "n_contacted": 2485,
-      "share_contacted": 0.9349134687735139,
-      "realised_profit": -9597.927486399518,
-      "expected_profit": -14454.066638252836,
-      "lapsers_contacted": 1327
+      "n_contacted": 2498,
+      "share_contacted": 0.9398043641835967,
+      "realised_profit": -11181.13700061688,
+      "expected_profit": -15031.623157898279,
+      "lapsers_contacted": 1325
     },
     {
       "threshold": 0.96,
-      "n_contacted": 2518,
-      "share_contacted": 0.9473288186606471,
-      "realised_profit": -10959.670011161423,
-      "expected_profit": -15987.74637047016,
-      "lapsers_contacted": 1329
+      "n_contacted": 2527,
+      "share_contacted": 0.9507148231753197,
+      "realised_profit": -11895.65113080428,
+      "expected_profit": -16364.547362366251,
+      "lapsers_contacted": 1328
     },
     {
       "threshold": 0.97,
-      "n_contacted": 2554,
-      "share_contacted": 0.9608728367193379,
-      "realised_profit": -12972.372978098654,
-      "expected_profit": -17847.39990473357,
+      "n_contacted": 2557,
+      "share_contacted": 0.9620015048908954,
+      "realised_profit": -13067.35486705014,
+      "expected_profit": -17947.023866641437,
       "lapsers_contacted": 1330
     },
     {
       "threshold": 0.98,
-      "n_contacted": 2608,
-      "share_contacted": 0.9811888638073739,
-      "realised_profit": -17738.850649738593,
-      "expected_profit": -21458.201021837565,
+      "n_contacted": 2604,
+      "share_contacted": 0.9796839729119639,
+      "realised_profit": -16813.27556899184,
+      "expected_profit": -20895.77963381669,
       "lapsers_contacted": 1330
     },
     {
@@ -959,7 +959,7 @@
       "n_contacted": 2658,
       "share_contacted": 1.0,
       "realised_profit": -22564.60440765474,
-      "expected_profit": -25155.84846419638,
+      "expected_profit": -25300.710710969295,
       "lapsers_contacted": 1330
     },
     {
@@ -967,7 +967,7 @@
       "n_contacted": 2658,
       "share_contacted": 1.0,
       "realised_profit": -22564.60440765474,
-      "expected_profit": -25155.84846419638,
+      "expected_profit": -25300.710710969295,
       "lapsers_contacted": 1330
     }
   ],

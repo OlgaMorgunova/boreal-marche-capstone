@@ -1,0 +1,268 @@
+{
+  "machine": "win32, 16 logical CPUs",
+  "throughput": {
+    "workers": 1,
+    "seconds_per_cell": 8.0,
+    "cells": [
+      {
+        "endpoint": "/predict",
+        "concurrency": 1,
+        "requests": 1672,
+        "rps": 208.9,
+        "n": 1672,
+        "p50": 4.36,
+        "p95": 6.86,
+        "p99": 8.34,
+        "mean": 4.78
+      },
+      {
+        "endpoint": "/predict",
+        "concurrency": 4,
+        "requests": 1771,
+        "rps": 221.3,
+        "n": 1771,
+        "p50": 17.61,
+        "p95": 22.46,
+        "p99": 24.45,
+        "mean": 18.05
+      },
+      {
+        "endpoint": "/predict",
+        "concurrency": 16,
+        "requests": 1787,
+        "rps": 222.0,
+        "n": 1787,
+        "p50": 70.04,
+        "p95": 82.72,
+        "p99": 169.0,
+        "mean": 71.8
+      },
+      {
+        "endpoint": "/predict/batch (100)",
+        "concurrency": 1,
+        "requests": 817,
+        "rps": 102.0,
+        "n": 817,
+        "p50": 9.22,
+        "p95": 12.77,
+        "p99": 14.46,
+        "mean": 9.79
+      },
+      {
+        "endpoint": "/predict/batch (100)",
+        "concurrency": 4,
+        "requests": 773,
+        "rps": 96.3,
+        "n": 773,
+        "p50": 38.17,
+        "p95": 47.28,
+        "p99": 131.06,
+        "mean": 41.45
+      },
+      {
+        "endpoint": "/predict/batch (100)",
+        "concurrency": 16,
+        "requests": 751,
+        "rps": 93.2,
+        "n": 751,
+        "p50": 152.08,
+        "p95": 263.57,
+        "p99": 303.27,
+        "mean": 170.9
+      },
+      {
+        "endpoint": "/recommend",
+        "concurrency": 1,
+        "requests": 5199,
+        "rps": 649.7,
+        "n": 5199,
+        "p50": 1.41,
+        "p95": 2.41,
+        "p99": 4.13,
+        "mean": 1.54
+      },
+      {
+        "endpoint": "/recommend",
+        "concurrency": 4,
+        "requests": 7400,
+        "rps": 924.6,
+        "n": 7400,
+        "p50": 4.08,
+        "p95": 6.0,
+        "p99": 7.43,
+        "mean": 4.32
+      },
+      {
+        "endpoint": "/recommend",
+        "concurrency": 16,
+        "requests": 7733,
+        "rps": 965.3,
+        "n": 7733,
+        "p50": 15.46,
+        "p95": 19.73,
+        "p99": 46.41,
+        "mean": 16.54
+      },
+      {
+        "endpoint": "/chat policy (rule)",
+        "concurrency": 1,
+        "requests": 1223,
+        "rps": 152.8,
+        "n": 1223,
+        "p50": 6.44,
+        "p95": 7.51,
+        "p99": 8.39,
+        "mean": 6.54
+      },
+      {
+        "endpoint": "/chat policy (rule)",
+        "concurrency": 4,
+        "requests": 2465,
+        "rps": 308.0,
+        "n": 2465,
+        "p50": 12.35,
+        "p95": 17.84,
+        "p99": 21.74,
+        "mean": 12.97
+      },
+      {
+        "endpoint": "/chat policy (rule)",
+        "concurrency": 16,
+        "requests": 2493,
+        "rps": 310.6,
+        "n": 2493,
+        "p50": 50.0,
+        "p95": 62.39,
+        "p99": 128.64,
+        "mean": 51.28
+      }
+    ]
+  },
+  "throughput_measured_at": "2026-11-01T15:57:14+00:00",
+  "scoring": {
+    "model_version": "0.9.5+xgboost",
+    "rows": [
+      {
+        "n": 1000,
+        "seconds": 0.006,
+        "rows_per_s": 164978
+      },
+      {
+        "n": 10000,
+        "seconds": 0.023,
+        "rows_per_s": 435878
+      },
+      {
+        "n": 100000,
+        "seconds": 0.173,
+        "rows_per_s": 576638
+      }
+    ]
+  },
+  "scoring_measured_at": "2026-11-01T15:57:16+00:00",
+  "rules": {
+    "mined_rules": 7512,
+    "rows": [
+      {
+        "factor": 1,
+        "n_rules": 7512,
+        "build_s": 0.036,
+        "memory_mb": 3.0,
+        "rules_checked_mean": 527,
+        "n": 300,
+        "p50": 0.1,
+        "p95": 0.25,
+        "p99": 0.38,
+        "mean": 0.11
+      },
+      {
+        "factor": 4,
+        "n_rules": 30048,
+        "build_s": 0.125,
+        "memory_mb": 13.3,
+        "rules_checked_mean": 2107,
+        "n": 300,
+        "p50": 0.54,
+        "p95": 1.82,
+        "p99": 3.13,
+        "mean": 0.68
+      },
+      {
+        "factor": 16,
+        "n_rules": 120192,
+        "build_s": 0.925,
+        "memory_mb": 54.3,
+        "rules_checked_mean": 8426,
+        "n": 300,
+        "p50": 4.03,
+        "p95": 10.5,
+        "p99": 14.27,
+        "mean": 4.5
+      },
+      {
+        "factor": 64,
+        "n_rules": 480768,
+        "build_s": 3.545,
+        "memory_mb": 218.6,
+        "rules_checked_mean": 33705,
+        "n": 300,
+        "p50": 17.83,
+        "p95": 46.12,
+        "p99": 56.5,
+        "mean": 19.85
+      }
+    ]
+  },
+  "rules_measured_at": "2026-11-01T15:57:29+00:00",
+  "retrieval": {
+    "dim": 384,
+    "current_chunks": 66,
+    "rows": [
+      {
+        "n_chunks": 100,
+        "ms": 0.0,
+        "memory_mb": 0.2
+      },
+      {
+        "n_chunks": 10000,
+        "ms": 0.37,
+        "memory_mb": 15.4
+      },
+      {
+        "n_chunks": 100000,
+        "ms": 7.06,
+        "memory_mb": 153.6
+      },
+      {
+        "n_chunks": 1000000,
+        "ms": 89.36,
+        "memory_mb": 1536.0
+      }
+    ]
+  },
+  "retrieval_measured_at": "2026-11-01T15:57:33+00:00",
+  "logstore": {
+    "rows_logged": 50000,
+    "db_bytes": 40243200,
+    "bytes_per_prediction_and_request": 805,
+    "report": [
+      {
+        "window": 500,
+        "report_ms": 26.4
+      },
+      {
+        "window": 2000,
+        "report_ms": 57.4
+      },
+      {
+        "window": 10000,
+        "report_ms": 253.4
+      },
+      {
+        "window": 50000,
+        "report_ms": 1208.0
+      }
+    ]
+  },
+  "logstore_measured_at": "2026-11-01T15:57:39+00:00"
+}

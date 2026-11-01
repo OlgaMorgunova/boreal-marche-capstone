@@ -15,7 +15,11 @@ class Strict(BaseModel):
 
 class CustomerFeatures(Strict):
     """Point-in-time feature vector (see reports/feature_spec.md). Nullable cadence features are
-    ``None`` when undefined (fewer than two order days) — never silently zero."""
+    ``None`` when undefined (fewer than two order days) — never silently zero.
+
+    Since v0.9.5 the model uses 19 of these (D5 data-minimisation audit). The other fields in
+    ``features.EXCLUDED_FROM_MODEL`` are optional: still accepted so existing clients keep working,
+    never stored. ``region`` stays required (delivery, monitoring, fairness audit)."""
 
     recency_days: float = Field(ge=0)
     tenure_days: float = Field(ge=0)
@@ -23,12 +27,12 @@ class CustomerFeatures(Strict):
     orders_30d: int = Field(ge=0)
     orders_90d: int = Field(ge=0)
     orders_180d: int = Field(ge=1)
-    orders_lifetime: int = Field(ge=1)
+    orders_lifetime: int | None = Field(default=None, ge=1)
     active_months_180d: int = Field(ge=1, le=7)
     revenue_30d: float = Field(ge=0)
     revenue_90d: float = Field(ge=0)
     revenue_180d: float = Field(gt=0)
-    revenue_lifetime: float = Field(gt=0)
+    revenue_lifetime: float | None = Field(default=None, gt=0)
     aov_180d: float = Field(gt=0)
     max_order_value_180d: float = Field(gt=0)
     mean_unit_price_180d: float = Field(gt=0)
@@ -37,21 +41,21 @@ class CustomerFeatures(Strict):
     overdue_ratio: float | None = Field(default=None, ge=0)
     orders_trend: float
     revenue_trend: float | None = Field(default=None, ge=-1, le=1)
-    lines_per_order_180d: float = Field(ge=1)
-    units_per_line_180d: float = Field(gt=0)
-    distinct_skus_180d: int = Field(ge=1)
-    sku_repeat_rate_180d: float = Field(ge=0, le=1)
-    share_seasonal: float = Field(ge=0, le=1)
-    share_kitchen: float = Field(ge=0, le=1)
-    share_home_decor: float = Field(ge=0, le=1)
-    share_bags_wrap: float = Field(ge=0, le=1)
-    share_lighting: float = Field(ge=0, le=1)
-    category_entropy_180d: float = Field(ge=0)
-    cancel_lines_180d: int = Field(ge=0)
-    cancel_rate_180d: float = Field(ge=0, le=1)
-    weekend_share_180d: float = Field(ge=0, le=1)
-    mean_order_hour_180d: float = Field(ge=0, le=23)
-    outlier_line_share_180d: float = Field(ge=0, le=1)
+    lines_per_order_180d: float | None = Field(default=None, ge=1)
+    units_per_line_180d: float | None = Field(default=None, gt=0)
+    distinct_skus_180d: int | None = Field(default=None, ge=1)
+    sku_repeat_rate_180d: float | None = Field(default=None, ge=0, le=1)
+    share_seasonal: float | None = Field(default=None, ge=0, le=1)
+    share_kitchen: float | None = Field(default=None, ge=0, le=1)
+    share_home_decor: float | None = Field(default=None, ge=0, le=1)
+    share_bags_wrap: float | None = Field(default=None, ge=0, le=1)
+    share_lighting: float | None = Field(default=None, ge=0, le=1)
+    category_entropy_180d: float | None = Field(default=None, ge=0)
+    cancel_lines_180d: int | None = Field(default=None, ge=0)
+    cancel_rate_180d: float | None = Field(default=None, ge=0, le=1)
+    weekend_share_180d: float | None = Field(default=None, ge=0, le=1)
+    mean_order_hour_180d: float | None = Field(default=None, ge=0, le=23)
+    outlier_line_share_180d: float | None = Field(default=None, ge=0, le=1)
     region: Literal[tuple(REGIONS)]  # type: ignore[valid-type]
     season_q: Literal["1", "2", "3", "4"]
 
@@ -65,12 +69,26 @@ class PredictRequest(Strict):
     features: CustomerFeatures
 
 
+class Factor(BaseModel):
+    """One principal factor of a prediction: exact additive contribution (TreeSHAP) to the
+    calibrated log-odds of returning. Explains the model, not the customer's motives."""
+
+    feature: str
+    label: str = Field(description="Plain definition of the feature")
+    value: float | str | None = Field(description="The customer's value (None = undefined)")
+    effect: float = Field(description="Contribution to the log-odds of returning")
+    direction: Literal["raises P(return)", "lowers P(return)"]
+
+
 class PredictResponse(BaseModel):
     customer_ref: str | None
     p_return: float = Field(description="Calibrated P(order within 90 days)")
     send_coupon: bool = Field(description="Proposed action; a human approves the campaign list")
     threshold: float
     model_version: str
+    top_factors: list[Factor] | None = Field(
+        default=None, description="Principal factors, largest first (only with ?explain=N)"
+    )
 
 
 class BatchPredictRequest(Strict):
@@ -118,6 +136,9 @@ class ReadyResponse(BaseModel):
     rules_loaded: bool
     assistant_loaded: bool
     errors: list[str]
+    startup_ms: dict[str, float] = Field(
+        default_factory=dict, description="Load time per artifact, warm-up and total (D5)"
+    )
 
 
 # ---------------------------------------------------------------- customers / products (D4) ---
@@ -126,7 +147,7 @@ class ReadyResponse(BaseModel):
 class CustomerSummary(BaseModel):
     ref: str
     region: str
-    orders_lifetime: int
+    orders_180d: int = Field(description="Orders in the last 180 days")
     recency_days: float
 
 

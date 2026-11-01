@@ -1,0 +1,356 @@
+{
+  "generated_at": "2026-09-29T18:44:10+00:00",
+  "n_test_looks": 2,
+  "cutoff": [
+    "2011-09-01"
+  ],
+  "n": 2768,
+  "positive_rate": 0.6069364161849711,
+  "model_version": "0.3.0+xgboost",
+  "metrics": {
+    "pr_auc": 0.8504189471701618,
+    "roc_auc": 0.7718323266806721,
+    "brier": 0.18851598853960233,
+    "recall_top_decile": 0.16130952380952382,
+    "precision_top_decile": 0.9783393501805054,
+    "pr_auc_lapse": 0.6461547886975169,
+    "ece": 0.0230958615288444
+  },
+  "ci95": {
+    "pr_auc": {
+      "lo": 0.8350480398870216,
+      "hi": 0.8647211412629555
+    },
+    "roc_auc": {
+      "lo": 0.7555251620272071,
+      "hi": 0.7891463497222384
+    },
+    "brier": {
+      "lo": 0.18205266235011516,
+      "hi": 0.1949751285123553
+    },
+    "recall_top_decile": {
+      "lo": 0.15623126421642886,
+      "hi": 0.16687367047625457
+    },
+    "precision_top_decile": {
+      "lo": 0.9602888086642599,
+      "hi": 0.9927797833935018
+    },
+    "pr_auc_lapse": {
+      "lo": 0.6134579342241386,
+      "hi": 0.6785449687075109
+    }
+  },
+  "raw_metrics": {
+    "pr_auc": 0.8504189471701618,
+    "roc_auc": 0.7718323266806721,
+    "brier": 0.19094048924367463,
+    "recall_top_decile": 0.16130952380952382,
+    "precision_top_decile": 0.9783393501805054,
+    "pr_auc_lapse": 0.6461547886975169
+  },
+  "baselines": {
+    "baseline_dummy_prior": {
+      "pr_auc": 0.6069364161849711,
+      "roc_auc": 0.5,
+      "brier": 0.2564604125007941,
+      "recall_top_decile": 0.1261904761904762,
+      "precision_top_decile": 0.7653429602888087,
+      "pr_auc_lapse": 0.3930635838150289,
+      "ci": {
+        "pr_auc": {
+          "lo": 0.5861542630057803,
+          "hi": 0.6253612716763006
+        },
+        "roc_auc": {
+          "lo": 0.5,
+          "hi": 0.5
+        },
+        "brier": {
+          "lo": 0.2553448762179003,
+          "hi": 0.25744941468119537
+        },
+        "recall_top_decile": {
+          "lo": 0.09079289547944447,
+          "hi": 0.10786517737006904
+        },
+        "precision_top_decile": {
+          "lo": 0.5504512635379062,
+          "hi": 0.6606498194945848
+        },
+        "pr_auc_lapse": {
+          "lo": 0.37463872832369943,
+          "hi": 0.41384573699421967
+        }
+      }
+    },
+    "baseline_rule_recency60": {
+      "pr_auc": 0.673439987520551,
+      "roc_auc": 0.6186755952380952,
+      "brier": 0.2439158337364938,
+      "recall_top_decile": 0.15119047619047618,
+      "precision_top_decile": 0.9169675090252708,
+      "pr_auc_lapse": 0.4672171899122177,
+      "ci": {
+        "pr_auc": {
+          "lo": 0.6487987797297861,
+          "hi": 0.6945277010293225
+        },
+        "roc_auc": {
+          "lo": 0.597113337090837,
+          "hi": 0.6350121936753282
+        },
+        "brier": {
+          "lo": 0.2401357014809455,
+          "hi": 0.2483824711179241
+        },
+        "recall_top_decile": {
+          "lo": 0.10912596926093544,
+          "hi": 0.12559060793701773
+        },
+        "precision_top_decile": {
+          "lo": 0.6606498194945848,
+          "hi": 0.7600180505415162
+        },
+        "pr_auc_lapse": {
+          "lo": 0.442626503698889,
+          "hi": 0.4904591111907885
+        }
+      }
+    },
+    "baseline_recency_deciles": {
+      "pr_auc": 0.7122764207311102,
+      "roc_auc": 0.656278175332633,
+      "brier": 0.2415561313032441,
+      "recall_top_decile": 0.13154761904761905,
+      "precision_top_decile": 0.7978339350180506,
+      "pr_auc_lapse": 0.5262554198917905,
+      "ci": {
+        "pr_auc": {
+          "lo": 0.6870054006150383,
+          "hi": 0.7343483637407551
+        },
+        "roc_auc": {
+          "lo": 0.633955258591278,
+          "hi": 0.6753821129827036
+        },
+        "brier": {
+          "lo": 0.23748466152244815,
+          "hi": 0.2467476660787849
+        },
+        "recall_top_decile": {
+          "lo": 0.11604162479783335,
+          "hi": 0.13257304505214423
+        },
+        "precision_top_decile": {
+          "lo": 0.7075812274368231,
+          "hi": 0.8050541516245487
+        },
+        "pr_auc_lapse": {
+          "lo": 0.49579264659870503,
+          "hi": 0.55379870936043
+        }
+      }
+    }
+  },
+  "policy": {
+    "n_customers": 2768,
+    "threshold": 0.56,
+    "model_contacted": 1139,
+    "model_profit": -7.191583333332346,
+    "ev_policy_contacted": 376,
+    "ev_policy_profit": 2421.4475581385286,
+    "everyone_profit": -55176.17769502133,
+    "nobody_profit": 0.0,
+    "model_vs_everyone": 55168.986111688,
+    "model_profit_per_1000": -2.598115366088275,
+    "everyone_profit_per_1000": -19933.59020773892,
+    "lapsers_total": 1088,
+    "lapsers_contacted_model": 708
+  },
+  "segments": [
+    {
+      "segment": "region",
+      "value": "INTL",
+      "n": 26,
+      "return_rate": 0.3076923076923077,
+      "mean_p": 0.5465613841297043,
+      "pr_auc": 0.8270833333333334,
+      "brier": 0.19940275277955635,
+      "lapse_recall": 0.7222222222222222,
+      "lapse_precision": 0.8666666666666667,
+      "selection_rate": 0.5769230769230769,
+      "recall_gap_vs_overall": 0.07148692810457513
+    },
+    {
+      "segment": "region",
+      "value": "MARITIMES",
+      "n": 14,
+      "return_rate": 0.6428571428571429,
+      "mean_p": 0.7058498069577713,
+      "pr_auc": null,
+      "brier": null,
+      "lapse_recall": 0.2,
+      "lapse_precision": 0.3333333333333333,
+      "selection_rate": 0.21428571428571427,
+      "recall_gap_vs_overall": -0.45073529411764707
+    },
+    {
+      "segment": "region",
+      "value": "ON",
+      "n": 228,
+      "return_rate": 0.6929824561403509,
+      "mean_p": 0.6575477218796622,
+      "pr_auc": 0.86118113909689,
+      "brier": 0.18780343203735533,
+      "lapse_recall": 0.5,
+      "lapse_precision": 0.47297297297297297,
+      "selection_rate": 0.32456140350877194,
+      "recall_gap_vs_overall": -0.15073529411764708
+    },
+    {
+      "segment": "region",
+      "value": "QC",
+      "n": 2500,
+      "return_rate": 0.602,
+      "mean_p": 0.6141865717155045,
+      "pr_auc": 0.8503475796668829,
+      "brier": 0.18816078722271856,
+      "lapse_recall": 0.6623115577889447,
+      "lapse_precision": 0.6294173829990449,
+      "selection_rate": 0.4188,
+      "recall_gap_vs_overall": 0.011576263671297604
+    },
+    {
+      "segment": "tenure_band",
+      "value": "6-12 months",
+      "n": 445,
+      "return_rate": 0.6247191011235955,
+      "mean_p": 0.6128574649214233,
+      "pr_auc": 0.8514420103927056,
+      "brier": 0.1939167017813177,
+      "lapse_recall": 0.6287425149700598,
+      "lapse_precision": 0.5645161290322581,
+      "selection_rate": 0.41797752808988764,
+      "recall_gap_vs_overall": -0.021992779147587238
+    },
+    {
+      "segment": "tenure_band",
+      "value": "<6 months",
+      "n": 686,
+      "return_rate": 0.46355685131195334,
+      "mean_p": 0.4786576740151175,
+      "pr_auc": 0.7038830171133132,
+      "brier": 0.20975712076802716,
+      "lapse_recall": 0.8097826086956522,
+      "lapse_precision": 0.6535087719298246,
+      "selection_rate": 0.6647230320699709,
+      "recall_gap_vs_overall": 0.15904731457800514
+    },
+    {
+      "segment": "tenure_band",
+      "value": ">12 months",
+      "n": 1637,
+      "return_rate": 0.6621869273060477,
+      "mean_p": 0.6770916718984125,
+      "pr_auc": 0.8818456117102305,
+      "brier": 0.17814657247285656,
+      "lapse_recall": 0.5515370705244123,
+      "lapse_precision": 0.613682092555332,
+      "selection_rate": 0.3036041539401344,
+      "recall_gap_vs_overall": -0.09919822359323482
+    },
+    {
+      "segment": "spend_quartile",
+      "value": "Q1 (low)",
+      "n": 763,
+      "return_rate": 0.40629095674967236,
+      "mean_p": 0.41011861189184134,
+      "pr_auc": 0.5439286124756656,
+      "brier": 0.22838853822725289,
+      "lapse_recall": 0.8830022075055187,
+      "lapse_precision": 0.6299212598425197,
+      "selection_rate": 0.8322411533420708,
+      "recall_gap_vs_overall": 0.23226691338787164
+    },
+    {
+      "segment": "spend_quartile",
+      "value": "Q2",
+      "n": 702,
+      "return_rate": 0.5313390313390314,
+      "mean_p": 0.5494283817809643,
+      "pr_auc": 0.6833719679838473,
+      "brier": 0.2277494035246293,
+      "lapse_recall": 0.668693009118541,
+      "lapse_precision": 0.5945945945945946,
+      "selection_rate": 0.5270655270655271,
+      "recall_gap_vs_overall": 0.017957715000893937
+    },
+    {
+      "segment": "spend_quartile",
+      "value": "Q3",
+      "n": 650,
+      "return_rate": 0.6676923076923077,
+      "mean_p": 0.7031507968663487,
+      "pr_auc": 0.8410932818566182,
+      "brier": 0.1903650858400463,
+      "lapse_recall": 0.3333333333333333,
+      "lapse_precision": 0.6605504587155964,
+      "selection_rate": 0.1676923076923077,
+      "recall_gap_vs_overall": -0.31740196078431376
+    },
+    {
+      "segment": "spend_quartile",
+      "value": "Q4 (high)",
+      "n": 653,
+      "return_rate": 0.8621745788667687,
+      "mean_p": 0.8481049928258294,
+      "pr_auc": 0.9649308772289417,
+      "brier": 0.09790875120965606,
+      "lapse_recall": 0.17777777777777778,
+      "lapse_precision": 0.64,
+      "selection_rate": 0.03828483920367534,
+      "recall_gap_vs_overall": -0.47295751633986927
+    },
+    {
+      "segment": "frequency_band",
+      "value": "1 order",
+      "n": 1280,
+      "return_rate": 0.43984375,
+      "mean_p": 0.45160017001544794,
+      "pr_auc": 0.6104157293369814,
+      "brier": 0.22834778847855325,
+      "lapse_recall": 0.8396094839609484,
+      "lapse_precision": 0.619979402677652,
+      "selection_rate": 0.75859375,
+      "recall_gap_vs_overall": 0.1888741898433013
+    },
+    {
+      "segment": "frequency_band",
+      "value": "2-3 orders",
+      "n": 897,
+      "return_rate": 0.6577480490523969,
+      "mean_p": 0.6817480253117865,
+      "pr_auc": 0.8108604804897959,
+      "brier": 0.1991588163447755,
+      "lapse_recall": 0.3322475570032573,
+      "lapse_precision": 0.6335403726708074,
+      "selection_rate": 0.1794871794871795,
+      "recall_gap_vs_overall": -0.31848773711438977
+    },
+    {
+      "segment": "frequency_band",
+      "value": "4+ orders",
+      "n": 591,
+      "return_rate": 0.8917089678510999,
+      "mean_p": 0.8797015344122832,
+      "pr_auc": 0.971499621451467,
+      "brier": 0.08609412650390427,
+      "lapse_recall": 0.0625,
+      "lapse_precision": 0.5714285714285714,
+      "selection_rate": 0.011844331641285956,
+      "recall_gap_vs_overall": -0.5882352941176471
+    }
+  ]
+}

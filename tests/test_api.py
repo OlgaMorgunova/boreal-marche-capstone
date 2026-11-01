@@ -152,7 +152,7 @@ def test_predictions_are_logged_and_monitored(client: TestClient) -> None:
     assert client.post("/predict/batch", json={"items": items}).status_code == 200
     store.flush()
     assert store.count("prediction_log") == before + 120
-    report = client.get("/monitoring/report").json()
+    report = client.get("/monitoring/report", params={"fresh": True}).json()
     checks = {c["name"]: c for c in report["checks"]}
     assert checks["input_drift"]["status"] != "insufficient_data"
     assert set(checks) >= {"prediction_drift", "data_quality", "error_rate", "rule_fire_rate"}

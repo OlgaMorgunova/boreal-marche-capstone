@@ -57,7 +57,7 @@ proportion to the value of the products you returned.
 
 Each quarter, some members receive a personal discount offer (currently 15% off one order). To
 decide who receives it, Boréal Marché uses an automated estimate of how likely each customer is to
-order again in the next 90 days, based on past orders and delivery region. A member of the marketing
+order again in the next 90 days, based on the dates and amounts of past orders. A member of the marketing
 team reviews and approves every offer list before it is sent. The estimate is not used to change
 prices, to refuse service or to change your tier. You can ask which information and main factors
 were used for your account, have inaccurate information corrected, ask a staff member to review the
