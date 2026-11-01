@@ -54,5 +54,27 @@ mapping), grocery demand, or individuals. **Do not** attempt to re-identify cust
 
 ## Personal information
 
-Customer ids are opaque integers; no names, e-mails or addresses exist. Country is the only
+Customer ids are opaque integers; no names, e-mails or addresses exist. Country (re-skinned as region) is the only
 quasi-identifier. Hosted LLM providers never receive rows from this dataset.
+
+## What the platform uses and stores (D5 data minimisation)
+
+The gold table still computes all 37 point-in-time features (`reports/feature_spec.md`), so the
+D2/D3 analyses stay reproducible. Since v0.9.5 the model uses 19 of them and the API stores only
+those plus `region` (delivery, monitoring, fairness audit); the 18 removed features — time of day,
+cancellations, category mix, basket shape, outlier share, lifetime value, and region as a model
+input — failed the necessity test (`reports/metrics/minimisation.json`, D5 §6).
+
+## Known biases relevant to the fairness audit
+
+The data come from one UK giftware wholesaler whose customers include many small businesses ordering
+in bulk, so spend is very unevenly distributed (top spend quartile ≥ $1,155 over 180 days). The
+region field is a re-skin of countries (92% "QC"), so region subgroups other than QC are small
+(e.g. 14 MARITIMES customers on the test snapshot) and their metrics are noisy. Lapse rates differ
+strongly by spend and tenure, which is what drives the recall gaps reported in D5 §7.
+
+## Retention
+
+Raw data: 2 years in the scenario, DVC-tracked and never in Git; derived tables are rebuilt by
+`make all` and can be deleted at any time. Prediction logs: 13 months
+(`GOVERNANCE_LOI25.md` §6).

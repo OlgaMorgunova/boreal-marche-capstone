@@ -1,4 +1,4 @@
-"""Render D1-D3 from templates: ``reports/src/*.md`` -> ``reports/977_D<n>_*.md|html|pdf``.
+"""Render D1-D5 from templates: ``reports/src/*.md`` -> ``reports/977_D<n>_*.md|html|pdf``.
 
 Templates contain ``{{ key }}`` placeholders. Every value is computed here from pipeline outputs
 (``reports/metrics/*.json``, artifacts, params) so a number in a report cannot drift from the code
@@ -26,6 +26,7 @@ REPORTS = {
     "D2": ("D2_Design_Architecture.md", "977_D2_Morgunova_DesignArchitecture"),
     "D3": ("D3_Implementation_Validation.md", "977_D3_Morgunova_ImplementationValidation"),
     "D4": ("D4_Deployment_Demonstration.md", "977_D4_Morgunova_DeploymentDemonstration"),
+    "D5": ("D5_Optimization_Ethics.md", "977_D5_Morgunova_OptimizationEthics"),
 }
 FAMILY_RATIONALE = {
     "recency": "Time since the last order is the classical strongest churn signal (the R of RFM).",
@@ -705,10 +706,11 @@ def to_pdf(html_path: Path, pdf_path: Path) -> None:
 
 def run(only: list[str] | None = None) -> None:
     from boreal_marche.reporting.d4 import d4_context
+    from boreal_marche.reporting.d5 import d5_context
 
     paths = Paths()
     src = paths.reports / "src"
-    ctx = context(paths) | d4_context(paths)
+    ctx = context(paths) | d4_context(paths) | d5_context(paths)
     from pypdf import PdfReader
 
     for code, (tpl, out) in REPORTS.items():

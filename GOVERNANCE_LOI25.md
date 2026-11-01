@@ -1,18 +1,30 @@
 # Governance and Québec Law 25 — Boréal Marché platform
 
-**Status:** design version for D2/D3 (v0.3). The subgroup fairness audit, the final minimisation
-decisions and the retention schedule are completed in D5.
+**Status:** D5 version (v0.9.5). The subgroup fairness audit (§7), the minimisation decisions (§5)
+and the retention schedule (§6) are complete; evidence in
+[`reports/977_D5_Morgunova_OptimizationEthics.md`](reports/977_D5_Morgunova_OptimizationEthics.md).
 **Author:** Olga Morgunova · **Scenario note:** the data are the public UCI Online Retail II dataset,
 re-skinned; no real Boréal Marché customer is involved. The obligations below are designed *as if*
 the platform processed real personal information of Québec residents.
 
-> **Primary-source check — PENDING (Olga).** The article summaries below are the author's reading of
-> the *Act respecting the protection of personal information in the private sector* (CQLR c. P-39.1,
-> as amended by Law 25, 2021, c. 25). Before D5 they must be verified against the current text on
-> LégisQuébec and the Commission d'accès à l'information (CAI) guidance, as the assignment requires.
-> Record the URLs and consultation date here: `____`.
+> **Primary sources consulted.**
+> * Commission d'accès à l'information (CAI), read 2026-11-01:
+>   "Vos droits" — https://cai.gouv.qc.ca/protection-renseignements-personnels/citoyens-protection-renseignements-personnels/acces-et-protection-renseignements-personnels
+>   (section "Être informé d'une décision automatisée et en demander la révision") and
+>   "Principaux changements de la Loi 25" — https://www.cai.gouv.qc.ca/protection-renseignements-personnels/sujets-et-domaines-dinteret/principaux-changements-loi-25
+>   (sections "Traitement automatisé", "Profilage", "Évaluation des facteurs relatifs à la vie privée").
+>   They confirm for s. 12.1: notice "au plus tard au moment où [l'entreprise] l'informe de cette
+>   décision"; on request, the personal information used and "les raisons ainsi que les principaux
+>   facteurs et paramètres ayant mené à la décision"; rectification; observations to "un membre du
+>   personnel en mesure de réviser la décision". Profiling functions "ne pourront être activées par
+>   défaut". An EFVP is required for any information-system project involving personal information
+>   and before communication outside Québec, proportionate to sensitivity, purpose and quantity.
+> * *Act respecting the protection of personal information in the private sector*, CQLR c. P-39.1
+>   (LégisQuébec, https://www.legisquebec.gouv.qc.ca/en/document/cs/P-39.1): the site refused
+>   automated reading on 2026-11-01. **Article numbers and the 30-day delay (s. 32) still need one
+>   manual check against the consolidated text — Olga, date: 01.11.2026.**
 
-## 1. Relevant obligations (to verify)
+## 1. Relevant obligations
 
 | Article | Obligation (summary) | Where the design responds |
 |---|---|---|
@@ -27,7 +39,7 @@ the platform processed real personal information of Québec residents.
 
 | # | Decision point | What is decided | Personal information used | Principal factors | Exclusively automated? | How the customer exercises rights |
 |---|---|---|---|---|---|---|
-| D-A | **Retention offer targeting** (Head A) | Whether the customer is put on the quarterly 15% coupon list | Purchase history (dates, amounts, items, cancellations), delivery region; no name/e-mail/ID enters the model | Recency, order frequency and cadence, spend, basket breadth (top factors per prediction published in D5) | **No — by design.** The API returns a *proposed* action (`send_coupon`); a marketing manager reviews and approves the list before sending | Notice in account page + e-mail footer; request factors via privacy@; observations reviewed by a staff member within 30 days |
+| D-A | **Retention offer targeting** (Head A) | Whether the customer is put on the quarterly 15% coupon list | Since v0.9.5 only order dates and amounts (19 features, §5); region is stored for delivery and the fairness audit but not used by the model; no name/e-mail/ID | Months with an order, gap between orders and its regularity, recent spend, tenure — exact top 3 per prediction from `POST /predict?explain=3` (D5 §5) | **No — by design.** The API returns a *proposed* action (`send_coupon`); a marketing manager reviews and approves the list before sending | Notice in account page + e-mail footer; request factors via privacy@; observations reviewed by a staff member within 30 days |
 | D-B | **Basket recommendations** (Head B) | Which 5 products are shown in "you might also like" | Current basket contents only (no customer id) | The association rule that fired ("because you added X"), shown in the UI | Yes, but not a decision *about the person* (same basket → same output for everyone); low impact | Explanation shown inline; strategy disclosed (rules vs. popularity) |
 | D-C | **Assistant answers & hand-off** (Head C, Week 9–10) | Answer, refusal, or hand-off to a human | The question text; for account questions, the customer's own data through the retention/recommendation tools | Retrieved policy passages (cited); tool outputs | Refusal/hand-off paths route to a human; never discloses another customer's data | "Talk to a person" always available; citations on every grounded answer |
 
@@ -40,47 +52,69 @@ version); a marketing manager approves the campaign list, can override individua
 override is logged. This is why `/predict` returns a *proposal* and not a sent coupon, and why the
 weekly retraining workflow opens a pull request instead of deploying. We still publish the notice
 (§4) because the system profiles customers (s. 8.1) and because the human review must be meaningful,
-not a rubber stamp — the reviewer sees the principal factors for each proposed customer (D5).
+not a rubber stamp — the reviewer gets the principal factors for each proposed customer
+(`/predict/batch?explain=3`) and, from D5, a separate "high-value review" list of top-spend
+customers the single threshold misses (§7).
 
 ## 4. Customer-facing notice (rendered in the app "About" section — D4)
 
 **English.** Boréal Marché uses an automated system to estimate how likely you are to order again in
-the next 90 days, based on your past orders (dates, amounts, products, cancellations) and delivery
-region. We use this estimate only to decide who receives our quarterly discount offer; a member of
+the next 90 days, based on the dates and amounts of your past orders. We use this estimate only to decide who receives our quarterly discount offer; a member of
 our marketing team reviews and approves every offer list. You can ask us which information and main
 factors were used, have inaccurate information corrected, submit your observations to a staff member
 who can review the decision, or opt out of this profiling at any time: privacy@borealmarche.example.
 
 **Français.** Boréal Marché utilise un système automatisé pour estimer la probabilité que vous passiez
-une nouvelle commande au cours des 90 prochains jours, à partir de vos commandes passées (dates,
-montants, produits, annulations) et de votre région de livraison. Nous utilisons cette estimation
+une nouvelle commande au cours des 90 prochains jours, à partir des dates et des montants de vos
+commandes passées. Nous utilisons cette estimation
 uniquement pour déterminer qui reçoit notre offre de rabais trimestrielle; un membre de notre équipe
 marketing examine et approuve chaque liste d'offres. Vous pouvez nous demander quels renseignements et
 quels principaux facteurs ont été utilisés, faire corriger des renseignements inexacts, présenter vos
 observations à un membre du personnel en mesure de réviser la décision, ou refuser ce profilage en
 tout temps : privacy@borealmarche.example.
 
-## 5. Data-minimisation audit (preliminary — decisions finalised in D5)
+## 5. Data-minimisation audit (final — D5)
 
-| Feature group | Needed? | Note |
-|---|---|---|
-| Recency, frequency, monetary, cadence | Yes | Core signal (spot-check: recency alone PR-AUC 0.58 vs. full model 0.78 CV) |
-| Basket shape, category mix | Yes, to be confirmed by ablation in D5 | Derived from products bought; no sensitive categories in this catalogue |
-| `weekend_share_180d`, `mean_order_hour_180d` | **Candidate for removal** | Time-of-day behaviour is intrusive relative to its expected value; ablation in D5 |
-| `region` | Needed for delivery; **used as a fairness subgroup** | Keep in the audit; if it does not improve PR-AUC materially, remove from the model and keep only for monitoring |
-| Customer identifier | Not a model input | Used only to join; `customer_ref` in the API is opaque and not used by the model |
-| Name, e-mail, address | Never used | Not present in the feature table |
+Rule, written before the ablation: a feature group whose removal costs less than **0.005 PR-AUC**
+(5 customer-grouped CV folds of the training snapshots, champion hyper-parameters) is not necessary
+and is removed. Result (`reports/metrics/minimisation.json`, `retention/minimise.py`):
 
-## 6. Retention and deletion policy (draft)
+| Feature group | CV PR-AUC loss if removed | Decision |
+|---|---:|---|
+| Time of day (`weekend_share_180d`, `mean_order_hour_180d`) | −0.0001 | **Removed** — intrusive and unnecessary |
+| `region` | −0.0001 | **Removed from the model**; still collected for delivery, monitoring and the fairness audit |
+| Cancellations (`cancel_lines_180d`, `cancel_rate_180d`) | +0.0001 | **Removed** |
+| Category mix (5 shares + entropy) | −0.0002 | **Removed** — what kind of products a person buys is not needed |
+| Basket shape (4 features) | +0.0000 | **Removed** |
+| Outlier-line share | +0.0000 | **Removed** |
+| Lifetime value (`revenue_lifetime`, `orders_lifetime`) | +0.0008 | **Removed** |
+| Recency, frequency, monetary (180 days), cadence, tenure, quarter (19 features) | not ablated: the core signal | Kept |
 
-Raw transactions: kept for the scenario's 2-year analysis horizon, DVC-tracked, never in Git.
-Prediction logs (D4): 13 months (one year-over-year comparison), then aggregated and deleted.
-Model artifacts: last 5 registry versions. On a verified deletion request the customer's rows are
-removed from the next ETL run; models trained on them are retired at the next scheduled retrain.
+All 18 removed together: CV PR-AUC 0.7809 → 0.7802, validation 0.8094 → 0.8052. The model
+`0.9.5+xgboost` uses 19 features; the API accepts the removed fields for compatibility, ignores them
+and **does not store them** (`features.COLLECTED`, asserted by a test). Customer identifier, name,
+e-mail and address were never inputs.
 
-## 7. Fairness audit plan (executed in D5)
+## 6. Retention and deletion policy (final — D5)
 
-Recall, precision and selection rate by **region**, **tenure band** and **spend quartile**; flag any
-group more than 5 points below overall recall; propose ≥ 3 mitigations with trade-offs. A first,
-unaudited look at the test-set segments is in D3 §9 (error analysis) and already shows large recall
-differences by spend quartile — the D5 audit must address it.
+| Data | Kept | Then | Mechanism |
+|---|---|---|---|
+| Raw transactions | 2 years (scenario analysis horizon) | deleted; models retrained without them | DVC-tracked, never in Git |
+| Prediction / request / chat log | 13 months (one year-over-year comparison) | aggregated (daily counts, histograms), rows deleted | `LogStore.purge`, monthly |
+| Removed features in v0.9 log rows | until those rows age out (≤ 13 months; App Runner's log is lost at each deploy) | — | no new row contains them |
+| Model artifacts | last 5 registry versions | older versions deleted | MLflow registry |
+| Deletion request | rows removed from the next ETL run; models trained on them retired at the next weekly retrain | confirmation to the person | privacy@ inbox, within the legal response delay (30 days, s. 32 — to verify) |
+
+## 7. Fairness audit (executed — D5)
+
+Lapser recall, coupon precision and selection rate by **region**, **tenure band** and **spend
+quartile** (edges fixed on the training snapshots), validation snapshot, served model, threshold
+0.61 (`retention/fairness.py`, `reports/metrics/fairness.json`). **Flagged (> 5 points below
+overall recall, ≥ 30 lapsers):** tenure > 12 months, spend Q3 and **spend Q4 (top): 46% vs 89%
+overall**; on test also region ON. Cause: one value-blind threshold applied to customers whose
+probability of returning is high. Mitigations compared — expected-value policy (M1), per-quartile
+thresholds (M2), re-weighted training (M3) — none dominates (D5 §7). **Adopted:** keep the single
+threshold for the automatic proposal, give the human reviewer a separate high-value review list
+(the customers M2 would add), and run a 10% randomised hold-out for two quarters to measure the
+coupon's effect per spend quartile before changing the rule. The promotion gate keeps "no worse
+than the champion" until then.
