@@ -101,7 +101,9 @@ with st.sidebar:
         st.error(f"{t('api_down', lang)}: {API_URL} ({type(exc).__name__})")
         st.stop()
     refs = customers()
-    labels = {c["ref"]: f"{c['ref']} · {c['region']} · {c['orders_180d']} orders/180 d" for c in refs}
+    labels = {
+        c["ref"]: f"{c['ref']} · {c['region']} · {c['orders_180d']} orders/180 d" for c in refs
+    }
     me = st.selectbox(t("customer", lang), list(labels), format_func=labels.__getitem__)
     st.caption(
         f"API {version['api_version']} · commit `{version['git_commit'][:7]}` · "
@@ -160,6 +162,8 @@ with tabs[0]:
             st.success(
                 f"{t('not_proposed', lang)} (p > {pred['threshold']:.2f}, {t('threshold', lang)})"
             )
+        if pred.get("action") in ("holdout", "review"):
+            st.info(t(f"action_{pred['action']}", lang))
         st.caption(t("human_review", lang) + f" · model `{pred['model_version']}`")
         if pred.get("top_factors"):
             st.markdown(f"**{t('factors', lang)}**")
@@ -168,6 +172,28 @@ with tabs[0]:
                 val = "—" if fct["value"] is None else fct["value"]
                 st.write(f"{arrow} {fct['label']} = `{val}`")
             st.caption(t("factors_help", lang))
+        try:
+            camp = api("GET", "/campaign")
+        except httpx.HTTPStatusError:  # an API older than v1.0, or no campaign policy loaded
+            camp = None
+        if camp:
+            with st.expander(t("campaign", lang)):
+                cols = st.columns(4)
+                for col, (k, v) in zip(cols, camp["counts"].items(), strict=True):
+                    col.metric(k, v)
+                st.caption(
+                    t("campaign_help", lang) + f" · campaign `{camp['campaign_id']}`, "
+                    f"hold-out {100 * camp['holdout_share']:.0f}%, review thresholds "
+                    + ", ".join(f"{q} ≤ {v:.2f}" for q, v in camp["review_thresholds"].items())
+                )
+                if camp["review_list"]:
+                    st.dataframe(
+                        pd.DataFrame(camp["review_list"])[
+                            ["ref", "region", "spend_quartile", "revenue_180d", "p_return"]
+                        ],
+                        width="stretch",
+                        hide_index=True,
+                    )
         with st.expander("Features sent to /predict"):
             used = {k: v for k, v in real.items() if v is not None or feats.get(k) is not None}
             st.dataframe(

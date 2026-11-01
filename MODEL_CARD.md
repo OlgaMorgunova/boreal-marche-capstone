@@ -70,7 +70,10 @@ Lapser recall = share of customers who lapsed who were proposed for the offer.
 
 The gap is caused by the single value-blind threshold, not by worse ranking in those groups (top
 spend-quartile PR-AUC 0.96 on test). Mitigation adopted: human high-value review list + randomised
-hold-out before changing the decision rule (`GOVERNANCE_LOI25.md` §7).
+hold-out before changing the decision rule (`GOVERNANCE_LOI25.md` §7) — **built and served in
+v1.0**: `/predict` returns an `action` (coupon / holdout / review / none) and `GET /campaign` the
+list for approval. If the reviewer approves the whole list, top-quartile lapser recall rises to
+0.89 (validation) and 0.82 (test); this measures the list, not reviewers' real choices.
 
 ## Interpretability
 

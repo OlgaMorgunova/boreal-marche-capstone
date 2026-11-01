@@ -53,14 +53,16 @@ override is logged. This is why `/predict` returns a *proposal* and not a sent c
 weekly retraining workflow opens a pull request instead of deploying. We still publish the notice
 (§4) because the system profiles customers (s. 8.1) and because the human review must be meaningful,
 not a rubber stamp — the reviewer gets the principal factors for each proposed customer
-(`/predict/batch?explain=3`) and, from D5, a separate "high-value review" list of top-spend
-customers the single threshold misses (§7).
+(`/predict/batch?explain=3`) and, since v1.0, a separate "high-value review" list of top-spend
+customers the single threshold misses (`GET /campaign`, the `action` field of `/predict`; §7).
 
 ## 4. Customer-facing notice (rendered in the app "About" section — D4)
 
 **English.** Boréal Marché uses an automated system to estimate how likely you are to order again in
 the next 90 days, based on the dates and amounts of your past orders. We use this estimate only to decide who receives our quarterly discount offer; a member of
-our marketing team reviews and approves every offer list. You can ask us which information and main
+our marketing team reviews and approves every offer list. Each quarter a small random group of
+customers (one in ten of those selected) does not receive the offer, so that we can measure whether
+it works; the draw does not depend on any information about you. You can ask us which information and main
 factors were used, have inaccurate information corrected, submit your observations to a staff member
 who can review the decision, or opt out of this profiling at any time: privacy@borealmarche.example.
 
@@ -68,7 +70,9 @@ who can review the decision, or opt out of this profiling at any time: privacy@b
 une nouvelle commande au cours des 90 prochains jours, à partir des dates et des montants de vos
 commandes passées. Nous utilisons cette estimation
 uniquement pour déterminer qui reçoit notre offre de rabais trimestrielle; un membre de notre équipe
-marketing examine et approuve chaque liste d'offres. Vous pouvez nous demander quels renseignements et
+marketing examine et approuve chaque liste d'offres. Chaque trimestre, un petit groupe de clients tiré
+au hasard (un sur dix parmi ceux qui sont sélectionnés) ne reçoit pas l'offre, afin de mesurer si elle
+est efficace; ce tirage ne dépend d'aucun renseignement vous concernant. Vous pouvez nous demander quels renseignements et
 quels principaux facteurs ont été utilisés, faire corriger des renseignements inexacts, présenter vos
 observations à un membre du personnel en mesure de réviser la décision, ou refuser ce profilage en
 tout temps : privacy@borealmarche.example.
@@ -118,3 +122,25 @@ threshold for the automatic proposal, give the human reviewer a separate high-va
 (the customers M2 would add), and run a 10% randomised hold-out for two quarters to measure the
 coupon's effect per spend quartile before changing the rule. The promotion gate keeps "no worse
 than the champion" until then.
+
+**Built and served (v1.0, `retention/campaign.py`).** Every `/predict` response carries an
+`action`: `coupon` (proposed), `holdout` (proposed, withheld this campaign), `review` (not proposed;
+spend Q3/Q4 with `p_return` between 0.61 and the M2 group threshold — Q3 ≤ 0.73, Q4 ≤ 0.88 — listed
+for the reviewer) or `none`. `GET /campaign` returns the list the reviewer approves. The automatic
+proposal is unchanged; spend only routes a case to a person. The hold-out is drawn by
+`sha256(campaign_id:customer_ref)`, so it is stateless, auditable and blind to every feature; a new
+`campaign.campaign_id` in `params.yaml` draws a new sample each quarter. The thresholds are frozen in
+`artifacts/campaign_policy.json` for one model version; the API refuses a policy written for another.
+Scored on the snapshots (`reports/metrics/campaign_policy.json`): if the reviewer approves the whole
+list, top-quartile lapser recall goes from 0.46 to 0.89 (validation) and from 0.16 to 0.82 (test),
+for 368 / 450 extra cases to review, of which 26–28% are lapsers. The hold-out arms are balanced
+(mean `p_return` 0.36 vs 0.35 on validation); with one quarter of this dataset's size it detects a
+save rate of about 0.16–0.21, so confirming the assumed 0.20 needs **one to two quarters** — the
+design's "two quarters" stands. The disclosure (§4) now mentions the random group.
+
+**What it costs, under the stated assumptions (20% save rate, `params.yaml`).** Approving the whole
+review list *loses* $8.2k (validation) and $16.9k (test): most of those high spenders would have
+returned anyway, so the list is for judgment, not for blanket approval — the same trade-off that kept
+M2 from being adopted. The hold-out gives up $2.7k (validation, 35% of that campaign's net $7.7k)
+and $0.5k (test) of assumed profit. That is the price of measuring a save rate that every other
+dollar figure depends on, and it is the reason the hold-out lasts two quarters, not indefinitely.

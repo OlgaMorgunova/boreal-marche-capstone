@@ -57,7 +57,8 @@ and smoke-tests the live service. Details: [ARCHITECTURE.md](ARCHITECTURE.md) an
 **Negative results, kept on purpose:** tuning added < 0.005 PR-AUC (the limit is the features, not
 the algorithm); the first profit model made "contact nobody" optimal until I fixed its value
 horizon; lapsing customers in the **top spend quartile** are proposed only 46% of the time vs 89%
-overall — a fairness gap that is audited and mitigated by human review, **not solved**; in mlxtend,
+overall — a fairness gap that is audited and, since v1.0, routed to a served human review list
+(lifts it to 89% *if* the reviewer approves the whole list), **not solved by the model**; in mlxtend,
 Apriori is ~116× faster than FP-Growth at this size. Every number here comes from
 `reports/metrics/*.json`.
 
@@ -92,10 +93,12 @@ records an extra look). No secret is needed; optional variables are in `.env.exa
 
 | Deliverable | Document |
 |---|---|
+| D7 — reflection (2 pages) | [977_Reflection_Morgunova.pdf](reports/977_Reflection_Morgunova.pdf) |
+| D7 — defence brief: system inventory, readiness check, prepared answers to the question bank | [977_D7_Morgunova_DefenceBrief.pdf](reports/977_D7_Morgunova_DefenceBrief.pdf) |
 | D6 — final technical report (consolidates D2–D5) | [977_D6_Morgunova_TechnicalReport.pdf](reports/977_D6_Morgunova_TechnicalReport.pdf) |
 | D6 — executive summary, English + français | [977_D6_Morgunova_ExecutiveSummary.pdf](reports/977_D6_Morgunova_ExecutiveSummary.pdf) |
 | D6 — presentation deck and recorded talk | [977_D6_Morgunova_Presentation.pdf](reports/977_D6_Morgunova_Presentation.pdf) · [video](https://youtu.be/2bcNpRwMQxE) · [speaking script](docs/PRESENTATION_SCRIPT.md) |
-| D1–D5 (as submitted, tags `v0.1`…`v0.9.5`) | [reports/](reports/) |
+| D1–D6 (as submitted, tags `v0.1`…`v0.9.6`; this release is `v1.0`) | [reports/](reports/) |
 | Governance and cards | [GOVERNANCE_LOI25.md](GOVERNANCE_LOI25.md) · [MODEL_CARD.md](MODEL_CARD.md) · [DATA_CARD.md](DATA_CARD.md) · [docs/MONITORING.md](docs/MONITORING.md) |
 
 ## Repository map
@@ -105,8 +108,8 @@ records an extra look). No secret is needed; optional variables are in `.env.exa
 | `params.yaml` | every window, cut-off, cost assumption, grid and seed |
 | `src/boreal_marche/` | all business logic: `data/`, `features.py`, `retention/`, `recommend/`, `assistant/`, `monitoring/`, `api.py`, `cloud/`, `reporting/` |
 | `tests/` | unit, API contract, golden prediction, data quality, monitoring, assistant guardrails, pipeline smoke |
-| `artifacts/` | `model.joblib` + `model_meta.json`, `rules.json`, `index/`, `reference_profile.json` |
-| `reports/` | D1–D6 PDFs, `metrics/*.json` (all evidence), `figures/`, `src/` (report templates) |
+| `artifacts/` | `model.joblib` + `model_meta.json`, `rules.json`, `index/`, `reference_profile.json`, `campaign_policy.json` |
+| `reports/` | D1–D7 PDFs, `metrics/*.json` (all evidence), `figures/`, `src/` (report templates) |
 | `docker/`, `.github/workflows/` | two images and the Compose stack; `ci.yml`, `cd.yml`, `retrain.yml`, `monitor.yml` |
 | `frontend/`, `loadtest/` | Streamlit interface; Locust traffic simulation |
 | `infra/aws/`, `docs/runbooks/` | IAM policies, bootstrap script, App Runner / SageMaker / budget-alarm runbooks |
@@ -120,10 +123,12 @@ The raw file is DVC-tracked and never committed. See [DATA_CARD.md](DATA_CARD.md
 
 ## What I would do next
 
-1. **Measure the coupon's real effect** with a randomised 10% hold-out for two quarters, then an
-   uplift model: every dollar above rests on an assumed 20% save rate.
-2. **Build the high-value review list** that addresses the fairness gap, and audit subgroups on the
-   backfilled labels.
+1. **Run the hold-out that is now built**: the API already draws a 10% hash-based hold-out of
+   proposed customers (`action: holdout`); two quarters of it measure the save rate every dollar
+   above assumes (20%), then an uplift model if the effect differs by customer.
+2. **Measure the review list in use**: v1.0 serves the high-value review list (`GET /campaign`);
+   what reviewers actually approve, and subgroup recall on backfilled labels, decide between the
+   single threshold and the expected-value policy.
 3. **Move serving to `ca-central-1`** (ECS Fargate; App Runner is not offered in Canada) and the
    prediction log to Postgres before any real customer data.
 4. **Run the SageMaker HPO job** — implemented and dry-run tested; the spot-instance quota request

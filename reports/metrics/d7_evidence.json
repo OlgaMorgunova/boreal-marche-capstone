@@ -1,0 +1,240 @@
+{
+  "live": {
+    "api_url": "https://padp32qm6p.us-east-1.awsapprunner.com",
+    "ui_url": "https://boreal-marche-capstone-4ay3m2fn6qdo4jtgy72vpr.streamlit.app",
+    "version": {
+      "api_version": "0.9.6",
+      "git_commit": "bc0d6603ab701e36b20954c69ab9c6513f5f302a",
+      "image_tag": "bc0d6603ab701e36b20954c69ab9c6513f5f302a",
+      "model_version": "0.9.5+xgboost",
+      "model_source": "artifacts/model.joblib",
+      "rules_mined_at": "2026-09-29T23:17:42+00:00",
+      "rule_count": 7512
+    },
+    "master_head": "bc0d6603ab701e36b20954c69ab9c6513f5f302a",
+    "campaign_counts": null,
+    "monitoring_checks": {
+      "input_drift": "insufficient_data",
+      "prediction_drift": "insufficient_data",
+      "data_quality": "insufficient_data",
+      "error_rate": "insufficient_data",
+      "latency_p95_predict": "insufficient_data",
+      "rule_fire_rate": "insufficient_data"
+    }
+  },
+  "repository": {
+    "public": false,
+    "runs": {
+      "ci.yml": {
+        "head_sha": null,
+        "conclusion": null,
+        "html_url": null,
+        "created_at": null
+      },
+      "cd.yml": {
+        "head_sha": null,
+        "conclusion": null,
+        "html_url": null,
+        "created_at": null
+      }
+    },
+    "tags": [
+      "v0.1",
+      "v0.2",
+      "v0.3",
+      "v0.9",
+      "v0.9.5",
+      "v0.9.6"
+    ],
+    "head": "bc0d6603ab701e36b20954c69ab9c6513f5f302a"
+  },
+  "sagemaker_quota": {
+    "QuotaName": "ml.m5.large for spot training job usage",
+    "Status": "CASE_OPENED",
+    "DesiredValue": 4.0,
+    "CaseId": "179073448000753",
+    "Created": "2026-09-29T22:11:32.237000-04:00"
+  },
+  "checks": [
+    {
+      "group": "live",
+      "item": "/health",
+      "status": "pass",
+      "detail": "200"
+    },
+    {
+      "group": "live",
+      "item": "/ready",
+      "status": "pass",
+      "detail": "[]"
+    },
+    {
+      "group": "live",
+      "item": "/version = head of master",
+      "status": "pass",
+      "detail": "live bc0d6603ab70 \u00b7 master bc0d6603ab70 \u00b7 API 0.9.6"
+    },
+    {
+      "group": "head A",
+      "item": "golden prediction reproduced",
+      "status": "pass",
+      "detail": "p_return=0.4060586238648678"
+    },
+    {
+      "group": "head A",
+      "item": "campaign action on /predict",
+      "status": "fail",
+      "detail": "None"
+    },
+    {
+      "group": "head A",
+      "item": "/campaign list (review + hold-out)",
+      "status": "fail",
+      "detail": "404"
+    },
+    {
+      "group": "head B",
+      "item": "/recommend fires a rule",
+      "status": "pass",
+      "detail": "rules"
+    },
+    {
+      "group": "head C",
+      "item": "/chat answers in French with a citation",
+      "status": "pass",
+      "detail": "tool=policy_search lang=fr citations=4"
+    },
+    {
+      "group": "head C",
+      "item": "/chat refuses out-of-scope",
+      "status": "pass",
+      "detail": "out_of_scope"
+    },
+    {
+      "group": "monitoring",
+      "item": "dashboard has traffic",
+      "status": "pass",
+      "detail": "8 predictions in window"
+    },
+    {
+      "group": "live",
+      "item": "interface reachable (303 = waking up)",
+      "status": "pass",
+      "detail": "303"
+    },
+    {
+      "group": "repository",
+      "item": "public",
+      "status": "fail",
+      "detail": "HTTP 404 (private or absent)"
+    },
+    {
+      "group": "repository",
+      "item": "ci.yml green on master",
+      "status": "pending",
+      "detail": "not readable while private (set GITHUB_TOKEN)"
+    },
+    {
+      "group": "repository",
+      "item": "cd.yml green on master",
+      "status": "pending",
+      "detail": "not readable while private (set GITHUB_TOKEN)"
+    },
+    {
+      "group": "repository",
+      "item": "annotated tag v0.1",
+      "status": "pass",
+      "detail": "tag"
+    },
+    {
+      "group": "repository",
+      "item": "annotated tag v0.2",
+      "status": "pass",
+      "detail": "tag"
+    },
+    {
+      "group": "repository",
+      "item": "annotated tag v0.3",
+      "status": "pass",
+      "detail": "tag"
+    },
+    {
+      "group": "repository",
+      "item": "annotated tag v0.9",
+      "status": "pass",
+      "detail": "tag"
+    },
+    {
+      "group": "repository",
+      "item": "annotated tag v1.0",
+      "status": "pending",
+      "detail": "missing"
+    },
+    {
+      "group": "repository",
+      "item": "\u00a77.2 structure",
+      "status": "pass",
+      "detail": "22 paths"
+    },
+    {
+      "group": "repository",
+      "item": "raw data not committed",
+      "status": "pass",
+      "detail": "only the .dvc pointer"
+    },
+    {
+      "group": "repository",
+      "item": "README video above the fold",
+      "status": "pass",
+      "detail": "link in the first 20 lines"
+    },
+    {
+      "group": "cloud",
+      "item": "SageMaker spot quota",
+      "status": "pending",
+      "detail": "CASE_OPENED (case 179073448000753, 4 instances)"
+    },
+    {
+      "group": "manual",
+      "item": "Application URL opens in an incognito window on a phone",
+      "status": "manual",
+      "detail": ""
+    },
+    {
+      "group": "manual",
+      "item": "Compose stack tested from a fresh clone on a different machine",
+      "status": "manual",
+      "detail": ""
+    },
+    {
+      "group": "manual",
+      "item": "Application warm and open in a browser tab before the defence",
+      "status": "manual",
+      "detail": ""
+    },
+    {
+      "group": "manual",
+      "item": "Fallback video at hand in case the network fails",
+      "status": "manual",
+      "detail": ""
+    },
+    {
+      "group": "manual",
+      "item": "Prepared: primary metric, baseline and threshold with their justification",
+      "status": "manual",
+      "detail": ""
+    },
+    {
+      "group": "manual",
+      "item": "Prepared: one answer to 'what would you do differently' and one negative result",
+      "status": "manual",
+      "detail": ""
+    }
+  ],
+  "collected_at": "2026-11-01T20:45:45+00:00",
+  "defence_video": {
+    "url": "https://youtu.be/STCDsmDr3s8",
+    "title": "Bor\u00e9al March\u00e9 Defense",
+    "checked_at": "2026-11-01T21:36:20+00:00"
+  }
+}

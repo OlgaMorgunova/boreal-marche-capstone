@@ -89,6 +89,37 @@ class PredictResponse(BaseModel):
     top_factors: list[Factor] | None = Field(
         default=None, description="Principal factors, largest first (only with ?explain=N)"
     )
+    action: Literal["coupon", "holdout", "review", "none"] | None = Field(
+        default=None,
+        description="Campaign routing (D7): coupon = proposed; holdout = proposed but withheld "
+        "this campaign to measure the save rate; review = not proposed, listed for a human "
+        "(high-value review list); none = not proposed. None when no campaign policy is loaded.",
+    )
+    spend_quartile: str | None = Field(
+        default=None, description="Spend quartile of revenue_180d (training edges)"
+    )
+
+
+class CampaignEntry(BaseModel):
+    ref: str
+    region: str
+    p_return: float
+    spend_quartile: str
+    revenue_180d: float
+    action: Literal["coupon", "holdout", "review", "none"]
+
+
+class CampaignResponse(BaseModel):
+    """The campaign list a manager approves, scored on the demo customers (not logged)."""
+
+    campaign_id: str
+    model_version: str
+    threshold: float
+    review_thresholds: dict[str, float]
+    holdout_share: float
+    counts: dict[str, int]
+    review_list: list[CampaignEntry]
+    holdout: list[CampaignEntry]
 
 
 class BatchPredictRequest(Strict):

@@ -55,10 +55,13 @@ from boreal_marche.monitoring.store import LogStore
 from boreal_marche.recommend.engine import RuleEngine
 from boreal_marche.registry import load_retention_model
 from boreal_marche.retention.artifact import RetentionModel
+from boreal_marche.retention.campaign import CampaignPolicy
 from boreal_marche.retention.explain import top_factors
 from boreal_marche.schemas import (
     BatchPredictRequest,
     BatchPredictResponse,
+    CampaignEntry,
+    CampaignResponse,
     ChatRequest,
     ChatResponse,
     CustomerFeatures,
@@ -97,6 +100,10 @@ LATENCY = Histogram(
 PREDICTIONS = Counter(
     "boreal_predictions_total", "Retention predictions", ["send_coupon"], registry=REGISTRY
 )
+ACTIONS = Counter(
+    "boreal_campaign_action_total", "Campaign routing of predictions", ["action"],
+    registry=REGISTRY,
+)  # fmt: skip
 STRATEGIES = Counter(
     "boreal_recommend_strategy_total", "Recommendation strategy fired", ["strategy"],
     registry=REGISTRY,
@@ -118,6 +125,16 @@ def _load(name: str, fn: Callable[[], Any]) -> None:
     except Exception as exc:  # noqa: BLE001 - reported by /ready
         STATE["errors"].append(f"{name}: {type(exc).__name__}: {exc}")
     STATE["startup_ms"][name] = round(1000 * (time.perf_counter() - t0), 1)
+
+
+def _campaign(paths: Paths) -> CampaignPolicy:
+    """Frozen review thresholds belong to one model: a stale policy is refused (reported by /ready,
+    predictions then carry ``action=None``) rather than applied to a model it was not fitted on."""
+    policy = CampaignPolicy.load(paths.campaign_policy)
+    served = STATE.get("model")
+    if served is not None and served.version != policy.model_version:
+        raise ValueError(f"policy is for {policy.model_version}, model is {served.version}")
+    return policy
 
 
 def _warm_up() -> None:
@@ -209,6 +226,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         _load("profile", lambda: read_json(paths.reference_profile))
         for f in slow:
             f.result()
+    _load("campaign", lambda: _campaign(paths))
     _load("warm_up", _warm_up)
     STATE["startup_ms"]["total"] = round(1000 * (time.perf_counter() - t_start), 1)
     log.info(json.dumps({"event": "startup", "ms": STATE["startup_ms"]}))
@@ -349,9 +367,12 @@ def _predict(
     X = _frame([r.features.model_dump() for r in reqs], model.feature_names)
     p = model.predict_proba(X)[:, 1]
     factors = top_factors(model, X, explain) if explain else [None] * len(reqs)
+    policy: CampaignPolicy | None = STATE.get("campaign")
     out = []
     for r, pi, fs in zip(reqs, p, factors, strict=True):
         send = bool(pi <= model.threshold)
+        spend = r.features.revenue_180d
+        action = policy.action(float(pi), spend, r.customer_ref) if policy else None
         out.append(
             PredictResponse(
                 customer_ref=r.customer_ref,
@@ -360,9 +381,13 @@ def _predict(
                 threshold=model.threshold,
                 model_version=model.version,
                 top_factors=[Factor(**f) for f in fs] if fs is not None else None,
+                action=action,
+                spend_quartile=policy.spend_quartile(spend) if policy else None,
             )
         )
         PREDICTIONS.labels(str(send).lower()).inc()
+        if action:
+            ACTIONS.labels(action).inc()
         STATE["store"].log(
             "prediction_log",
             {
@@ -395,6 +420,43 @@ def predict_batch(
     req: BatchPredictRequest, request: Request, explain: int = EXPLAIN
 ) -> BatchPredictResponse:
     return BatchPredictResponse(predictions=_predict(req.items, request, explain))
+
+
+@app.get("/campaign", response_model=CampaignResponse, tags=["retention"])
+def campaign() -> CampaignResponse:
+    """This quarter's campaign list for the demo customers, as the reviewer sees it: proposed
+    coupons, the hold-out and the high-value review list. Scored, not logged (no drift traffic)."""
+    model: RetentionModel = _need("model", "retention model")
+    policy: CampaignPolicy = _need("campaign", "campaign policy")
+    data: dict[str, Any] = _need("customers", "demo customers")
+    rows = list(data.values())
+    p = model.predict_proba(_frame([c["features"] for c in rows], model.feature_names))[:, 1]
+    entries = [
+        CampaignEntry(
+            ref=c["ref"],
+            region=c["region"],
+            p_return=float(pi),
+            spend_quartile=policy.spend_quartile(c["features"]["revenue_180d"]),
+            revenue_180d=c["features"]["revenue_180d"],
+            action=policy.action(float(pi), c["features"]["revenue_180d"], c["ref"]),
+        )
+        for c, pi in zip(rows, p, strict=True)
+    ]
+    counts = {
+        a: sum(e.action == a for e in entries) for a in ("coupon", "holdout", "review", "none")
+    }
+    return CampaignResponse(
+        campaign_id=policy.campaign_id,
+        model_version=policy.model_version,
+        threshold=policy.threshold,
+        review_thresholds=policy.review_thresholds,
+        holdout_share=policy.holdout_share,
+        counts=counts,
+        review_list=sorted(
+            (e for e in entries if e.action == "review"), key=lambda e: -e.revenue_180d
+        ),
+        holdout=[e for e in entries if e.action == "holdout"],
+    )
 
 
 @app.get("/customers", response_model=CustomerList, tags=["retention"])

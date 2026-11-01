@@ -28,7 +28,8 @@
 | `GET /health` | liveness — the process is up |
 | `GET /ready` | readiness — model and rules loaded (503 otherwise) |
 | `GET /version` | API version, git commit, model version and source, rules date and count |
-| `POST /predict`, `/predict/batch` | calibrated P(return in 90 d) + proposed coupon action (human approves) |
+| `POST /predict`, `/predict/batch` | calibrated P(return in 90 d) + proposed coupon action (human approves) + campaign `action` (v1.0: coupon / holdout / review / none) |
+| `GET /campaign` | v1.0: this quarter's list for approval — proposed, 10% hash-drawn hold-out, high-value review list (`retention/campaign.py`, `GOVERNANCE_LOI25.md` §7) |
 | `POST /recommend` | top-k items, firing rule per item, strategy (`rules`, `rules+popularity`, `popularity_fallback`, `empty_basket`) |
 | `GET /customers`, `/customers/{ref}/features` | pseudonymised demo customers (feature-store stand-in) |
 | `GET /products` | catalogue search by SKU or name |

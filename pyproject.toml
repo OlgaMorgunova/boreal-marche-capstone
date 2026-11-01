@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "boreal-marche-capstone"
-version = "0.9.6"
+version = "1.0.0"
 description = "Boréal Marché customer intelligence platform — AI Development Project Capstone"
 authors = [{ name = "Olga Morgunova" }]
 requires-python = ">=3.11,<3.12"

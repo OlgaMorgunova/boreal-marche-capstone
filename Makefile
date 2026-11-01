@@ -10,7 +10,7 @@ ARGS ?=
 .PHONY: setup setup-pinned data etl features dq spotcheck tune train evaluate leakage \
         rules-sweep rules rules-eval hpo index test cov lint format typecheck figures reports \
         all api clean-mlflow mlflow-ui up down reference assistant-eval simulate loadtest \
-        backfill frontend minimise explain fairness latency scalability
+        backfill frontend minimise explain fairness campaign latency scalability
 
 setup:            ## .venv with Python 3.11 (uv) + latest compatible versions of all extras
 	uv venv .venv --python 3.11
@@ -23,7 +23,7 @@ setup-pinned:     ## .venv with the exact tested versions (requirements-dev.txt)
 
 data etl features dq spotcheck tune train leakage rules-sweep rules rules-eval figures reports \
 test cov lint format typecheck api mlflow-ui clean-mlflow all reference index assistant-eval \
-loadtest backfill frontend minimise explain fairness scalability:
+loadtest backfill frontend minimise explain fairness campaign scalability:
 	$(RUN) $@
 
 evaluate:         ## one-time test evaluation; `make evaluate ARGS=--force` adds a reported look
