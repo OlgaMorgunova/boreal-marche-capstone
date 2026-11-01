@@ -337,7 +337,7 @@ def rules_sweep(paths: Paths) -> None:
     ax.set_ylabel("min_confidence")
     for i in range(piv.shape[0]):
         for j in range(piv.shape[1]):
-            v = piv.iat[i, j]
+            v = float(piv.iat[i, j])  # newer pandas stubs type .iat as possibly bytes
             ax.text(
                 j,
                 i,
