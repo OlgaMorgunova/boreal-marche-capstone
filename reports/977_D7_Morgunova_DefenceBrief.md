@@ -3,7 +3,7 @@
 # D7 Defence Brief — Complete System, Readiness and Prepared Answers
 
 Olga Morgunova · 420-977-VA AI Development Project (Capstone 1) · Learning Integration Assessment ·
-release `v1.0` · instructor: Steve Ataky, Ph.D. · evidence collected 2026-11-01 22:53 UTC
+release `v1.0` · instructor: Steve Ataky, Ph.D. · evidence collected 2026-11-01 22:59 UTC
 
 </div>
 
@@ -48,11 +48,11 @@ comes from `scripts/collect_d7_evidence.py`, run against the live service.
 | head B | /recommend fires a rule | ✔ pass | rules |
 | head C | /chat answers in French with a citation | ✔ pass | tool=policy_search lang=fr citations=4 |
 | head C | /chat refuses out-of-scope | ✔ pass | out_of_scope |
-| monitoring | dashboard has traffic | ✔ pass | 2 predictions in window |
+| monitoring | dashboard has traffic | ✔ pass | 5 predictions in window |
 | live | interface reachable (303 = waking up) | ✔ pass | 303 |
-| repository | public | ✘ **fail** | HTTP 404 (private or absent) |
-| repository | ci.yml green on master | … pending | not readable while private (set GITHUB_TOKEN) |
-| repository | cd.yml green on master | … pending | not readable while private (set GITHUB_TOKEN) |
+| repository | public | ✔ pass | public |
+| repository | ci.yml green on master | ✔ pass | success @ b00c936 |
+| repository | cd.yml green on master | ✔ pass | success @ b00c936 |
 | repository | annotated tag v0.1 | ✔ pass | tag |
 | repository | annotated tag v0.2 | ✔ pass | tag |
 | repository | annotated tag v0.3 | ✔ pass | tag |
@@ -69,7 +69,7 @@ comes from `scripts/collect_d7_evidence.py`, run against the live service.
 | manual | Prepared: primary metric, baseline and threshold with their justification | ☐ manual |  |
 | manual | Prepared: one answer to 'what would you do differently' and one negative result | ☐ manual |  |
 
-*Table 1 — 18 automated checks pass, 1 fail, 4 are pending
+*Table 1 — 21 automated checks pass, 0 fail, 2 are pending
 and 6 need a person. Re-run the morning of the defence; a failure is fixed before
 the defence, not explained during it.*
 
