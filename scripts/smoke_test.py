@@ -3,9 +3,10 @@
     python scripts/smoke_test.py --api https://<api-url> --ui https://<ui-url> --expect-sha <sha>
 
 Asserts: /health, /ready (retried while the service warms up), /version reports the expected commit,
-the golden prediction is reproduced by the deployed model, /recommend fires a rule, /chat answers a
-policy question with a citation, and the interface answers its health probe. Standard library only,
-so it runs on a bare CI runner. Exit code 1 on the first failure.
+the golden prediction is reproduced by the deployed model and routed by the campaign policy (D7),
+/campaign returns a list, /recommend fires a rule, /chat answers a policy question with a citation,
+and the interface answers its health probe. Standard library only, so it runs on a bare CI runner.
+Exit code 1 on the first failure.
 """
 
 from __future__ import annotations
@@ -77,6 +78,10 @@ def main() -> None:
     code, p = call(f"{api}/predict", {"customer_ref": case["ref"], "features": case["features"]})
     ok = code == 200 and abs(p["p_return"] - case["p_return"]) < 1e-6
     check("golden prediction", ok, f"p_return={p.get('p_return') if code == 200 else p}")
+
+    code, cp = call(f"{api}/campaign")
+    ok = code == 200 and sum(cp["counts"].values()) > 0 and p.get("action") is not None
+    check("campaign policy (review list, hold-out)", ok, str(cp["counts"] if ok else cp)[:120])
 
     code, r = call(f"{api}/recommend", {"basket": ["22916", "22918"], "k": 3})
     check("recommend", code == 200 and r["strategy"].startswith("rules"), r.get("strategy", r))

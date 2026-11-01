@@ -71,6 +71,14 @@ class BusinessParams(_Frozen):
     sensitivity_save_rates: list[float]
 
 
+class CampaignParams(_Frozen):
+    """Served fairness mitigation (D5 §7, built in D7): see ``retention/campaign.py``."""
+
+    campaign_id: str
+    holdout_share: float
+    review_quartiles: list[str]
+
+
 class RecommendParams(_Frozen):
     holdout_start: str
     validation_start: str
@@ -171,6 +179,7 @@ class Params(_Frozen):
     spotcheck: SpotcheckParams
     tuning: TuningParams
     business: BusinessParams
+    campaign: CampaignParams
     recommend: RecommendParams
     mlflow: MlflowParams
     cloud: CloudParams
@@ -236,6 +245,10 @@ class Paths:
     @property
     def catalogue(self) -> Path:
         return self.artifacts / "catalogue.json"
+
+    @property
+    def campaign_policy(self) -> Path:
+        return self.artifacts / "campaign_policy.json"
 
     @property
     def index_dir(self) -> Path:

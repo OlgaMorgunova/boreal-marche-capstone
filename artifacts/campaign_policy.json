@@ -1,0 +1,16 @@
+{
+  "campaign_id": "2026Q4",
+  "model_version": "0.9.5+xgboost",
+  "threshold": 0.61,
+  "spend_edges": [
+    270.15000000000003,
+    533.4000000000001,
+    1154.85
+  ],
+  "review_thresholds": {
+    "Q3": 0.7321225059917824,
+    "Q4 (top)": 0.8835703593832647
+  },
+  "holdout_share": 0.1,
+  "source": "reports/metrics/fairness.json (2026-11-01T15:43:49+00:00)"
+}

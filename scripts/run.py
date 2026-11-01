@@ -8,6 +8,7 @@
     python scripts/run.py api              # D4: API on :8000 (second terminal: `frontend`, :8501)
     python scripts/run.py simulate         # D4: Locust traffic, normal then shifted cohort
     python scripts/run.py minimise explain fairness   # D5: ablation, explanations, fairness audit
+    python scripts/run.py campaign                    # D7: served review list + hold-out policy
     python scripts/run.py latency --label after       # D5: latency profile (see the script)
     python scripts/run.py --list
 
@@ -49,6 +50,7 @@ STAGES: dict[str, list[list[str]]] = {
     "minimise": [M + ["boreal_marche.retention.minimise"]],
     "explain": [M + ["boreal_marche.retention.explain"]],
     "fairness": [M + ["boreal_marche.retention.fairness"]],
+    "campaign": [M + ["boreal_marche.retention.campaign"]],
     "latency": [[sys.executable, "scripts/latency_profile.py"]],
     "scalability": [[sys.executable, "scripts/scalability_probe.py"]],
     "frontend": [M + ["streamlit", "run", "frontend/app.py", "--server.port", "8501"]],

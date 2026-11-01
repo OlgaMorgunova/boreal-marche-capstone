@@ -47,6 +47,7 @@ COPY --from=builder /opt/models /opt/models
 COPY params.yaml ./
 COPY artifacts/model.joblib artifacts/model_meta.json artifacts/rules.json \
      artifacts/reference_profile.json artifacts/demo_customers.json artifacts/catalogue.json \
+     artifacts/campaign_policy.json \
      ./artifacts/
 COPY artifacts/index ./artifacts/index
 # Last, so a new commit only rebuilds this tiny layer; /version reports both values.

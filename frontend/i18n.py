@@ -31,6 +31,28 @@ STRINGS: dict[str, dict[str, str]] = {
         "en": "A proposal only: a marketing staff member reviews and approves every offer list (Law 25, s. 12.1).",
         "fr": "Une proposition seulement : un membre de l'équipe marketing examine et approuve chaque liste (Loi 25, art. 12.1).",
     },
+    "action_holdout": {
+        "en": "Hold-out this quarter: proposed, but in the 10% random sample that receives no "
+        "coupon, so the coupon's real effect can be measured.",
+        "fr": "Groupe témoin ce trimestre : proposé, mais dans l'échantillon aléatoire de 10 % qui "
+        "ne reçoit pas de coupon, pour mesurer l'effet réel du coupon.",
+    },
+    "action_review": {
+        "en": "High-value review list: not proposed automatically; a staff member decides "
+        "(fairness mitigation for top spenders).",
+        "fr": "Liste de révision à forte valeur : non proposé automatiquement; un membre du "
+        "personnel décide (mesure d'équité pour les gros acheteurs).",
+    },
+    "campaign": {
+        "en": "Campaign list for approval (demo customers)",
+        "fr": "Liste de campagne à approuver (clients de démonstration)",
+    },
+    "campaign_help": {
+        "en": "coupon = proposed · holdout = proposed, withheld to measure the save rate · "
+        "review = top spenders the single threshold misses, for a human decision · none.",
+        "fr": "coupon = proposé · holdout = proposé, retenu pour mesurer le taux de sauvegarde · "
+        "review = gros acheteurs que le seuil unique manque, décision humaine · none.",
+    },
     "what_if": {"en": "What if…", "fr": "Et si…"},
     "what_if_help": {
         "en": "Move a slider: the probability is recomputed by the API on every change.",

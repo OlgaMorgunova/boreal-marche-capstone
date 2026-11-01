@@ -1,0 +1,139 @@
+{
+  "generated_at": "2026-11-01T22:41:15+00:00",
+  "policy": {
+    "campaign_id": "2026Q4",
+    "model_version": "0.9.5+xgboost",
+    "threshold": 0.61,
+    "spend_edges": [
+      270.15000000000003,
+      533.4000000000001,
+      1154.85
+    ],
+    "review_thresholds": {
+      "Q3": 0.7321225059917824,
+      "Q4 (top)": 0.8835703593832647
+    },
+    "holdout_share": 0.1,
+    "source": "reports/metrics/fairness.json (2026-11-01T15:43:49+00:00)"
+  },
+  "snapshots": {
+    "validation": {
+      "n": 2658,
+      "actions": {
+        "coupon": 1628,
+        "holdout": 186,
+        "review": 368,
+        "none": 476
+      },
+      "lapser_recall_model": 0.8879699248120301,
+      "rule_recency60": {
+        "coupons": 1142,
+        "lapser_recall": 0.5593984962406015,
+        "profit": 2117.7683005952395
+      },
+      "review_list": {
+        "n": 368,
+        "lapsers": 97,
+        "lapser_share": 0.26358695652173914,
+        "profit_if_all_approved": -8221.357515357142
+      },
+      "by_spend_quartile": {
+        "Q1 (low)": {
+          "n": 757,
+          "lapser_recall_automatic": 0.9981949458483754,
+          "lapser_recall_if_review_approved": 0.9981949458483754,
+          "review_list": 0
+        },
+        "Q2": {
+          "n": 688,
+          "lapser_recall_automatic": 0.9773299748110831,
+          "lapser_recall_if_review_approved": 0.9773299748110831,
+          "review_list": 0
+        },
+        "Q3": {
+          "n": 635,
+          "lapser_recall_automatic": 0.7011070110701108,
+          "lapser_recall_if_review_approved": 0.8892988929889298,
+          "review_list": 168
+        },
+        "Q4 (top)": {
+          "n": 578,
+          "lapser_recall_automatic": 0.46296296296296297,
+          "lapser_recall_if_review_approved": 0.8888888888888888,
+          "review_list": 200
+        }
+      },
+      "holdout": {
+        "n": 186,
+        "share_of_proposed": 0.10253583241455347,
+        "mean_p_holdout": 0.3641215284391743,
+        "mean_p_treated": 0.3513723437136077,
+        "lapse_rate_holdout": 0.6720430107526881,
+        "lapse_rate_treated": 0.6486486486486487,
+        "profit_forgone": 2663.417679761905,
+        "profit_proposed": 7695.461029761906,
+        "min_detectable_save_rate_one_quarter": 0.15875071085776712,
+        "quarters_to_detect_assumed_save_rate": 1
+      }
+    },
+    "test": {
+      "n": 2768,
+      "actions": {
+        "coupon": 1081,
+        "holdout": 131,
+        "review": 450,
+        "none": 1106
+      },
+      "lapser_recall_model": 0.6819852941176471,
+      "rule_recency60": {
+        "coupons": 1288,
+        "lapser_recall": 0.609375,
+        "profit": -12181.658796428568
+      },
+      "review_list": {
+        "n": 450,
+        "lapsers": 128,
+        "lapser_share": 0.28444444444444444,
+        "profit_if_all_approved": -16920.94975138528
+      },
+      "by_spend_quartile": {
+        "Q1 (low)": {
+          "n": 763,
+          "lapser_recall_automatic": 0.9426048565121413,
+          "lapser_recall_if_review_approved": 0.9426048565121413,
+          "review_list": 0
+        },
+        "Q2": {
+          "n": 702,
+          "lapser_recall_automatic": 0.6899696048632219,
+          "lapser_recall_if_review_approved": 0.6899696048632219,
+          "review_list": 0
+        },
+        "Q3": {
+          "n": 650,
+          "lapser_recall_automatic": 0.3425925925925926,
+          "lapser_recall_if_review_approved": 0.6574074074074074,
+          "review_list": 179
+        },
+        "Q4 (top)": {
+          "n": 653,
+          "lapser_recall_automatic": 0.15555555555555556,
+          "lapser_recall_if_review_approved": 0.8222222222222222,
+          "review_list": 271
+        }
+      },
+      "holdout": {
+        "n": 131,
+        "share_of_proposed": 0.10808580858085809,
+        "mean_p_holdout": 0.4522495126708051,
+        "mean_p_treated": 0.44743532506120026,
+        "lapse_rate_holdout": 0.6641221374045801,
+        "lapse_rate_treated": 0.6059204440333025,
+        "profit_forgone": 452.1734333333337,
+        "profit_proposed": -1038.9145833333318,
+        "min_detectable_save_rate_one_quarter": 0.2062783243766105,
+        "quarters_to_detect_assumed_save_rate": 2
+      }
+    }
+  }
+}

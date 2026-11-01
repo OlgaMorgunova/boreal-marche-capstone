@@ -67,6 +67,15 @@ business:
   value_horizon_days: 365
   sensitivity_save_rates: [0.10, 0.20, 0.30]
 
+campaign:
+  # Served fairness mitigation (D5 §7 "adopted", built in D7; retention/campaign.py). The automatic
+  # proposal stays p_return <= threshold. Customers of these spend quartiles that M2's group
+  # thresholds would add go to a human "high-value review" list instead of getting a coupon, and a
+  # hash-chosen share of proposed customers is held out to measure the save rate.
+  campaign_id: "2026Q4"         # changes every quarter: a new id draws a new hold-out
+  holdout_share: 0.10
+  review_quartiles: ["Q3", "Q4 (top)"]
+
 recommend:
   holdout_start: "2011-09-01"
   validation_start: "2011-07-01"   # tuning slice inside the mining period

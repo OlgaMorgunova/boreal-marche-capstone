@@ -13,6 +13,7 @@
 !artifacts/reference_profile.json
 !artifacts/demo_customers.json
 !artifacts/catalogue.json
+!artifacts/campaign_policy.json
 !artifacts/index/
 **/__pycache__
 **/*.pyc
