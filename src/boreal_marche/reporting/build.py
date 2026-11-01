@@ -1,4 +1,4 @@
-"""Render D1-D5 from templates: ``reports/src/*.md`` -> ``reports/977_D<n>_*.md|html|pdf``.
+"""Render D1-D6 from templates: ``reports/src/*.md`` -> ``reports/977_D<n>_*.md|html|pdf``.
 
 Templates contain ``{{ key }}`` placeholders. Every value is computed here from pipeline outputs
 (``reports/metrics/*.json``, artifacts, params) so a number in a report cannot drift from the code
@@ -27,6 +27,10 @@ REPORTS = {
     "D3": ("D3_Implementation_Validation.md", "977_D3_Morgunova_ImplementationValidation"),
     "D4": ("D4_Deployment_Demonstration.md", "977_D4_Morgunova_DeploymentDemonstration"),
     "D5": ("D5_Optimization_Ethics.md", "977_D5_Morgunova_OptimizationEthics"),
+    "D6": ("D6_Technical_Report.md", "977_D6_Morgunova_TechnicalReport"),
+    "D6-ES": ("D6_Executive_Summary.md", "977_D6_Morgunova_ExecutiveSummary"),
+    "D6-DECK": ("D6_Presentation.md", "977_D6_Morgunova_Presentation"),
+    "D6-CARDS": ("D6_Demo_Cards.md", "977_D6_Morgunova_DemoVideoCards"),
 }
 FAMILY_RATIONALE = {
     "recency": "Time since the last order is the classical strongest churn signal (the R of RFM).",
@@ -657,6 +661,51 @@ blockquote { border-left: 3px solid #eb6834; margin: 6pt 0; padding: 2pt 8pt; ba
 .pagebreak { page-break-before: always; }
 """
 
+# Two-page executive summary (one page per language): larger type, no tables wider than a page.
+CSS_ES = (
+    CSS
+    + """
+@page { margin: 13mm 17mm 11mm 17mm; @bottom-center { content: none; } }
+body { font-size: 9.7pt; line-height: 1.36; }
+h1 { font-size: 15.5pt; }
+h2 { font-size: 11pt; margin: 7pt 0 2pt; }
+ul { margin: 2pt 0; } li { margin: 1.5pt 0; }
+table { font-size: 8.8pt; margin: 3pt 0 4pt; }
+.lang { font-size: 8pt; color: #52514e; text-transform: uppercase; letter-spacing: .08em; }
+.decision { border: 1.5px solid #2a78d6; background: #f3f7fd; padding: 5pt 9pt; margin-top: 8pt; }
+"""
+)
+
+# 16:9 deck: one <section class="slide"> per page.
+CSS_DECK = """
+@page { size: 13.333in 7.5in; margin: 0; }
+body { margin: 0; font-family: 'DejaVu Sans', Arial, sans-serif; color: #0b0b0b; }
+.slide { box-sizing: border-box; width: 13.333in; height: 7.5in; padding: 0.45in 0.6in 0.35in;
+  page-break-after: always; overflow: hidden; position: relative; background: #fcfcfb;
+  font-size: 17pt; line-height: 1.32; }
+.slide:last-child { page-break-after: auto; }
+.slide h1 { font-size: 30pt; color: #184f95; margin: 0 0 4pt; }
+.slide h2 { font-size: 25pt; color: #184f95; margin: 0 0 2pt; border: none; }
+.fr { font-size: 12.5pt; color: #52514e; font-style: italic; margin: 0 0 12pt; }
+.slide ul { margin: 6pt 0; padding-left: 22pt; } .slide li { margin: 5pt 0; }
+.slide table { border-collapse: collapse; width: 100%; font-size: 13pt; margin: 6pt 0; }
+.slide th { background: #e8f0fb; color: #0d366b; text-align: left; }
+.slide th, .slide td { border: 1px solid #d6d5d0; padding: 4pt 7pt; }
+.slide img { display: block; margin: 4pt auto; max-width: 100%; max-height: 4.6in; }
+.slide code { font-family: 'DejaVu Sans Mono', monospace; font-size: 85%; background: #f4f3ef; }
+.cols { display: flex; gap: 0.35in; } .cols > div { flex: 1; }
+.big { font-size: 40pt; font-weight: 700; color: #2a78d6; line-height: 1.1; }
+.note { font-size: 11.5pt; color: #52514e; }
+.foot { position: absolute; bottom: 0.18in; left: 0.6in; right: 0.6in; font-size: 9.5pt;
+  color: #a3a29c; display: flex; justify-content: space-between; }
+.title-slide { background: #184f95; color: #fcfcfb; }
+.title-slide h1, .title-slide .fr { color: #fcfcfb; } .title-slide a { color: #cde2fb; }
+.title-slide table { color: #0b0b0b; background: #fcfcfb; }
+blockquote { border-left: 4px solid #eb6834; margin: 8pt 0; padding: 4pt 12pt;
+  background: #fdf5f1; }
+"""
+STYLES = {"D6-ES": CSS_ES, "D6-DECK": CSS_DECK, "D6-CARDS": CSS_DECK}
+
 
 def find_browser() -> str:
     """Chromium-based browser for headless PDF printing: CHROME_PATH, PATH, then the usual
@@ -707,10 +756,12 @@ def to_pdf(html_path: Path, pdf_path: Path) -> None:
 def run(only: list[str] | None = None) -> None:
     from boreal_marche.reporting.d4 import d4_context
     from boreal_marche.reporting.d5 import d5_context
+    from boreal_marche.reporting.d6 import d6_context
 
     paths = Paths()
     src = paths.reports / "src"
     ctx = context(paths) | d4_context(paths) | d5_context(paths)
+    ctx |= d6_context(paths, ctx)
     from pypdf import PdfReader
 
     for code, (tpl, out) in REPORTS.items():
@@ -724,7 +775,7 @@ def run(only: list[str] | None = None) -> None:
         )
         html = (
             f"<!doctype html><html lang='en'><head><meta charset='utf-8'><title>{code}</title>"
-            f"<style>{CSS}</style></head><body>{body}</body></html>"
+            f"<style>{STYLES.get(code, CSS)}</style></head><body>{body}</body></html>"
         )
         html_path = paths.reports / f"{out}.html"
         html_path.write_text(html, encoding="utf-8")
@@ -736,5 +787,6 @@ def run(only: list[str] | None = None) -> None:
 if __name__ == "__main__":
     import sys
 
-    # `python -m boreal_marche.reporting.build D4` rebuilds one report and leaves the others as is.
+    # `python -m boreal_marche.reporting.build D4` rebuilds one report and leaves the others as is;
+    # `... build D6 D6-ES D6-DECK D6-CARDS` rebuilds the D6 documents.
     run(sys.argv[1:] or None)
