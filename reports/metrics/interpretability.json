@@ -1,0 +1,310 @@
+{
+  "generated_at": "2026-11-01T15:44:17+00:00",
+  "snapshot": "validation",
+  "n": 2658,
+  "model_version": "0.9.5+xgboost",
+  "method": "XGBoost TreeSHAP (pred_contribs) x Platt slope, folded to input features",
+  "calibration_slope": 1.237419253084064,
+  "base_logit": -0.18112611770629883,
+  "base_p": 0.45484185218811035,
+  "additivity_max_abs_error": 4.2304429177519864e-06,
+  "global": [
+    {
+      "feature": "active_months_180d",
+      "label": "Distinct calendar months with an order in the observation window",
+      "mean_abs_effect": 0.3233840763568878,
+      "perm_pr_auc_drop": 0.01509879138089847,
+      "perm_std": 0.004151660535262139,
+      "share_top1": 0.5003762227238525,
+      "share_top3": 0.7618510158013544
+    },
+    {
+      "feature": "mean_gap_days",
+      "label": "Mean days between consecutive distinct order days (lifetime)",
+      "mean_abs_effect": 0.21072739362716675,
+      "perm_pr_auc_drop": 0.01407242296659963,
+      "perm_std": 0.0036713008536715087,
+      "share_top1": 0.172686230248307,
+      "share_top3": 0.6192626034612491
+    },
+    {
+      "feature": "revenue_180d",
+      "label": "Capped revenue in the observation window",
+      "mean_abs_effect": 0.18203343451023102,
+      "perm_pr_auc_drop": 0.002156055758943265,
+      "perm_std": 0.0013006514154352046,
+      "share_top1": 0.11060948081264109,
+      "share_top3": 0.49134687735139204
+    },
+    {
+      "feature": "std_gap_days",
+      "label": "Std of days between distinct order days (lifetime)",
+      "mean_abs_effect": 0.1804935187101364,
+      "perm_pr_auc_drop": 0.009329869114673284,
+      "perm_std": 0.00203375903195385,
+      "share_top1": 0.08314522197140707,
+      "share_top3": 0.40255831452219715
+    },
+    {
+      "feature": "tenure_days",
+      "label": "Days from first order in history to cutoff",
+      "mean_abs_effect": 0.16127195954322815,
+      "perm_pr_auc_drop": 0.004264868234639607,
+      "perm_std": 0.0010880389347314987,
+      "share_top1": 0.0981941309255079,
+      "share_top3": 0.3611738148984199
+    },
+    {
+      "feature": "season_q",
+      "label": "Calendar quarter of the cutoff (1-4)",
+      "mean_abs_effect": 0.14352595806121826,
+      "perm_pr_auc_drop": 0.0,
+      "perm_std": 0.0,
+      "share_top1": 0.0,
+      "share_top3": 0.0
+    },
+    {
+      "feature": "revenue_90d",
+      "label": "Capped revenue in [T-90d, T)",
+      "mean_abs_effect": 0.12110932171344757,
+      "perm_pr_auc_drop": 0.002636539261176951,
+      "perm_std": 0.0006923264532408765,
+      "share_top1": 0.004514672686230248,
+      "share_top3": 0.14409330323551542
+    },
+    {
+      "feature": "orders_180d",
+      "label": "Distinct invoices in the observation window",
+      "mean_abs_effect": 0.09875326603651047,
+      "perm_pr_auc_drop": 0.0005290223822280726,
+      "perm_std": 0.0006217617369662616,
+      "share_top1": 0.0003762227238525207,
+      "share_top3": 0.028969149736644093
+    },
+    {
+      "feature": "recency_days",
+      "label": "Days from last order to cutoff",
+      "mean_abs_effect": 0.08029000461101532,
+      "perm_pr_auc_drop": 0.0009194317463230739,
+      "perm_std": 0.0009845778271747045,
+      "share_top1": 0.005267118133935289,
+      "share_top3": 0.07298720842738901
+    },
+    {
+      "feature": "overdue_ratio",
+      "label": "recency_days / mean_gap_days",
+      "mean_abs_effect": 0.07049213349819183,
+      "perm_pr_auc_drop": 0.004707584157718703,
+      "perm_std": 0.00032613214713938095,
+      "share_top1": 0.02069224981188864,
+      "share_top3": 0.05981941309255079
+    },
+    {
+      "feature": "orders_90d",
+      "label": "Distinct invoices in [T-90d, T)",
+      "mean_abs_effect": 0.06461387872695923,
+      "perm_pr_auc_drop": 0.0011840234902951608,
+      "perm_std": 0.001014393000469551,
+      "share_top1": 0.0,
+      "share_top3": 0.004138449962377728
+    },
+    {
+      "feature": "tenure_censored",
+      "label": "1 if first observed order is within 30 days of the data start (true tenure unknown)",
+      "mean_abs_effect": 0.051902156323194504,
+      "perm_pr_auc_drop": 0.00018341390551750435,
+      "perm_std": 0.0003876465469771448,
+      "share_top1": 0.0,
+      "share_top3": 0.004890895410082769
+    },
+    {
+      "feature": "mean_unit_price_180d",
+      "label": "Mean unit price of lines in window",
+      "mean_abs_effect": 0.04395701363682747,
+      "perm_pr_auc_drop": 0.001236102064162603,
+      "perm_std": 0.00044294713963615053,
+      "share_top1": 0.004138449962377728,
+      "share_top3": 0.04589917231000752
+    },
+    {
+      "feature": "revenue_trend",
+      "label": "(revenue last 90d - revenue previous 90d) / revenue_180d",
+      "mean_abs_effect": 0.03726926073431969,
+      "perm_pr_auc_drop": 0.0005324144496247962,
+      "perm_std": 0.00031059638670333993,
+      "share_top1": 0.0,
+      "share_top3": 0.0
+    },
+    {
+      "feature": "aov_180d",
+      "label": "Mean order value in the observation window",
+      "mean_abs_effect": 0.037063974887132645,
+      "perm_pr_auc_drop": -0.00016469641180349992,
+      "perm_std": 0.0004786461000024694,
+      "share_top1": 0.0,
+      "share_top3": 0.0030097817908201654
+    },
+    {
+      "feature": "max_order_value_180d",
+      "label": "Largest order value in window",
+      "mean_abs_effect": 0.028927253559231758,
+      "perm_pr_auc_drop": -0.00025345052321037456,
+      "perm_std": 0.00023976729984064293,
+      "share_top1": 0.0,
+      "share_top3": 0.0
+    },
+    {
+      "feature": "revenue_30d",
+      "label": "Capped revenue in [T-30d, T)",
+      "mean_abs_effect": 0.019858848303556442,
+      "perm_pr_auc_drop": -0.00014711251273695768,
+      "perm_std": 0.00021127764714773005,
+      "share_top1": 0.0,
+      "share_top3": 0.0
+    },
+    {
+      "feature": "orders_trend",
+      "label": "orders in last 90d minus orders in the previous 90d",
+      "mean_abs_effect": 0.010761101730167866,
+      "perm_pr_auc_drop": 0.00017349927840939471,
+      "perm_std": 7.581012049717835e-05,
+      "share_top1": 0.0,
+      "share_top3": 0.0
+    },
+    {
+      "feature": "orders_30d",
+      "label": "Distinct invoices in [T-30d, T)",
+      "mean_abs_effect": 0.0031021584291011095,
+      "perm_pr_auc_drop": -7.234024440871956e-05,
+      "perm_std": 6.322256722515928e-05,
+      "share_top1": 0.0,
+      "share_top3": 0.0
+    }
+  ],
+  "direction_checks": {
+    "recency_days": {
+      "expected": -1,
+      "corr_value_vs_effect": -0.9446375232633953,
+      "agrees": true
+    },
+    "orders_90d": {
+      "expected": 1,
+      "corr_value_vs_effect": 0.8289950337961051,
+      "agrees": true
+    },
+    "orders_180d": {
+      "expected": 1,
+      "corr_value_vs_effect": 0.757416738904696,
+      "agrees": true
+    },
+    "active_months_180d": {
+      "expected": 1,
+      "corr_value_vs_effect": 0.9829106300641238,
+      "agrees": true
+    },
+    "overdue_ratio": {
+      "expected": -1,
+      "corr_value_vs_effect": -0.3865498568405661,
+      "agrees": true
+    },
+    "revenue_180d": {
+      "expected": 1,
+      "corr_value_vs_effect": 0.302274335422864,
+      "agrees": true
+    }
+  },
+  "stability": {
+    "noise": 0.05,
+    "top3_set_identical": 0.7016553799849511,
+    "top3_mean_jaccard": 0.8441309255079006,
+    "top1_identical": 0.827313769751693
+  },
+  "n_features_ever_top3": 13,
+  "season_q_in_top3_if_not_excluded": 0.318660647103085,
+  "examples": [
+    {
+      "p_return": 0.11168898771842932,
+      "send_coupon": true,
+      "y": 0,
+      "factors": [
+        {
+          "feature": "mean_gap_days",
+          "label": "Mean days between consecutive distinct order days (lifetime)",
+          "value": 347.0,
+          "effect": -0.4258,
+          "direction": "lowers P(return)"
+        },
+        {
+          "feature": "revenue_180d",
+          "label": "Capped revenue in the observation window",
+          "value": 91.80000000000001,
+          "effect": -0.3566,
+          "direction": "lowers P(return)"
+        },
+        {
+          "feature": "active_months_180d",
+          "label": "Distinct calendar months with an order in the observation window",
+          "value": 1.0,
+          "effect": -0.295,
+          "direction": "lowers P(return)"
+        }
+      ]
+    },
+    {
+      "p_return": 0.6097908750962864,
+      "send_coupon": true,
+      "y": 1,
+      "factors": [
+        {
+          "feature": "tenure_days",
+          "label": "Days from first order in history to cutoff",
+          "value": 504.51944444444445,
+          "effect": 0.2119,
+          "direction": "raises P(return)"
+        },
+        {
+          "feature": "std_gap_days",
+          "label": "Std of days between distinct order days (lifetime)",
+          "value": 35.75844888507703,
+          "effect": 0.1789,
+          "direction": "raises P(return)"
+        },
+        {
+          "feature": "revenue_180d",
+          "label": "Capped revenue in the observation window",
+          "value": 636.5,
+          "effect": 0.111,
+          "direction": "raises P(return)"
+        }
+      ]
+    },
+    {
+      "p_return": 0.9882354461556746,
+      "send_coupon": false,
+      "y": 1,
+      "factors": [
+        {
+          "feature": "active_months_180d",
+          "label": "Distinct calendar months with an order in the observation window",
+          "value": 6.0,
+          "effect": 1.1071,
+          "direction": "raises P(return)"
+        },
+        {
+          "feature": "mean_gap_days",
+          "label": "Mean days between consecutive distinct order days (lifetime)",
+          "value": 4.395161290322581,
+          "effect": 0.5431,
+          "direction": "raises P(return)"
+        },
+        {
+          "feature": "std_gap_days",
+          "label": "Std of days between distinct order days (lifetime)",
+          "value": 2.0154627800275473,
+          "effect": 0.5001,
+          "direction": "raises P(return)"
+        }
+      ]
+    }
+  ]
+}

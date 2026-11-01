@@ -16,7 +16,7 @@ import numpy as np
 
 from boreal_marche import tracking
 from boreal_marche.config import Params, Paths, load_params
-from boreal_marche.features import FEATURES
+from boreal_marche.features import MODEL_FEATURES
 from boreal_marche.reporting import style
 from boreal_marche.retention.cv import cross_validate, load_gold, make_folds, split_xy, summarise
 from boreal_marche.retention.models import baselines, build, is_baseline, model_zoo
@@ -58,7 +58,7 @@ def run(params: Params | None = None, paths: Paths | None = None) -> dict[str, o
             {
                 "n_folds": len(folds),
                 "n_rows": len(train),
-                "n_features": len(FEATURES),
+                "n_features": len(MODEL_FEATURES),
                 "cutoffs": ",".join(params.windows.cutoffs.train),
             }
         )

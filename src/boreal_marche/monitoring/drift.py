@@ -75,7 +75,9 @@ def feature_drift(name: str, ref: dict[str, Any], values: pd.Series, m: Monitori
         out["psi"] = psi(expected, numeric_shares(values, ref["bin_edges"]))
         live = pd.to_numeric(values, errors="coerce").dropna().to_numpy(dtype=float)
         if len(live) >= 2:
-            ks = ks_2samp(np.asarray(ref["sample"]), live)
+            # Asymptotic p-value: only the statistic is thresholded, and the exact method was the
+            # single largest cost of a report (D5 §2).
+            ks = ks_2samp(np.asarray(ref["sample"]), live, method="asymp")
             out["ks"], out["ks_pvalue"] = float(ks.statistic), float(ks.pvalue)
         else:
             out["ks"], out["ks_pvalue"] = None, None

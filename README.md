@@ -10,16 +10,17 @@ College LEA.EU · **Instructor:** Steve Ataky, Ph.D. · **Individual project**
 > **Live:** application and API docs URLs, and the 3–5 min demo video, are added here after the
 > first deployment (`docs/runbooks/AWS_APPRUNNER_DEPLOY.md`). Locally: `make up` → http://localhost:8501.
 
-## Results so far (v0.9)
+## Results so far (v0.9.5)
 
 | Head | Metric (held-out, temporal) | Result | Baseline |
 |---|---|---|---|
-| A — Retention | PR-AUC, test snapshot 2011-09-01 (reported once) | **0.850** [0.835, 0.865] | 0.712 recency deciles · 0.673 "ordered in 60 days" rule · 0.607 dummy |
-| A — Retention | Calibration error (ECE) | **0.023** (sigmoid) | 0.053 uncalibrated (validation) |
-| A — Decision | Coupon campaign vs. coupon-to-everyone (test quarter, stated assumptions) | **+$55k** per quarter | status quo loses $55k |
+| A — Retention | PR-AUC, test snapshot 2011-09-01 (3 looks, each after the choices were fixed) | **0.847** [0.832, 0.863] with 19 of 37 features (v0.9: 0.850 with 37) | 0.712 recency deciles · 0.673 "ordered in 60 days" rule · 0.607 dummy |
+| A — Retention | Calibration error (ECE) | **0.041** (sigmoid) | 0.053 uncalibrated (validation) |
+| A — Decision | Coupon campaign vs. coupon-to-everyone (test quarter, stated assumptions) | **+$54k** per quarter | status quo loses $55k |
 | B — Recommend | Hit-rate@5, holdout from 2011-09-01 | **0.145**, 92% of baskets served by rules | 0.017 top-5 best-sellers (8.6×) |
 | C — Assistant | Tool choice, 40-question golden set / 20 paraphrases | **97.5% / 95%** local LLM (Ollama llama3.1:8b), 100% out-of-scope refusal | rule baseline 100% / **35%** (keywords overfit the golden set) |
-| Platform | API image size · `/predict` p95 in-network | **823 MB** (D3: 1,437 MB) · 13.5 ms | — |
+| Platform | API image size · `/predict` warm p50 (D5) | **823 MB** (D3: 1,437 MB) · 4.8 ms | 7.8 ms at v0.9 |
+| Fairness | Lapser recall, top spend quartile vs overall (validation) | 0.46 vs 0.89 — **flagged**, mitigations in D5 §7 | — |
 | Monitoring | Shifted cohort (Locust) | 4 of 6 checks red, 7 alert transitions | normal traffic: amber at most |
 
 Honest findings: tuning adds < 0.004 PR-AUC (feature-limited problem); the model is weak for
@@ -72,7 +73,7 @@ Environment variables: `.env.example`.
 - [x] D2 — Model Design and Architecture · [`reports/977_D2_Morgunova_DesignArchitecture.pdf`](reports/977_D2_Morgunova_DesignArchitecture.pdf)
 - [x] D3 — Model Implementation and Validation · [`reports/977_D3_Morgunova_ImplementationValidation.pdf`](reports/977_D3_Morgunova_ImplementationValidation.pdf) (SageMaker evidence pending)
 - [x] D4 — Deployment Demonstration and Dashboard · [`reports/977_D4_Morgunova_DeploymentDemonstration.pdf`](reports/977_D4_Morgunova_DeploymentDemonstration.pdf) (live URLs, CI/CD run and video pending the AWS bootstrap)
-- [ ] D5 — Optimization and Ethics
+- [x] D5 — Optimization and Ethics · [`reports/977_D5_Morgunova_OptimizationEthics.pdf`](reports/977_D5_Morgunova_OptimizationEthics.pdf) (total AWS spend pending Cost Explorer; SageMaker quota pending)
 - [ ] D6 — Communication and Presentation
 - [ ] D7 — Complete System and Defence
 
@@ -85,13 +86,13 @@ Environment variables: `.env.example`.
 | `tests/` | unit, API contract + golden prediction, data quality, end-to-end smoke |
 | `data/` | DVC-tracked raw file, generated bronze/silver/gold (not in Git), `manifest.json` |
 | `artifacts/` | `model.joblib`, `model_meta.json`, `rules.json`, `index/`, `reference_profile.json`, `demo_customers.json`, `catalogue.json` |
-| `reports/` | D1–D3, cleaning report, feature spec, `metrics/*.json`, `figures/` |
+| `reports/` | D1–D5, cleaning report, feature spec, `metrics/*.json`, `figures/` |
 | `docs/` | promotion policy, [monitoring policy](docs/MONITORING.md), AWS runbooks, `corpus/` (Head C policies) |
 | `docker/`, `.github/workflows/` | two images, compose stack; `ci.yml`, `cd.yml` (OIDC → ECR → App Runner), `retrain.yml`, `monitor.yml` |
 | `frontend/`, `loadtest/` | Streamlit interface; Locust traffic simulation |
 | `infra/aws/` | IAM trust/permission policies and the one-time bootstrap script |
 | `scripts/run.py` | cross-platform task runner (the Makefile delegates to it) |
-| `docs/COMMIT_PLAN_TAGS.md`, `docs/COMMIT_PLAN_D4.md` | how the work is split into the `v0.1`…`v0.9` commits and tags |
+| `docs/COMMIT_PLAN_TAGS.md`, `docs/COMMIT_PLAN_D4.md`, `docs/COMMIT_PLAN_D5.md` | how the work is split into the `v0.1`…`v0.9.5` commits and tags |
 | `MASTER_PROMPT_D1_D3.md`, `PLAN.md` | the specification this work was executed from, and its progress log |
 
 ## Data provenance

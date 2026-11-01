@@ -31,7 +31,7 @@ import numpy as np
 import pandas as pd
 
 from boreal_marche.config import Params, Paths, load_params
-from boreal_marche.features import CATEGORICAL, FEATURES, NUMERIC
+from boreal_marche.features import CATEGORICAL, COLLECTED, FEATURES, NUMERIC
 from boreal_marche.monitoring.drift import feature_drift
 from boreal_marche.retention.cv import load_gold
 from boreal_marche.utils import git_commit, read_json, utc_now, write_json
@@ -123,18 +123,20 @@ def run(params: Params | None = None, paths: Paths | None = None) -> dict[str, A
     model = joblib.load(paths.model_file)
     p_ref = model.predict_proba(ref[FEATURES])[:, 1]
     rules_eval = read_json(paths.metrics / "rules_evaluation.json")
+    # Only what the API stores (model inputs + region, D5 minimisation) can be monitored.
+    num, cat = [f for f in NUMERIC if f in COLLECTED], [f for f in CATEGORICAL if f in COLLECTED]
     features = {
-        **{f: numeric_profile(ref[f], n_sample, params.seed) for f in NUMERIC},
-        **{f: categorical_profile(ref[f]) for f in CATEGORICAL},
+        **{f: numeric_profile(ref[f], n_sample, params.seed) for f in num},
+        **{f: categorical_profile(ref[f]) for f in cat},
     }
     pooled = {
-        **{f: numeric_profile(train[f], n_sample, params.seed) for f in NUMERIC},
-        **{f: categorical_profile(train[f]) for f in CATEGORICAL},
+        **{f: numeric_profile(train[f], n_sample, params.seed) for f in num},
+        **{f: categorical_profile(train[f]) for f in cat},
     }
     known_shift = sorted(
         (
             feature_drift(f, pooled[f], ref[f], params.monitoring)
-            for f in FEATURES
+            for f in COLLECTED
             if f not in params.monitoring.exclude_features
         ),
         key=lambda d: -d["psi"],
@@ -170,7 +172,7 @@ def run(params: Params | None = None, paths: Paths | None = None) -> dict[str, A
         {
             "ref": customer_ref(int(row["customer_id"])),
             "region": str(row["region"]),
-            "features": {f: json_value(row[f]) for f in FEATURES},
+            "features": {f: json_value(row[f]) for f in COLLECTED},
         }
         for _, row in demo.sort_values("customer_id").iterrows()
     ]

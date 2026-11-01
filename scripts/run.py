@@ -7,6 +7,8 @@
     python scripts/run.py notebook         # re-execute the walkthrough notebook, outputs saved
     python scripts/run.py api              # D4: API on :8000 (second terminal: `frontend`, :8501)
     python scripts/run.py simulate         # D4: Locust traffic, normal then shifted cohort
+    python scripts/run.py minimise explain fairness   # D5: ablation, explanations, fairness audit
+    python scripts/run.py latency --label after       # D5: latency profile (see the script)
     python scripts/run.py --list
 
 Run it with the project interpreter: `.venv/bin/python` (Linux/macOS) or `.venv\\Scripts\\python`
@@ -44,6 +46,11 @@ STAGES: dict[str, list[list[str]]] = {
     "simulate": [[sys.executable, "scripts/simulate_traffic.py"]],
     "loadtest": [M + ["locust", "-f", "loadtest/locustfile.py", "--host", "http://127.0.0.1:8000"]],
     "backfill": [M + ["boreal_marche.monitoring.backfill", "--replay-validation"]],
+    "minimise": [M + ["boreal_marche.retention.minimise"]],
+    "explain": [M + ["boreal_marche.retention.explain"]],
+    "fairness": [M + ["boreal_marche.retention.fairness"]],
+    "latency": [[sys.executable, "scripts/latency_profile.py"]],
+    "scalability": [[sys.executable, "scripts/scalability_probe.py"]],
     "frontend": [M + ["streamlit", "run", "frontend/app.py", "--server.port", "8501"]],
     "figures": [M + ["boreal_marche.reporting.figures"]],
     "reports": [M + ["boreal_marche.reporting.figures"], M + ["boreal_marche.reporting.build"]],

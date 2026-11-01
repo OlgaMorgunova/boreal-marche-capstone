@@ -1,0 +1,208 @@
+{
+  "generated_at": "2026-11-01T15:30:52+00:00",
+  "rule": "remove a group if its CV PR-AUC loss < 0.005",
+  "full": {
+    "cv_pr_auc": 0.7808624491255443,
+    "cv_folds": [
+      0.7905147456589058,
+      0.7623118566773184,
+      0.7908253266085756,
+      0.7874155266892586,
+      0.7732447899936629
+    ],
+    "val_pr_auc": 0.8093592444825716,
+    "n_features": 37
+  },
+  "groups": [
+    {
+      "group": "time_of_day",
+      "features": [
+        "weekend_share_180d",
+        "mean_order_hour_180d"
+      ],
+      "why_audited": "When a person shops (weekend, hour) is behavioural profiling beyond what a re-order prediction needs.",
+      "cv_pr_auc": 0.7809536550099176,
+      "cv_folds": [
+        0.7913257055575247,
+        0.7630796026113809,
+        0.7906571577174395,
+        0.7866595806309729,
+        0.7730462285322703
+      ],
+      "val_pr_auc": 0.8093325571169371,
+      "n_features": 35,
+      "cv_loss": -9.120588437339094e-05,
+      "val_loss": 2.6687365634492366e-05,
+      "folds_worse": 3,
+      "necessary": false
+    },
+    {
+      "group": "region",
+      "features": [
+        "region"
+      ],
+      "why_audited": "Needed for delivery; as a model input it is a proxy for geography.",
+      "cv_pr_auc": 0.7809353639887716,
+      "cv_folds": [
+        0.7922637802184365,
+        0.7619826780253588,
+        0.7909096692425597,
+        0.7867196922222575,
+        0.7728010002352452
+      ],
+      "val_pr_auc": 0.8095379801695751,
+      "n_features": 36,
+      "cv_loss": -7.291486322735796e-05,
+      "val_loss": -0.00017873568700355058,
+      "folds_worse": 3,
+      "necessary": false
+    },
+    {
+      "group": "cancellations",
+      "features": [
+        "cancel_lines_180d",
+        "cancel_rate_180d"
+      ],
+      "why_audited": "Dissatisfaction signal.",
+      "cv_pr_auc": 0.7807843731443507,
+      "cv_folds": [
+        0.7914039891598826,
+        0.7620388530587899,
+        0.7907233952578601,
+        0.786828583125149,
+        0.772927045120072
+      ],
+      "val_pr_auc": 0.8092109060409356,
+      "n_features": 35,
+      "cv_loss": 7.807598119358161e-05,
+      "val_loss": 0.00014833844163597565,
+      "folds_worse": 4,
+      "necessary": false
+    },
+    {
+      "group": "category_mix",
+      "features": [
+        "share_seasonal",
+        "share_kitchen",
+        "share_home_decor",
+        "share_bags_wrap",
+        "share_lighting",
+        "category_entropy_180d"
+      ],
+      "why_audited": "What kind of products a person buys.",
+      "cv_pr_auc": 0.781018853696037,
+      "cv_folds": [
+        0.7907211613235581,
+        0.7644469819687736,
+        0.7913664991687696,
+        0.7858115540560437,
+        0.7727480719630402
+      ],
+      "val_pr_auc": 0.8092775452776405,
+      "n_features": 31,
+      "cv_loss": -0.0001564045704927075,
+      "val_loss": 8.169920493106275e-05,
+      "folds_worse": 2,
+      "necessary": false
+    },
+    {
+      "group": "basket_shape",
+      "features": [
+        "lines_per_order_180d",
+        "units_per_line_180d",
+        "distinct_skus_180d",
+        "sku_repeat_rate_180d"
+      ],
+      "why_audited": "Size and breadth of orders.",
+      "cv_pr_auc": 0.7808497075437498,
+      "cv_folds": [
+        0.791291735079854,
+        0.7620468026511478,
+        0.7896680239034835,
+        0.7891503587724492,
+        0.7720916173118146
+      ],
+      "val_pr_auc": 0.8095941076525256,
+      "n_features": 33,
+      "cv_loss": 1.2741581794428747e-05,
+      "val_loss": -0.0002348631699540249,
+      "folds_worse": 3,
+      "necessary": false
+    },
+    {
+      "group": "outlier_lines",
+      "features": [
+        "outlier_line_share_180d"
+      ],
+      "why_audited": "Bulk-buying flag.",
+      "cv_pr_auc": 0.7808207413885613,
+      "cv_folds": [
+        0.790443766576529,
+        0.7619737941886926,
+        0.7912883726181693,
+        0.7871635100812635,
+        0.7732342634781519
+      ],
+      "val_pr_auc": 0.8096763074765692,
+      "n_features": 36,
+      "cv_loss": 4.1707736982976584e-05,
+      "val_loss": -0.00031706299399758553,
+      "folds_worse": 4,
+      "necessary": false
+    },
+    {
+      "group": "lifetime_value",
+      "features": [
+        "revenue_lifetime",
+        "orders_lifetime"
+      ],
+      "why_audited": "Long-run value; grows with observable history (monitoring finding, D4).",
+      "cv_pr_auc": 0.7800490882042539,
+      "cv_folds": [
+        0.7897928527709615,
+        0.762689339674618,
+        0.7892961953208373,
+        0.7869940628652008,
+        0.7714729903896511
+      ],
+      "val_pr_auc": 0.807784068380643,
+      "n_features": 35,
+      "cv_loss": 0.0008133609212903625,
+      "val_loss": 0.0015751761019285881,
+      "folds_worse": 4,
+      "necessary": false
+    }
+  ],
+  "removable": [
+    "weekend_share_180d",
+    "mean_order_hour_180d",
+    "region",
+    "cancel_lines_180d",
+    "cancel_rate_180d",
+    "share_seasonal",
+    "share_kitchen",
+    "share_home_decor",
+    "share_bags_wrap",
+    "share_lighting",
+    "category_entropy_180d",
+    "lines_per_order_180d",
+    "units_per_line_180d",
+    "distinct_skus_180d",
+    "sku_repeat_rate_180d",
+    "outlier_line_share_180d",
+    "revenue_lifetime",
+    "orders_lifetime"
+  ],
+  "combined_without_removable": {
+    "cv_pr_auc": 0.7801636824097636,
+    "cv_folds": [
+      0.789301298437079,
+      0.7635550433740507,
+      0.7884504091581683,
+      0.7885357634450215,
+      0.7709758976344993
+    ],
+    "val_pr_auc": 0.805173566517175,
+    "n_features": 19
+  }
+}

@@ -269,6 +269,23 @@ FEATURE_SPEC: list[FeatureDef] = [
 FEATURES: list[str] = [f.name for f in FEATURE_SPEC]
 CATEGORICAL: list[str] = [f.name for f in FEATURE_SPEC if f.dtype == "category"]
 NUMERIC: list[str] = [f.name for f in FEATURE_SPEC if f.dtype != "category"]
+# D5 data-minimisation audit (reports/metrics/minimisation.json, GOVERNANCE_LOI25.md §5): each of
+# these groups cost < 0.005 PR-AUC in grouped CV, all 18 together 0.0007, so the model no longer
+# uses them (from v0.9.5). They are still computed for the gold table (the D2/D3 history and the
+# leakage tests depend on it) but the API stops storing them.
+EXCLUDED_FROM_MODEL: list[str] = [
+    "weekend_share_180d", "mean_order_hour_180d", "region", "cancel_lines_180d",
+    "cancel_rate_180d", "share_seasonal", "share_kitchen", "share_home_decor", "share_bags_wrap",
+    "share_lighting", "category_entropy_180d", "lines_per_order_180d", "units_per_line_180d",
+    "distinct_skus_180d", "sku_repeat_rate_180d", "outlier_line_share_180d", "revenue_lifetime",
+    "orders_lifetime",
+]  # fmt: skip
+MODEL_FEATURES: list[str] = [f for f in FEATURES if f not in EXCLUDED_FROM_MODEL]
+MODEL_NUMERIC: list[str] = [f for f in NUMERIC if f in MODEL_FEATURES]
+MODEL_CATEGORICAL: list[str] = [f for f in CATEGORICAL if f in MODEL_FEATURES]
+# What the API stores per prediction: the model inputs, plus region — needed for delivery, and
+# kept for monitoring and the subgroup fairness audit although the model does not use it.
+COLLECTED: list[str] = MODEL_FEATURES + ["region"]
 ID_COLS = ["customer_id", "cutoff"]
 TARGET = "y"
 # Columns that exist in the gold table for evaluation but must never be used as features.

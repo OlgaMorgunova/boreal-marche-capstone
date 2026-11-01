@@ -1,0 +1,755 @@
+{
+  "runs": {
+    "before": {
+      "cold_start_to_ready_ms": {
+        "runs": [
+          6302,
+          5723,
+          5675
+        ],
+        "median": 5723
+      },
+      "first_call_ms": {
+        "/health": 21.1,
+        "/ready": 1.3,
+        "/version": 1.7,
+        "/customers": 1.7,
+        "/customers/{ref}/features": 1.5,
+        "/products": 11.2,
+        "/predict": 17.8,
+        "/predict/batch (100)": 18.8,
+        "/recommend": 4.5,
+        "/chat policy (rule)": 11.6,
+        "/chat retention tool (rule)": 16.9,
+        "/monitoring/report": 51.1
+      },
+      "warm_client_ms": {
+        "/health": {
+          "n": 200,
+          "p50": 0.61,
+          "p95": 0.9,
+          "p99": 1.24,
+          "mean": 0.67
+        },
+        "/ready": {
+          "n": 200,
+          "p50": 0.74,
+          "p95": 1.0,
+          "p99": 1.38,
+          "mean": 0.77
+        },
+        "/version": {
+          "n": 200,
+          "p50": 0.74,
+          "p95": 0.99,
+          "p99": 1.25,
+          "mean": 0.79
+        },
+        "/customers": {
+          "n": 200,
+          "p50": 0.94,
+          "p95": 1.31,
+          "p99": 1.71,
+          "mean": 1.0
+        },
+        "/customers/{ref}/features": {
+          "n": 200,
+          "p50": 0.76,
+          "p95": 1.08,
+          "p99": 1.5,
+          "mean": 0.81
+        },
+        "/products": {
+          "n": 200,
+          "p50": 10.19,
+          "p95": 12.61,
+          "p99": 13.04,
+          "mean": 10.53
+        },
+        "/predict": {
+          "n": 200,
+          "p50": 7.75,
+          "p95": 9.93,
+          "p99": 11.38,
+          "mean": 8.0
+        },
+        "/predict/batch (100)": {
+          "n": 20,
+          "p50": 13.65,
+          "p95": 16.01,
+          "p99": 16.23,
+          "mean": 13.98
+        },
+        "/recommend": {
+          "n": 200,
+          "p50": 1.24,
+          "p95": 1.72,
+          "p99": 2.96,
+          "mean": 1.33
+        },
+        "/chat policy (rule)": {
+          "n": 200,
+          "p50": 6.5,
+          "p95": 7.9,
+          "p99": 8.64,
+          "mean": 6.66
+        },
+        "/chat retention tool (rule)": {
+          "n": 200,
+          "p50": 11.59,
+          "p95": 15.43,
+          "p99": 17.39,
+          "mean": 12.67
+        },
+        "/monitoring/report": {
+          "n": 20,
+          "p50": 115.12,
+          "p95": 121.07,
+          "p99": 134.61,
+          "mean": 115.2
+        }
+      },
+      "warm_server_ms": {
+        "/ready": {
+          "n": 202,
+          "p50": 0.27,
+          "p95": 0.39,
+          "p99": 0.45,
+          "mean": 0.29
+        },
+        "/version": {
+          "n": 200,
+          "p50": 0.28,
+          "p95": 0.42,
+          "p99": 0.51,
+          "mean": 0.3
+        },
+        "/customers": {
+          "n": 200,
+          "p50": 0.4,
+          "p95": 0.55,
+          "p99": 0.7,
+          "mean": 0.42
+        },
+        "/customers/{ref}/features": {
+          "n": 200,
+          "p50": 0.29,
+          "p95": 0.43,
+          "p99": 0.58,
+          "mean": 0.32
+        },
+        "/products": {
+          "n": 200,
+          "p50": 9.41,
+          "p95": 11.48,
+          "p99": 11.84,
+          "mean": 9.67
+        },
+        "/predict": {
+          "n": 200,
+          "p50": 6.89,
+          "p95": 8.93,
+          "p99": 10.42,
+          "mean": 7.15
+        },
+        "/predict/batch": {
+          "n": 20,
+          "p50": 11.23,
+          "p95": 13.55,
+          "p99": 13.8,
+          "mean": 11.68
+        },
+        "/recommend": {
+          "n": 200,
+          "p50": 0.72,
+          "p95": 1.04,
+          "p99": 1.58,
+          "mean": 0.79
+        },
+        "/chat": {
+          "n": 401,
+          "p50": 8.75,
+          "p95": 13.3,
+          "p99": 15.82,
+          "mean": 8.72
+        },
+        "/monitoring/report": {
+          "n": 20,
+          "p50": 114.12,
+          "p95": 119.97,
+          "p99": 133.67,
+          "mean": 114.19
+        }
+      },
+      "startup_ms_reported_by_ready": {},
+      "artifact_load_ms": {
+        "model.joblib": 1409.9,
+        "rules.json -> RuleEngine": 29.7,
+        "embedding model (ONNX)": 1582.8,
+        "retrieval index": 1.0,
+        "reference_profile.json": 6.5,
+        "reload: model.joblib": 11.1,
+        "reload: rules.json -> RuleEngine": 26.2,
+        "reload: embedding model (ONNX)": 1006.8
+      },
+      "measured_at": "2026-11-01T15:35:47+00:00",
+      "note": "v0.9 code (commit b296495), unchanged; default model source (MLflow registry attempt, local fallback)",
+      "server_env": {},
+      "machine": "win32, Python 3.11.16, 16 logical CPUs"
+    },
+    "after_code": {
+      "cold_start_to_ready_ms": {
+        "runs": [
+          5748,
+          5187,
+          5684
+        ],
+        "median": 5684
+      },
+      "first_call_ms": {
+        "/health": 21.5,
+        "/ready": 1.2,
+        "/version": 1.6,
+        "/customers": 1.8,
+        "/customers/{ref}/features": 1.4,
+        "/products": 3.5,
+        "/predict": 9.3,
+        "/predict/batch (100)": 14.5,
+        "/recommend": 3.5,
+        "/chat policy (rule)": 10.9,
+        "/chat retention tool (rule)": 12.9,
+        "/monitoring/report": 69.3
+      },
+      "warm_client_ms": {
+        "/health": {
+          "n": 200,
+          "p50": 0.77,
+          "p95": 1.12,
+          "p99": 1.55,
+          "mean": 0.82
+        },
+        "/ready": {
+          "n": 200,
+          "p50": 0.77,
+          "p95": 1.13,
+          "p99": 1.27,
+          "mean": 0.82
+        },
+        "/version": {
+          "n": 200,
+          "p50": 0.7,
+          "p95": 0.99,
+          "p99": 1.33,
+          "mean": 0.75
+        },
+        "/customers": {
+          "n": 200,
+          "p50": 0.86,
+          "p95": 1.17,
+          "p99": 2.56,
+          "mean": 0.95
+        },
+        "/customers/{ref}/features": {
+          "n": 200,
+          "p50": 0.81,
+          "p95": 1.15,
+          "p99": 1.37,
+          "mean": 0.84
+        },
+        "/products": {
+          "n": 200,
+          "p50": 2.58,
+          "p95": 3.85,
+          "p99": 4.6,
+          "mean": 2.73
+        },
+        "/predict": {
+          "n": 200,
+          "p50": 4.55,
+          "p95": 6.25,
+          "p99": 7.97,
+          "mean": 4.75
+        },
+        "/predict/batch (100)": {
+          "n": 20,
+          "p50": 10.42,
+          "p95": 13.67,
+          "p99": 15.61,
+          "mean": 10.9
+        },
+        "/recommend": {
+          "n": 200,
+          "p50": 1.29,
+          "p95": 1.9,
+          "p99": 2.45,
+          "mean": 1.39
+        },
+        "/chat policy (rule)": {
+          "n": 200,
+          "p50": 6.53,
+          "p95": 7.71,
+          "p99": 8.18,
+          "mean": 6.61
+        },
+        "/chat retention tool (rule)": {
+          "n": 200,
+          "p50": 8.08,
+          "p95": 11.97,
+          "p99": 13.84,
+          "mean": 8.66
+        },
+        "/monitoring/report": {
+          "n": 20,
+          "p50": 0.95,
+          "p95": 1.16,
+          "p99": 1.42,
+          "mean": 1.0
+        }
+      },
+      "warm_server_ms": {
+        "/ready": {
+          "n": 202,
+          "p50": 0.28,
+          "p95": 0.47,
+          "p99": 0.55,
+          "mean": 0.31
+        },
+        "/version": {
+          "n": 200,
+          "p50": 0.26,
+          "p95": 0.4,
+          "p99": 0.74,
+          "mean": 0.3
+        },
+        "/customers": {
+          "n": 200,
+          "p50": 0.37,
+          "p95": 0.58,
+          "p99": 0.77,
+          "mean": 0.41
+        },
+        "/customers/{ref}/features": {
+          "n": 200,
+          "p50": 0.31,
+          "p95": 0.51,
+          "p99": 0.71,
+          "mean": 0.34
+        },
+        "/products": {
+          "n": 200,
+          "p50": 1.93,
+          "p95": 2.73,
+          "p99": 3.67,
+          "mean": 2.05
+        },
+        "/predict": {
+          "n": 200,
+          "p50": 3.81,
+          "p95": 5.16,
+          "p99": 6.17,
+          "mean": 3.96
+        },
+        "/predict/batch": {
+          "n": 20,
+          "p50": 8.22,
+          "p95": 10.53,
+          "p99": 11.13,
+          "mean": 8.5
+        },
+        "/recommend": {
+          "n": 200,
+          "p50": 0.75,
+          "p95": 1.1,
+          "p99": 1.24,
+          "mean": 0.8
+        },
+        "/chat": {
+          "n": 401,
+          "p50": 6.4,
+          "p95": 10.08,
+          "p99": 12.08,
+          "mean": 6.71
+        },
+        "/monitoring/report": {
+          "n": 20,
+          "p50": 0.4,
+          "p95": 0.51,
+          "p99": 0.59,
+          "mean": 0.41
+        }
+      },
+      "startup_ms_reported_by_ready": {
+        "engine": 21.2,
+        "customers": 2.6,
+        "catalogue": 11.4,
+        "profile": 6.4,
+        "assistant": 1409.2,
+        "model": 2829.1,
+        "warm_up": 22.5,
+        "total": 2981.2
+      },
+      "artifact_load_ms": {
+        "model.joblib": 1397.3,
+        "rules.json -> RuleEngine": 27.5,
+        "embedding model (ONNX)": 1505.7,
+        "retrieval index": 1.2,
+        "reference_profile.json": 6.2,
+        "reload: model.joblib": 11.0,
+        "reload: rules.json -> RuleEngine": 25.9,
+        "reload: embedding model (ONNX)": 981.4
+      },
+      "measured_at": "2026-11-01T15:36:41+00:00",
+      "note": "D5 code changes, v0.9 model (37 features); same model source as before",
+      "server_env": {},
+      "machine": "win32, Python 3.11.16, 16 logical CPUs"
+    },
+    "after": {
+      "cold_start_to_ready_ms": {
+        "runs": [
+          6294,
+          5718,
+          6232
+        ],
+        "median": 6232
+      },
+      "first_call_ms": {
+        "/health": 19.2,
+        "/ready": 1.2,
+        "/version": 2.1,
+        "/customers": 2.0,
+        "/customers/{ref}/features": 1.6,
+        "/products": 4.3,
+        "/predict": 9.3,
+        "/predict/batch (100)": 12.5,
+        "/recommend": 3.6,
+        "/chat policy (rule)": 9.0,
+        "/chat retention tool (rule)": 13.4,
+        "/monitoring/report": 53.0
+      },
+      "warm_client_ms": {
+        "/health": {
+          "n": 200,
+          "p50": 0.63,
+          "p95": 0.99,
+          "p99": 1.94,
+          "mean": 0.71
+        },
+        "/ready": {
+          "n": 200,
+          "p50": 0.65,
+          "p95": 0.83,
+          "p99": 0.95,
+          "mean": 0.68
+        },
+        "/version": {
+          "n": 200,
+          "p50": 0.65,
+          "p95": 0.92,
+          "p99": 1.43,
+          "mean": 0.7
+        },
+        "/customers": {
+          "n": 200,
+          "p50": 0.76,
+          "p95": 1.18,
+          "p99": 2.62,
+          "mean": 0.85
+        },
+        "/customers/{ref}/features": {
+          "n": 200,
+          "p50": 0.71,
+          "p95": 1.08,
+          "p99": 1.26,
+          "mean": 0.78
+        },
+        "/products": {
+          "n": 200,
+          "p50": 2.38,
+          "p95": 3.07,
+          "p99": 4.3,
+          "mean": 2.49
+        },
+        "/predict": {
+          "n": 200,
+          "p50": 4.75,
+          "p95": 7.6,
+          "p99": 8.71,
+          "mean": 5.1
+        },
+        "/predict/batch (100)": {
+          "n": 20,
+          "p50": 9.21,
+          "p95": 11.42,
+          "p99": 12.19,
+          "mean": 9.33
+        },
+        "/recommend": {
+          "n": 200,
+          "p50": 1.23,
+          "p95": 1.64,
+          "p99": 2.14,
+          "mean": 1.28
+        },
+        "/chat policy (rule)": {
+          "n": 200,
+          "p50": 6.66,
+          "p95": 7.42,
+          "p99": 8.18,
+          "mean": 6.71
+        },
+        "/chat retention tool (rule)": {
+          "n": 200,
+          "p50": 7.62,
+          "p95": 10.95,
+          "p99": 12.19,
+          "mean": 8.02
+        },
+        "/monitoring/report": {
+          "n": 20,
+          "p50": 0.88,
+          "p95": 1.09,
+          "p99": 1.56,
+          "mean": 0.92
+        }
+      },
+      "warm_server_ms": {
+        "/ready": {
+          "n": 202,
+          "p50": 0.25,
+          "p95": 0.33,
+          "p99": 0.46,
+          "mean": 0.26
+        },
+        "/version": {
+          "n": 200,
+          "p50": 0.25,
+          "p95": 0.39,
+          "p99": 0.57,
+          "mean": 0.28
+        },
+        "/customers": {
+          "n": 200,
+          "p50": 0.33,
+          "p95": 0.5,
+          "p99": 1.23,
+          "mean": 0.37
+        },
+        "/customers/{ref}/features": {
+          "n": 200,
+          "p50": 0.28,
+          "p95": 0.45,
+          "p99": 0.59,
+          "mean": 0.32
+        },
+        "/products": {
+          "n": 200,
+          "p50": 1.76,
+          "p95": 2.26,
+          "p99": 2.9,
+          "mean": 1.85
+        },
+        "/predict": {
+          "n": 200,
+          "p50": 3.93,
+          "p95": 6.32,
+          "p99": 6.97,
+          "mean": 4.21
+        },
+        "/predict/batch": {
+          "n": 20,
+          "p50": 7.45,
+          "p95": 9.43,
+          "p99": 10.12,
+          "mean": 7.6
+        },
+        "/recommend": {
+          "n": 200,
+          "p50": 0.71,
+          "p95": 0.94,
+          "p99": 1.16,
+          "mean": 0.73
+        },
+        "/chat": {
+          "n": 401,
+          "p50": 6.14,
+          "p95": 9.07,
+          "p99": 10.84,
+          "mean": 6.45
+        },
+        "/monitoring/report": {
+          "n": 20,
+          "p50": 0.34,
+          "p95": 0.44,
+          "p99": 0.67,
+          "mean": 0.37
+        }
+      },
+      "startup_ms_reported_by_ready": {
+        "engine": 20.7,
+        "customers": 1.7,
+        "catalogue": 11.5,
+        "profile": 4.1,
+        "assistant": 1505.9,
+        "model": 3314.0,
+        "warm_up": 18.4,
+        "total": 3452.8
+      },
+      "artifact_load_ms": {
+        "model.joblib": 1412.4,
+        "rules.json -> RuleEngine": 30.2,
+        "embedding model (ONNX)": 1539.4,
+        "retrieval index": 1.0,
+        "reference_profile.json": 4.0,
+        "reload: model.joblib": 10.8,
+        "reload: rules.json -> RuleEngine": 28.1,
+        "reload: embedding model (ONNX)": 999.4
+      },
+      "measured_at": "2026-11-01T15:53:27+00:00",
+      "note": "D5 code + D5 model (19 features); same model source as before",
+      "server_env": {},
+      "machine": "win32, Python 3.11.16, 16 logical CPUs"
+    },
+    "container_v09": {
+      "image": "boreal-api:d4",
+      "cold_start_to_ready_ms": {
+        "runs": [
+          7243,
+          5729,
+          5690
+        ],
+        "median": 5729
+      },
+      "idle_memory": [
+        "758.9MiB",
+        "750.2MiB",
+        "750.5MiB"
+      ],
+      "startup_ms_reported_by_ready": {},
+      "measured_at": "2026-11-01T15:54:01+00:00",
+      "note": "",
+      "server_env": {},
+      "machine": "win32, Python 3.11.16, 16 logical CPUs"
+    },
+    "container_d5": {
+      "image": "boreal-api:d5",
+      "cold_start_to_ready_ms": {
+        "runs": [
+          6070,
+          5679,
+          5764
+        ],
+        "median": 5764
+      },
+      "idle_memory": [
+        "765.4MiB",
+        "764.9MiB",
+        "773.2MiB"
+      ],
+      "startup_ms_reported_by_ready": {
+        "engine": 27.8,
+        "customers": 2.0,
+        "catalogue": 15.4,
+        "profile": 5.2,
+        "model": 166.3,
+        "assistant": 1805.4,
+        "warm_up": 22.7,
+        "total": 1904.6
+      },
+      "measured_at": "2026-11-01T15:54:34+00:00",
+      "note": "",
+      "server_env": {},
+      "machine": "win32, Python 3.11.16, 16 logical CPUs"
+    },
+    "live_v09": {
+      "url": "https://padp32qm6p.us-east-1.awsapprunner.com",
+      "first_call_ms": {
+        "/health": 30.1,
+        "/ready": 27.8,
+        "/version": 34.0,
+        "/customers": 45.8,
+        "/customers/{ref}/features": 32.8,
+        "/products": 41.3,
+        "/predict": 40.6,
+        "/recommend": 29.1,
+        "/chat policy (rule)": 45.3,
+        "/chat retention tool (rule)": 63.6
+      },
+      "warm_client_ms": {
+        "/health": {
+          "n": 40,
+          "p50": 30.34,
+          "p95": 35.22,
+          "p99": 44.08,
+          "mean": 30.85
+        },
+        "/ready": {
+          "n": 40,
+          "p50": 30.44,
+          "p95": 43.51,
+          "p99": 54.77,
+          "mean": 32.43
+        },
+        "/version": {
+          "n": 40,
+          "p50": 32.22,
+          "p95": 59.71,
+          "p99": 198.91,
+          "mean": 42.68
+        },
+        "/customers": {
+          "n": 40,
+          "p50": 34.23,
+          "p95": 42.66,
+          "p99": 71.15,
+          "mean": 35.74
+        },
+        "/customers/{ref}/features": {
+          "n": 40,
+          "p50": 31.42,
+          "p95": 35.11,
+          "p99": 44.32,
+          "mean": 31.38
+        },
+        "/products": {
+          "n": 40,
+          "p50": 39.85,
+          "p95": 43.19,
+          "p99": 44.63,
+          "mean": 40.1
+        },
+        "/predict": {
+          "n": 40,
+          "p50": 41.77,
+          "p95": 62.31,
+          "p99": 75.0,
+          "mean": 45.72
+        },
+        "/recommend": {
+          "n": 40,
+          "p50": 33.29,
+          "p95": 37.75,
+          "p99": 48.61,
+          "mean": 34.33
+        },
+        "/chat policy (rule)": {
+          "n": 40,
+          "p50": 45.51,
+          "p95": 53.28,
+          "p99": 57.5,
+          "mean": 46.05
+        },
+        "/chat retention tool (rule)": {
+          "n": 40,
+          "p50": 44.85,
+          "p95": 50.06,
+          "p99": 61.06,
+          "mean": 45.62
+        }
+      },
+      "measured_at": "2026-11-01T15:55:23+00:00",
+      "note": "deployed v0.9 (commit b296495), App Runner us-east-1, 1 vCPU/2 GB, client in Quebec over the internet",
+      "server_env": {},
+      "machine": "win32, Python 3.11.16, 16 logical CPUs"
+    }
+  }
+}

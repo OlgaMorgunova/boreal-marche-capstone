@@ -44,8 +44,9 @@ WHAT_IF = [  # (feature, label en, label fr, min, max, step)
         20000.0,
         10.0,
     ),
-    ("cancel_rate_180d", "Share of cancelled lines", "Part de lignes annulées", 0.0, 1.0, 0.01),
-]
+    ("active_months_180d", "Months with an order (of the last 6)",
+     "Mois avec commande (6 derniers)", 1, 7, 1),
+]  # fmt: skip
 
 st.set_page_config(page_title="Boréal Marché", page_icon="🍁", layout="wide")
 
@@ -100,7 +101,7 @@ with st.sidebar:
         st.error(f"{t('api_down', lang)}: {API_URL} ({type(exc).__name__})")
         st.stop()
     refs = customers()
-    labels = {c["ref"]: f"{c['ref']} · {c['region']} · {c['orders_lifetime']} orders" for c in refs}
+    labels = {c["ref"]: f"{c['ref']} · {c['region']} · {c['orders_180d']} orders/180 d" for c in refs}
     me = st.selectbox(t("customer", lang), list(labels), format_func=labels.__getitem__)
     st.caption(
         f"API {version['api_version']} · commit `{version['git_commit'][:7]}` · "
@@ -135,14 +136,15 @@ with tabs[0]:
             feats[f] = st.slider(fr if lang == "fr" else en, lo, hi_, step=step, key=f"wi_{f}")
         # Keep the vector internally consistent (the API validates ranges).
         feats["orders_180d"] = max(feats["orders_180d"], feats["orders_90d"], 1)
-        feats["orders_lifetime"] = max(feats["orders_lifetime"], feats["orders_180d"])
-        feats["revenue_lifetime"] = max(feats["revenue_lifetime"], feats["revenue_180d"])
+        feats["active_months_180d"] = min(feats["active_months_180d"], feats["orders_180d"])
         if st.button(t("reset", lang)):
             st.session_state.pop("whatif_for")
             st.rerun()
     with right:
         base = api("POST", "/predict", json={"customer_ref": me, "features": real})
-        pred = api("POST", "/predict", json={"customer_ref": me, "features": feats})
+        pred = api(
+            "POST", "/predict", params={"explain": 3}, json={"customer_ref": me, "features": feats}
+        )
         delta = pred["p_return"] - base["p_return"]
         st.metric(
             t("p_return", lang),
@@ -159,9 +161,18 @@ with tabs[0]:
                 f"{t('not_proposed', lang)} (p > {pred['threshold']:.2f}, {t('threshold', lang)})"
             )
         st.caption(t("human_review", lang) + f" · model `{pred['model_version']}`")
+        if pred.get("top_factors"):
+            st.markdown(f"**{t('factors', lang)}**")
+            for fct in pred["top_factors"]:
+                arrow = "▲" if fct["effect"] > 0 else "▼"
+                val = "—" if fct["value"] is None else fct["value"]
+                st.write(f"{arrow} {fct['label']} = `{val}`")
+            st.caption(t("factors_help", lang))
         with st.expander("Features sent to /predict"):
+            used = {k: v for k, v in real.items() if v is not None or feats.get(k) is not None}
             st.dataframe(
-                pd.DataFrame({"real": real, "what-if": feats}).astype(str), width="stretch"
+                pd.DataFrame({"real": used, "what-if": {k: feats[k] for k in used}}).astype(str),
+                width="stretch",
             )
 
 

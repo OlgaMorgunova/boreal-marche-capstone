@@ -258,7 +258,7 @@
     "section": "Quarterly offers and how members are selected",
     "lang": "en",
     "source": "C:/projects/boreal-marche-capstone/docs/corpus/loyalty.md",
-    "text": "Each quarter, some members receive a personal discount offer (currently 15% off one order). To\ndecide who receives it, Boréal Marché uses an automated estimate of how likely each customer is to\norder again in the next 90 days, based on past orders and delivery region. A member of the marketing\nteam reviews and approves every offer list before it is sent. The estimate is not used to change\nprices, to refuse service or to change your tier. You can ask which information and main factors\nwere used for your account, have inaccurate information corrected, ask a staff member to review the\ndecision, or opt out of this profiling while staying a member: see the Privacy Notice."
+    "text": "Each quarter, some members receive a personal discount offer (currently 15% off one order). To\ndecide who receives it, Boréal Marché uses an automated estimate of how likely each customer is to\norder again in the next 90 days, based on the dates and amounts of past orders. A member of the marketing\nteam reviews and approves every offer list before it is sent. The estimate is not used to change\nprices, to refuse service or to change your tier. You can ask which information and main factors\nwere used for your account, have inaccurate information corrected, ask a staff member to review the\ndecision, or opt out of this profiling while staying a member: see the Privacy Notice."
   },
   {
     "chunk_id": "loyalty#changes-to-the-programme-0",
@@ -402,7 +402,7 @@
     "section": "Automated decisions and profiling",
     "lang": "en",
     "source": "C:/projects/boreal-marche-capstone/docs/corpus/privacy.md",
-    "text": "We use an automated system to estimate how likely you are to order again in the next 90 days, based\non your order history and your delivery region. This is a form of profiling. The estimate is used\nonly to decide who receives our quarterly discount offer; a member of our marketing team reviews and\napproves every offer list, so the decision is not based exclusively on automated processing. You\ncan ask us which personal information and which main factors were used, ask us to correct\ninaccurate information, submit your observations to a staff member who can review the decision, and\nopt out of this profiling at any time. Our product recommendations (\"you might also like\") are based\non which products are bought together across all orders, not on a personal profile."
+    "text": "We use an automated system to estimate how likely you are to order again in the next 90 days, based\non the dates and amounts of your past orders. This is a form of profiling. The estimate is used\nonly to decide who receives our quarterly discount offer; a member of our marketing team reviews and\napproves every offer list, so the decision is not based exclusively on automated processing. You\ncan ask us which personal information and which main factors were used, ask us to correct\ninaccurate information, submit your observations to a staff member who can review the decision, and\nopt out of this profiling at any time. Our product recommendations (\"you might also like\") are based\non which products are bought together across all orders, not on a personal profile."
   },
   {
     "chunk_id": "privacy#our-chat-assistant-0",

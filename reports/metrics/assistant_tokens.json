@@ -1,0 +1,295 @@
+{
+  "generated_at": "2026-11-01T15:59:47+00:00",
+  "model": "llama3.1:8b",
+  "n": 40,
+  "mean_prompt_tokens": 1035.0,
+  "mean_completion_tokens": 59.9,
+  "latency_ms_p50": 1578.4499999999998,
+  "openai_list_price_per_mtok": {
+    "input": 0.15,
+    "output": 0.6
+  },
+  "openai_est_usd_per_1000_queries": 0.1912,
+  "cases": [
+    {
+      "id": "P01",
+      "tool": "policy_search",
+      "latency_ms": 8977.7,
+      "prompt_tokens": 1520,
+      "completion_tokens": 38
+    },
+    {
+      "id": "P02",
+      "tool": "policy_search",
+      "latency_ms": 2875.4,
+      "prompt_tokens": 1469,
+      "completion_tokens": 116
+    },
+    {
+      "id": "P03",
+      "tool": "policy_search",
+      "latency_ms": 1178.2,
+      "prompt_tokens": 1527,
+      "completion_tokens": 34
+    },
+    {
+      "id": "P04",
+      "tool": "policy_search",
+      "latency_ms": 3489.7,
+      "prompt_tokens": 1372,
+      "completion_tokens": 149
+    },
+    {
+      "id": "P05",
+      "tool": "policy_search",
+      "latency_ms": 1722.0,
+      "prompt_tokens": 1315,
+      "completion_tokens": 64
+    },
+    {
+      "id": "P06",
+      "tool": "policy_search",
+      "latency_ms": 2268.6,
+      "prompt_tokens": 1204,
+      "completion_tokens": 92
+    },
+    {
+      "id": "P07",
+      "tool": "policy_search",
+      "latency_ms": 1653.5,
+      "prompt_tokens": 1226,
+      "completion_tokens": 63
+    },
+    {
+      "id": "P08",
+      "tool": "policy_search",
+      "latency_ms": 1675.7,
+      "prompt_tokens": 1227,
+      "completion_tokens": 64
+    },
+    {
+      "id": "P09",
+      "tool": "policy_search",
+      "latency_ms": 2061.1,
+      "prompt_tokens": 1250,
+      "completion_tokens": 82
+    },
+    {
+      "id": "P10",
+      "tool": "out_of_scope",
+      "latency_ms": 677.5,
+      "prompt_tokens": 649,
+      "completion_tokens": 29
+    },
+    {
+      "id": "P11",
+      "tool": "policy_search",
+      "latency_ms": 2120.0,
+      "prompt_tokens": 1303,
+      "completion_tokens": 86
+    },
+    {
+      "id": "P12",
+      "tool": "policy_search",
+      "latency_ms": 1096.7,
+      "prompt_tokens": 1136,
+      "completion_tokens": 38
+    },
+    {
+      "id": "P13",
+      "tool": "policy_search",
+      "latency_ms": 2069.7,
+      "prompt_tokens": 1146,
+      "completion_tokens": 85
+    },
+    {
+      "id": "P14",
+      "tool": "policy_search",
+      "latency_ms": 1534.3,
+      "prompt_tokens": 1347,
+      "completion_tokens": 55
+    },
+    {
+      "id": "P15",
+      "tool": "policy_search",
+      "latency_ms": 1773.9,
+      "prompt_tokens": 1196,
+      "completion_tokens": 68
+    },
+    {
+      "id": "T01",
+      "tool": "retention_score",
+      "latency_ms": 1069.1,
+      "prompt_tokens": 846,
+      "completion_tokens": 42
+    },
+    {
+      "id": "T02",
+      "tool": "retention_score",
+      "latency_ms": 1330.3,
+      "prompt_tokens": 846,
+      "completion_tokens": 58
+    },
+    {
+      "id": "T03",
+      "tool": "retention_score",
+      "latency_ms": 637.5,
+      "prompt_tokens": 834,
+      "completion_tokens": 22
+    },
+    {
+      "id": "T04",
+      "tool": "recommendations",
+      "latency_ms": 2164.0,
+      "prompt_tokens": 977,
+      "completion_tokens": 95
+    },
+    {
+      "id": "T05",
+      "tool": "recommendations",
+      "latency_ms": 1358.1,
+      "prompt_tokens": 966,
+      "completion_tokens": 55
+    },
+    {
+      "id": "T06",
+      "tool": "recommendations",
+      "latency_ms": 1883.1,
+      "prompt_tokens": 1015,
+      "completion_tokens": 80
+    },
+    {
+      "id": "T07",
+      "tool": "recommendations",
+      "latency_ms": 1957.5,
+      "prompt_tokens": 950,
+      "completion_tokens": 84
+    },
+    {
+      "id": "T08",
+      "tool": "product_lookup",
+      "latency_ms": 828.5,
+      "prompt_tokens": 808,
+      "completion_tokens": 32
+    },
+    {
+      "id": "T09",
+      "tool": "product_lookup",
+      "latency_ms": 1330.6,
+      "prompt_tokens": 934,
+      "completion_tokens": 55
+    },
+    {
+      "id": "T10",
+      "tool": "product_lookup",
+      "latency_ms": 1000.4,
+      "prompt_tokens": 800,
+      "completion_tokens": 41
+    },
+    {
+      "id": "O01",
+      "tool": "out_of_scope",
+      "latency_ms": 420.2,
+      "prompt_tokens": 645,
+      "completion_tokens": 18
+    },
+    {
+      "id": "O02",
+      "tool": "out_of_scope",
+      "latency_ms": 421.5,
+      "prompt_tokens": 644,
+      "completion_tokens": 19
+    },
+    {
+      "id": "O03",
+      "tool": "out_of_scope",
+      "latency_ms": 434.8,
+      "prompt_tokens": 646,
+      "completion_tokens": 19
+    },
+    {
+      "id": "O04",
+      "tool": "out_of_scope",
+      "latency_ms": 432.8,
+      "prompt_tokens": 644,
+      "completion_tokens": 19
+    },
+    {
+      "id": "O05",
+      "tool": "out_of_scope",
+      "latency_ms": 443.7,
+      "prompt_tokens": 643,
+      "completion_tokens": 19
+    },
+    {
+      "id": "O06",
+      "tool": "out_of_scope",
+      "latency_ms": 397.8,
+      "prompt_tokens": 644,
+      "completion_tokens": 18
+    },
+    {
+      "id": "O07",
+      "tool": "out_of_scope",
+      "latency_ms": 430.7,
+      "prompt_tokens": 644,
+      "completion_tokens": 19
+    },
+    {
+      "id": "O08",
+      "tool": "out_of_scope",
+      "latency_ms": 870.1,
+      "prompt_tokens": 645,
+      "completion_tokens": 41
+    },
+    {
+      "id": "F01",
+      "tool": "policy_search",
+      "latency_ms": 2049.7,
+      "prompt_tokens": 1570,
+      "completion_tokens": 78
+    },
+    {
+      "id": "F02",
+      "tool": "policy_search",
+      "latency_ms": 2428.2,
+      "prompt_tokens": 1314,
+      "completion_tokens": 97
+    },
+    {
+      "id": "F03",
+      "tool": "policy_search",
+      "latency_ms": 2300.6,
+      "prompt_tokens": 1272,
+      "completion_tokens": 94
+    },
+    {
+      "id": "F04",
+      "tool": "policy_search",
+      "latency_ms": 2384.9,
+      "prompt_tokens": 1214,
+      "completion_tokens": 97
+    },
+    {
+      "id": "F05",
+      "tool": "policy_search",
+      "latency_ms": 3536.3,
+      "prompt_tokens": 1381,
+      "completion_tokens": 147
+    },
+    {
+      "id": "F06",
+      "tool": "recommendations",
+      "latency_ms": 1622.6,
+      "prompt_tokens": 983,
+      "completion_tokens": 67
+    },
+    {
+      "id": "F07",
+      "tool": "out_of_scope",
+      "latency_ms": 446.1,
+      "prompt_tokens": 649,
+      "completion_tokens": 18
+    }
+  ]
+}

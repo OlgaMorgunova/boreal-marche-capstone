@@ -1,5 +1,7 @@
 """FastAPI service. Models, rules, the retrieval index and the reference profile are loaded once at
-startup (lifespan), never per request.
+startup (lifespan), never per request: the two slow loads (retention model, embedding model) run
+in parallel, then one warm-up call per head runs before ``/ready`` turns 200, so the first customer
+does not pay for lazy initialisation. Load and warm-up times are reported by ``/ready`` (D5 §2).
 
 ``/health`` = the process is alive (liveness). ``/ready`` = every artifact is loaded and requests
 can be served (readiness; 503 otherwise, so a load balancer keeps traffic away).
@@ -20,10 +22,12 @@ import threading
 import time
 import uuid
 from collections.abc import AsyncIterator, Awaitable, Callable, Iterator
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 from typing import Any
 
 import httpx
+import numpy as np
 import pandas as pd
 from fastapi import FastAPI, HTTPException, Query, Request, Response, status
 from fastapi.responses import JSONResponse, StreamingResponse
@@ -44,13 +48,14 @@ from boreal_marche.assistant.providers import build_providers
 from boreal_marche.assistant.service import Assistant, ProviderUnavailable
 from boreal_marche.assistant.tools import Toolbox
 from boreal_marche.config import Paths, load_params
-from boreal_marche.features import FEATURES
+from boreal_marche.features import CATEGORICAL, COLLECTED
 from boreal_marche.monitoring import alerts
 from boreal_marche.monitoring.drift import STATUS_ORDER, build_report, realised_metrics, timeseries
 from boreal_marche.monitoring.store import LogStore
 from boreal_marche.recommend.engine import RuleEngine
 from boreal_marche.registry import load_retention_model
 from boreal_marche.retention.artifact import RetentionModel
+from boreal_marche.retention.explain import top_factors
 from boreal_marche.schemas import (
     BatchPredictRequest,
     BatchPredictResponse,
@@ -59,6 +64,7 @@ from boreal_marche.schemas import (
     CustomerFeatures,
     CustomerList,
     CustomerSummary,
+    Factor,
     PredictRequest,
     PredictResponse,
     ProductList,
@@ -106,10 +112,26 @@ FEATURE_PSI = Gauge("boreal_feature_psi", "PSI per input feature", ["feature"], 
 
 
 def _load(name: str, fn: Callable[[], Any]) -> None:
+    t0 = time.perf_counter()
     try:
         STATE[name] = fn()
     except Exception as exc:  # noqa: BLE001 - reported by /ready
         STATE["errors"].append(f"{name}: {type(exc).__name__}: {exc}")
+    STATE["startup_ms"][name] = round(1000 * (time.perf_counter() - t0), 1)
+
+
+def _warm_up() -> None:
+    """One call per head on a committed demo customer: XGBoost, ONNX Runtime and pandas initialise
+    lazily on first use, which otherwise lands on the first real request."""
+    if "customers" not in STATE:
+        return
+    feats = next(iter(STATE["customers"].values()))["features"]
+    if "model" in STATE:
+        top_factors(STATE["model"], _frame([feats], STATE["model"].feature_names), 3)
+    if "engine" in STATE:
+        STATE["engine"].recommend([], k=5)
+    if "assistant" in STATE:
+        STATE["assistant"].toolbox.retriever.search("returns policy", 1)
 
 
 def _monitor_loop(stop: threading.Event, interval: int) -> None:
@@ -141,18 +163,21 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     STATE.clear()
     # Resolved once: /version must not shell out to git on every request.
     STATE.update(
-        params=params, paths=paths, errors=[], git_commit=os.environ.get("GIT_SHA") or git_commit()
-    )
-    try:
-        STATE["model"], STATE["model_source"] = load_retention_model(params, paths)
-    except Exception as exc:  # noqa: BLE001 - reported by /ready
-        STATE["errors"].append(f"model: {exc}")
-    _load(
-        "engine", lambda: RuleEngine.from_json(paths.rules_file, min_lift=params.recommend.min_lift)
-    )
-    _load("customers", lambda: {c["ref"]: c for c in read_json(paths.demo_customers)["customers"]})
-    _load("catalogue", lambda: read_json(paths.catalogue)["products"])
-    _load("profile", lambda: read_json(paths.reference_profile))
+        params=params, paths=paths, errors=[], startup_ms={},
+        git_commit=os.environ.get("GIT_SHA") or git_commit(),
+    )  # fmt: skip
+    t_start = time.perf_counter()
+
+    def _model() -> RetentionModel:
+        model, STATE["model_source"] = load_retention_model(params, paths)
+        return model
+
+    def _catalogue() -> list[dict[str, Any]]:
+        products: list[dict[str, Any]] = read_json(paths.catalogue)["products"]
+        for p in products:  # folded once here, not for every product on every /products call
+            p["_folded"] = fold(p["description"])
+        return products
+
     STATE["store"] = LogStore(os.environ.get("DATABASE_URL", "sqlite:///./boreal.db"))
     STATE["api_client"] = httpx.Client(
         base_url=os.environ.get("BOREAL_API_URL", "http://127.0.0.1:8000"), timeout=10
@@ -166,7 +191,27 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         price = (a.openai_price_per_mtok.input, a.openai_price_per_mtok.output)
         return Assistant(toolbox, providers, price)
 
-    _load("assistant", _assistant)
+    def _engine() -> RuleEngine:
+        return RuleEngine.from_json(paths.rules_file, min_lift=params.recommend.min_lift)
+
+    def _customers() -> dict[str, Any]:
+        return {c["ref"]: c for c in read_json(paths.demo_customers)["customers"]}
+
+    # The retention model and the embedding model (ONNX session) are the two slow, independent
+    # loads. Measured (D5 §2): side by side saves ~0.45 s when the model comes from the MLflow
+    # registry (I/O-bound), nothing measurable from the local file (~0.1 s, the ONNX session
+    # dominates).
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        slow = [pool.submit(_load, "model", _model), pool.submit(_load, "assistant", _assistant)]
+        _load("engine", _engine)
+        _load("customers", _customers)
+        _load("catalogue", _catalogue)
+        _load("profile", lambda: read_json(paths.reference_profile))
+        for f in slow:
+            f.result()
+    _load("warm_up", _warm_up)
+    STATE["startup_ms"]["total"] = round(1000 * (time.perf_counter() - t_start), 1)
+    log.info(json.dumps({"event": "startup", "ms": STATE["startup_ms"]}))
     stop = threading.Event()
     if os.environ.get("BOREAL_MONITOR_LOOP", "1") == "1" and "profile" in STATE:
         threading.Thread(
@@ -257,6 +302,7 @@ def ready(response: Response) -> ReadyResponse:
         rules_loaded=ok["engine"],
         assistant_loaded=ok["assistant"],
         errors=list(STATE.get("errors", [])),
+        startup_ms=dict(STATE.get("startup_ms", {})),
     )
 
 
@@ -284,13 +330,27 @@ def metrics() -> Response:
 # ---------------------------------------------------------------------------- Head A ---
 
 
-def _predict(reqs: list[PredictRequest], request: Request) -> list[PredictResponse]:
+def _frame(rows: list[dict[str, Any]], features: list[str]) -> pd.DataFrame:
+    """Model input built column by column: the same frame as ``pd.DataFrame(rows)[features]`` with
+    numeric columns cast to float64 (asserted in tests), ~8x faster for one row (D5 §2)."""
+    return pd.DataFrame(
+        {
+            f: np.array([r[f] for r in rows], dtype=object if f in CATEGORICAL else "float64")
+            for f in features
+        },
+        columns=features,
+    )
+
+
+def _predict(
+    reqs: list[PredictRequest], request: Request, explain: int = 0
+) -> list[PredictResponse]:
     model: RetentionModel = _need("model", "retention model")
-    X = pd.DataFrame([r.features.model_dump() for r in reqs])[FEATURES]
-    X = X.astype({c: "float64" for c in X.columns if c not in ("region", "season_q")})
+    X = _frame([r.features.model_dump() for r in reqs], model.feature_names)
     p = model.predict_proba(X)[:, 1]
+    factors = top_factors(model, X, explain) if explain else [None] * len(reqs)
     out = []
-    for r, pi in zip(reqs, p, strict=True):
+    for r, pi, fs in zip(reqs, p, factors, strict=True):
         send = bool(pi <= model.threshold)
         out.append(
             PredictResponse(
@@ -299,6 +359,7 @@ def _predict(reqs: list[PredictRequest], request: Request) -> list[PredictRespon
                 send_coupon=send,
                 threshold=model.threshold,
                 model_version=model.version,
+                top_factors=[Factor(**f) for f in fs] if fs is not None else None,
             )
         )
         PREDICTIONS.labels(str(send).lower()).inc()
@@ -311,21 +372,29 @@ def _predict(reqs: list[PredictRequest], request: Request) -> list[PredictRespon
                 "p_return": float(pi),
                 "send_coupon": send,
                 "threshold": model.threshold,
-                "features": r.features.model_dump_json(),
+                # Only what the model uses, plus region (D5 data minimisation).
+                "features": r.features.model_dump_json(include=set(COLLECTED)),
                 "cohort": request.state.cohort,
             },
         )
     return out
 
 
+EXPLAIN = Query(
+    0, ge=0, le=10, description="Also return the N principal factors of each prediction (s. 12.1)"
+)
+
+
 @app.post("/predict", response_model=PredictResponse, tags=["retention"])
-def predict(req: PredictRequest, request: Request) -> PredictResponse:
-    return _predict([req], request)[0]
+def predict(req: PredictRequest, request: Request, explain: int = EXPLAIN) -> PredictResponse:
+    return _predict([req], request, explain)[0]
 
 
 @app.post("/predict/batch", response_model=BatchPredictResponse, tags=["retention"])
-def predict_batch(req: BatchPredictRequest, request: Request) -> BatchPredictResponse:
-    return BatchPredictResponse(predictions=_predict(req.items, request))
+def predict_batch(
+    req: BatchPredictRequest, request: Request, explain: int = EXPLAIN
+) -> BatchPredictResponse:
+    return BatchPredictResponse(predictions=_predict(req.items, request, explain))
 
 
 @app.get("/customers", response_model=CustomerList, tags=["retention"])
@@ -339,7 +408,7 @@ def customers(limit: int = Query(50, ge=1, le=300)) -> CustomerList:
             CustomerSummary(
                 ref=c["ref"],
                 region=c["region"],
-                orders_lifetime=c["features"]["orders_lifetime"],
+                orders_180d=c["features"]["orders_180d"],
                 recency_days=c["features"]["recency_days"],
             )
             for c in rows
@@ -406,7 +475,7 @@ def products(
     hits = [p for p in catalogue if p["sku"] == code]
     if not hits:
         words = [_singular(w) for w in re.findall(r"[a-z0-9]+", fold(q))]
-        hits = [p for p in catalogue if words and all(w in fold(p["description"]) for w in words)]
+        hits = [p for p in catalogue if words and all(w in p["_folded"] for w in words)]
         if not q.strip():
             hits = catalogue
     return ProductList(query=q, products=[ProductOut.model_validate(p) for p in hits[:limit]])
@@ -476,10 +545,21 @@ def chat_stream(req: ChatRequest, request: Request) -> StreamingResponse:
 
 
 @app.get("/monitoring/report", tags=["monitoring"])
-def monitoring_report() -> dict[str, Any]:
-    """Drift, data quality and operational checks with traffic lights (recomputed on request)."""
+def monitoring_report(
+    fresh: bool = Query(False, description="Recompute now instead of serving a recent report"),
+) -> dict[str, Any]:
+    """Drift, data quality and operational checks with traffic lights. A report younger than
+    ``monitoring.report_cache_seconds`` is served as is (computing one costs ~100 ms and the
+    dashboard polls it); ``fresh=true`` forces a recomputation."""
     _need("profile", "reference profile")
-    return refresh_report()
+    last = STATE.get("last_report")
+    if (
+        fresh
+        or last is None
+        or time.time() - last["generated_at"] > (STATE["params"].monitoring.report_cache_seconds)
+    ):
+        return refresh_report()
+    return dict(last)
 
 
 @app.get("/monitoring/alerts", tags=["monitoring"])

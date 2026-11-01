@@ -1,6 +1,6 @@
 # Monitoring policy — Boréal Marché platform
 
-**Owner:** Olga Morgunova · **Applies from:** v0.9 (D4) · Thresholds live in `params.yaml → monitoring`
+**Owner:** Olga Morgunova · **Applies from:** v0.9 (D4), revised v0.9.5 (D5) · Thresholds live in `params.yaml → monitoring`
 and are the single source of truth; this page explains them.
 
 ## What is logged
@@ -8,7 +8,8 @@ and are the single source of truth; this page explains them.
 Every request is timed by the API middleware and written to `request_log` (route template, status,
 latency, caller, request id) and as a structured JSON line on stdout. Every prediction is written to
 `prediction_log` with its full feature vector, probability, decision, threshold and model version;
-every recommendation to `recommendation_log` (basket size, unknown SKUs, strategy that fired); every
+since v0.9.5 only the model's 19 inputs plus `region` are stored (D5 data minimisation), so drift is
+monitored on those 20; every recommendation to `recommendation_log` (basket size, unknown SKUs, strategy that fired); every
 assistant turn to `chat_log` (provider, tool, refusal, handoff, latency). Storage: SQLite on the App
 Runner instance (single instance by design), Postgres in the Compose stack. Retention: 13 months
 (`LogStore.purge`, privacy notice).
@@ -26,7 +27,10 @@ constant within a quarter by construction.
 ## Checks and thresholds
 
 Computed on the last 500 predictions / 2,000 requests (`GET /monitoring/report`); fewer than 100
-predictions → *insufficient data* (grey), never green.
+predictions → *insufficient data* (grey), never green. A report younger than 10 s
+(`monitoring.report_cache_seconds`) is served from memory — computing one costs ~110 ms at this
+window and grows linearly (1.2 s at 50,000 predictions, D5 §3); `?fresh=true` recomputes. The
+background alert loop always recomputes.
 
 | Check | Measure | Amber | Red | What it triggers |
 |---|---|---|---|---|
@@ -65,3 +69,13 @@ any of: input drift red for 7 consecutive days; prediction drift red for 3 days;
 available) more than 0.05 below the validation PR-AUC (0.809); a new quarter starts (`season_q`
 changes). Promotion still requires every gate in `docs/MLFLOW_PROMOTION_POLICY.md`, including the
 fairness gate, and a human merge.
+
+## Fairness monitoring (D5)
+
+The subgroup audit (`retention/fairness.py`: lapser recall by region, tenure band and spend
+quartile) runs at every promotion (weekly retraining gate) on the validation snapshot. Once
+backfilled labels exist for a full quarter, the same audit is to be run on the logged predictions
+and their realised outcomes (not yet built); a group more than 5 points below overall recall is
+reported in the retraining pull request. Known flagged groups at v0.9.5: spend Q3 and Q4, tenure
+> 12 months (D5 §7).
+

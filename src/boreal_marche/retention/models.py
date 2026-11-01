@@ -31,7 +31,7 @@ from sklearn.preprocessing import FunctionTransformer, OneHotEncoder, StandardSc
 from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
 
-from boreal_marche.features import CATEGORICAL, NUMERIC
+from boreal_marche.features import CATEGORICAL, MODEL_FEATURES, NUMERIC
 
 N_JOBS = 8
 
@@ -41,7 +41,9 @@ def signed_log1p(x: np.ndarray) -> np.ndarray:
     return np.sign(x) * np.log1p(np.abs(x))
 
 
-def make_preprocessor() -> ColumnTransformer:
+def make_preprocessor(features: list[str] | None = None) -> ColumnTransformer:
+    """Preprocessing for ``features`` (default: the model features after the D5 minimisation)."""
+    features = MODEL_FEATURES if features is None else features
     numeric = Pipeline(
         [
             ("impute", SimpleImputer(strategy="median", add_indicator=True)),
@@ -51,7 +53,10 @@ def make_preprocessor() -> ColumnTransformer:
     )
     categorical = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
     return ColumnTransformer(
-        [("num", numeric, NUMERIC), ("cat", categorical, CATEGORICAL)],
+        [
+            ("num", numeric, [f for f in NUMERIC if f in features]),
+            ("cat", categorical, [f for f in CATEGORICAL if f in features]),
+        ],
         verbose_feature_names_out=False,
     )
 

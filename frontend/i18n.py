@@ -41,6 +41,17 @@ STRINGS: dict[str, dict[str, str]] = {
         "fr": "Revenir aux valeurs réelles du client",
     },
     "threshold": {"en": "decision threshold", "fr": "seuil de décision"},
+    "factors": {
+        "en": "Principal factors of this estimate",
+        "fr": "Principaux facteurs de cette estimation",
+    },
+    "factors_help": {
+        "en": "▲ raises, ▼ lowers the estimated probability. They describe how the model weighed "
+        "your order history, not why you order; the time of year is part of the baseline.",
+        "fr": "▲ augmente, ▼ diminue la probabilité estimée. Ils décrivent comment le modèle a "
+        "pondéré votre historique de commandes, pas pourquoi vous commandez; la période de "
+        "l'année fait partie de la base.",
+    },
     "search": {
         "en": "Search the catalogue (name or SKU)",
         "fr": "Chercher dans le catalogue (nom ou code)",

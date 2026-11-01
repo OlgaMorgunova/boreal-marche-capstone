@@ -38,7 +38,7 @@ e-mail.
 ## Automated decisions and profiling
 
 We use an automated system to estimate how likely you are to order again in the next 90 days, based
-on your order history and your delivery region. This is a form of profiling. The estimate is used
+on the dates and amounts of your past orders. This is a form of profiling. The estimate is used
 only to decide who receives our quarterly discount offer; a member of our marketing team reviews and
 approves every offer list, so the decision is not based exclusively on automated processing. You
 can ask us which personal information and which main factors were used, ask us to correct
