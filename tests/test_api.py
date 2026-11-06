@@ -89,6 +89,20 @@ def test_recommend_strategies(client: TestClient) -> None:
     first = r["recommendations"][0]
     assert first["source"] == "rule" and first["because"] and first["lift"] >= 3.0
     assert client.post("/recommend", json={"basket": [], "k": 0}).status_code == 422
+    assert 0 < first["support"] <= 1
+
+
+def test_rules_summary_and_basket_filters(client: TestClient) -> None:
+    s = client.get("/recommend/rules").json()
+    assert s["rule_count"] > 0 and s["n_antecedent_items"] > 0 and s["categories"]
+    assert s["min_lift"] >= 1.0 and 0 < s["min_support"] < 1
+    cat = s["categories"][0]
+    prods = client.get(
+        "/products", params={"in_rules": True, "category": cat, "limit": 500}
+    ).json()["products"]
+    assert prods and all(p["category"] == cat for p in prods)
+    fired = client.post("/recommend", json={"basket": [prods[0]["sku"]]}).json()
+    assert fired["strategy"].startswith("rules")
 
 
 # ----------------------------------------------------------------------------------- D4 ---

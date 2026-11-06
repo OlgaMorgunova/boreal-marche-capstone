@@ -77,6 +77,7 @@ from boreal_marche.schemas import (
     RecommendedItem,
     RecommendRequest,
     RecommendResponse,
+    RulesSummary,
     VersionResponse,
 )
 from boreal_marche.utils import git_commit, read_json
@@ -204,7 +205,9 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     def _assistant() -> Assistant:
         toolbox = Toolbox(load_retriever(params, paths), STATE["api_client"],
                           a.similarity_floor, a.top_k)  # fmt: skip
-        providers = build_providers(a.ollama_model, a.openai_model, a.request_timeout_seconds)
+        providers = build_providers(
+            a.ollama_model, a.openai_model, a.request_timeout_seconds, a.gemini_model
+        )
         price = (a.openai_price_per_mtok.input, a.openai_price_per_mtok.output)
         return Assistant(toolbox, providers, price)
 
@@ -517,6 +520,7 @@ def recommend(req: RecommendRequest, request: Request) -> RecommendResponse:
                 because=sorted(r.rule.antecedent) if r.rule else None,
                 confidence=r.rule.confidence if r.rule else None,
                 lift=r.rule.lift if r.rule else None,
+                support=r.rule.support if r.rule else None,
             )
             for r in res.recommendations
         ],
@@ -527,12 +531,40 @@ def _singular(w: str) -> str:
     return w[:-1] if len(w) > 3 and w.endswith("s") and not w.endswith("ss") else w
 
 
+@app.get("/recommend/rules", response_model=RulesSummary, tags=["recommendation"])
+def rules_summary() -> RulesSummary:
+    engine: RuleEngine = _need("engine", "rules")
+    catalogue: list[dict[str, Any]] = _need("catalogue", "catalogue")
+    h, mined = engine.header, engine.header.get("params", {})
+    return RulesSummary(
+        algorithm=h.get("algorithm"),
+        mined_at=h.get("mined_at"),
+        rule_count=len(engine.rules),
+        n_baskets=h.get("n_baskets"),
+        n_items=h.get("n_items"),
+        n_antecedent_items=len(engine.triggers),
+        min_support=mined.get("min_support"),
+        min_confidence=mined.get("min_confidence"),
+        min_lift=max(engine.min_lift, float(mined.get("min_lift") or 0.0)),
+        max_len=mined.get("max_len"),
+        categories=sorted({p["category"] for p in catalogue if p["sku"] in engine.triggers}),
+    )
+
+
 @app.get("/products", response_model=ProductList, tags=["recommendation"])
 def products(
-    q: str = Query("", max_length=100), limit: int = Query(10, ge=1, le=50)
+    q: str = Query("", max_length=100),
+    limit: int = Query(10, ge=1, le=500),
+    category: str = Query("", max_length=40, description="Only products of this category"),
+    in_rules: bool = Query(False, description="Only products that fire a basket rule on their own"),
 ) -> ProductList:
     """Catalogue search by SKU or by words of the description (all words must match)."""
     catalogue: list[dict[str, Any]] = _need("catalogue", "catalogue")
+    if in_rules:
+        engine: RuleEngine = _need("engine", "rules")
+        catalogue = [p for p in catalogue if p["sku"] in engine.triggers]
+    if category:
+        catalogue = [p for p in catalogue if p["category"] == category]
     code = q.strip().upper()
     hits = [p for p in catalogue if p["sku"] == code]
     if not hits:

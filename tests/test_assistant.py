@@ -253,3 +253,7 @@ def test_openai_compat_decide_parsing(monkeypatch: pytest.MonkeyPatch) -> None:
     assert d.tool == "recommendations" and d.args == {"skus": ["22916"]}  # 99999 not typed
     assert u.prompt_tokens == 7
     assert prov.OpenAICompatProvider("openai", "u", "m", None, 5).available()[0] is False
+    assert prov.OpenAICompatProvider("gemini", "u", "m", None, 5).available() == (
+        False,
+        "GEMINI_API_KEY not set",
+    )

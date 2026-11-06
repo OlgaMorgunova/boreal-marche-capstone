@@ -22,6 +22,7 @@ services:
       OLLAMA_BASE_URL: http://ollama:11434
       OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.1:8b}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
       ALERT_WEBHOOK_URL: ${ALERT_WEBHOOK_URL:-}
       BOREAL_API_URL: http://127.0.0.1:8000
     depends_on:

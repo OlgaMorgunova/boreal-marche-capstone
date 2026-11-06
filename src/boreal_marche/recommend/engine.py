@@ -58,6 +58,7 @@ class RuleEngine:
         rank_by: str = "lift",
         header: dict[str, Any] | None = None,
     ) -> None:
+        self.min_lift = min_lift
         self.rules = [r for r in rules if r.lift >= min_lift]
         self.popularity = popularity
         self.catalogue = catalogue
@@ -67,6 +68,7 @@ class RuleEngine:
         for r in self.rules:
             for a in r.antecedent:
                 self.by_item[a].append(r)
+        self.triggers = {a for r in self.rules if len(r.antecedent) == 1 for a in r.antecedent}
 
     @classmethod
     def from_json(cls, path: Path, **kwargs: Any) -> RuleEngine:

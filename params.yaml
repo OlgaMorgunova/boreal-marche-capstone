@@ -134,6 +134,7 @@ assistant:
   openai_model: "gpt-4o-mini"
   # Published list prices (USD per 1M tokens) used only to *estimate* hosted cost per query.
   openai_price_per_mtok: {input: 0.15, output: 0.60}
+  gemini_model: "gemini-flash-lite-latest"
   request_timeout_seconds: 120
 
 monitoring:

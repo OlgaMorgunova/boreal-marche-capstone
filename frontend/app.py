@@ -218,55 +218,151 @@ def _save_basket(items: list[str]) -> None:
 
 
 @st.cache_data(ttl=600)
-def describe(sku: str) -> str:
+def product(sku: str) -> dict[str, Any] | None:
     hits = api("GET", "/products", params={"q": sku, "limit": 1})["products"]
-    return hits[0]["description"].title() if hits else sku
+    return hits[0] if hits and hits[0]["sku"] == sku else None
+
+
+def describe(sku: str) -> str:
+    p = product(sku)
+    return p["description"].title() if p else sku
+
+
+def category_label(cat: str) -> str:
+    return cat.replace("_", " ").capitalize()
+
+
+@st.cache_data(ttl=600)
+def rules_summary() -> dict[str, Any]:
+    return api("GET", "/recommend/rules")
+
+
+@st.cache_data(ttl=600)
+def rule_items(category: str) -> list[dict[str, Any]]:
+    q = {"in_rules": True, "limit": 500, "category": category}
+    return api("GET", "/products", params=q)["products"]
+
+
+def _set_basket(items: list[str]) -> None:
+    _save_basket(items)
+    st.rerun()
 
 
 with tabs[1]:
     basket = _basket()
-    c1, c2 = st.columns([2, 3], gap="large")
+    summary = rules_summary()
+    st.caption(t("basket_intro", lang))
+    c1, c2 = st.columns([1, 2], gap="large")
+
     with c1:
-        q = st.text_input(t("search", lang), placeholder="cake cases, 22423, lunch bag…")
-        if q:
-            found = api("GET", "/products", params={"q": q, "limit": 8})["products"]
-            if not found:
-                st.caption(t("not_found", lang))
-            for p in found:
-                a, b = st.columns([4, 1])
-                a.write(f"**{p['description'].title()}** · `{p['sku']}` · ${p['median_price']:.2f}")
-                if b.button(t("add", lang), key=f"add_{p['sku']}", disabled=p["sku"] in basket):
-                    _save_basket([*basket, p["sku"]])
-                    st.rerun()
-        st.subheader(t("your_basket", lang))
+        st.subheader(f"🛍️ {t('build_basket', lang)}")
+        cats = ["", *summary["categories"]]
+        cat = st.selectbox(
+            t("category", lang),
+            cats,
+            format_func=lambda c: category_label(c) if c else t("all_categories", lang),
+        )
+        names = {p["sku"]: p["description"].title() for p in rule_items(cat)}
+        options = [*basket, *(s for s in names if s not in basket)]
+        picked = st.multiselect(
+            t("pick_items", lang),
+            options,
+            default=basket,
+            format_func=lambda s: f"{names.get(s) or describe(s)} · {s}",
+            help=t("pick_help", lang),
+        )
+        if picked != basket:
+            _set_basket(picked)
+        with st.expander(t("search_all", lang)):
+            q = st.text_input(t("search", lang), placeholder="cake cases, 22423, lunch bag…")
+            if q:
+                found = api("GET", "/products", params={"q": q, "limit": 8})["products"]
+                if not found:
+                    st.caption(t("not_found", lang))
+                for p in found:
+                    a, b = st.columns([4, 1])
+                    a.write(
+                        f"**{p['description'].title()}** · `{p['sku']}` · ${p['median_price']:.2f}"
+                    )
+                    if b.button(t("add", lang), key=f"add_{p['sku']}", disabled=p["sku"] in basket):
+                        _set_basket([*basket, p["sku"]])
+        st.markdown(f"**{t('your_basket', lang)}**")
         if not basket:
-            st.caption(t("empty_basket", lang))
+            st.info(t("empty_basket", lang))
         for sku in basket:
-            a, b = st.columns([4, 1])
-            a.write(f"{describe(sku)} · `{sku}`")
-            if b.button(t("remove", lang), key=f"rm_{sku}"):
-                _save_basket([s for s in basket if s != sku])
-                st.rerun()
+            p = product(sku)
+            cat_txt = f" *({category_label(p['category'])})*" if p else ""
+            st.markdown(f"- {describe(sku)} · `{sku}`{cat_txt}")
+
     with c2:
-        st.subheader(t("suggestions", lang))
-        rec = api("POST", "/recommend", json={"basket": basket, "k": 5})
+        st.subheader(f"💡 {t('suggestions', lang)}")
+        rec = api("POST", "/recommend", json={"basket": basket, "k": 10})
+        by_rule = [r for r in rec["recommendations"] if r["source"] == "rule"]
+        popular = [r for r in rec["recommendations"] if r["source"] == "popularity"]
+        if not basket:
+            st.warning(t("pick_first", lang))
+        elif by_rule:
+            st.success(t("found_rules", lang).format(n=len(by_rule)))
+            table = pd.DataFrame(
+                {
+                    t("col_item", lang): [
+                        f"{r['description'].title()} · {r['item']}" for r in by_rule
+                    ],
+                    t("col_trigger", lang): [
+                        ", ".join(describe(s) for s in r["because"] or []) for r in by_rule
+                    ],
+                    t("col_conf", lang): [f"{r['confidence']:.1%}" for r in by_rule],
+                    t("col_lift", lang): [round(r["lift"], 2) for r in by_rule],
+                    t("col_support", lang): [
+                        f"{r['support']:.2%}" if r.get("support") is not None else "—"
+                        for r in by_rule
+                    ],
+                },
+                index=pd.RangeIndex(1, len(by_rule) + 1, name=t("col_rank", lang)),
+            )
+            st.dataframe(table, width="stretch")
+            top = by_rule[0]
+            st.markdown(
+                "> 🌟 "
+                + t("insight", lang).format(
+                    a=", ".join(f"`{describe(s)}`" for s in top["because"] or []),
+                    b=top["description"].title(),
+                    lift=top["lift"],
+                )
+            )
+        else:
+            st.info(t("no_rule", lang))
+        if popular:
+            st.caption(f"{t('popular', lang)}: " + ", ".join(
+                f"{r['description'].title()} (`{r['item']}`)" for r in popular[:5]
+            ))  # fmt: skip
+        candidates = [r["item"] for r in (by_rule or popular[:5])]
+        if candidates:
+            a, b = st.columns([4, 1], vertical_alignment="bottom")
+            choice = a.selectbox(
+                t("add_suggestion", lang),
+                candidates,
+                format_func=lambda s: f"{describe(s)} · {s}",
+            )
+            if b.button(t("add", lang), key="add_suggestion"):
+                _set_basket([*basket, choice])
         st.caption(
             f"{t('strategy', lang)}: `{rec['strategy']}` · rules mined {rec['rules_mined_at'] or '—'}"
         )
-        for r in rec["recommendations"]:
-            with st.container(border=True):
-                a, b = st.columns([4, 1])
-                a.markdown(f"**{r['description'].title()}** · `{r['item']}`")
-                if r["because"]:
-                    names = ", ".join(describe(s) for s in r["because"])
-                    a.caption(
-                        f"{t('because', lang)} {names} — confidence {100 * r['confidence']:.0f}%, lift {r['lift']:.1f}"
-                    )
-                else:
-                    a.caption(t("popular", lang))
-                if b.button(t("add", lang), key=f"rec_{r['item']}"):
-                    _save_basket([*basket, r["item"]])
-                    st.rerun()
+
+    st.divider()
+    st.subheader(f"⚙️ {t('rules_metrics', lang)}")
+    m1, m2, m3, m4 = st.columns(4)
+    m1.metric(t("m_rules", lang), f"{summary['rule_count']:,}")
+    m2.metric(t("m_baskets", lang), f"{summary['n_baskets'] or 0:,}")
+    m3.metric(t("m_support", lang), f"{summary['min_support'] or 0:.1%}")
+    m4.metric(t("m_conf", lang), f"{summary['min_confidence'] or 0:.0%}")
+    st.caption(
+        f"{summary['algorithm'] or '—'} · min lift {summary['min_lift']:.1f} · "
+        f"max itemset size {summary['max_len'] or '—'} · "
+        f"{summary['n_antecedent_items']:,} products can trigger a rule · "
+        f"mined {summary['mined_at'] or '—'}"
+    )
 
 
 # ------------------------------------------------------------------------ 3. assistant ---

@@ -122,6 +122,7 @@ def run(providers: list[str], sets: list[str]) -> dict[str, Any]:
         "models": {
             "ollama": params.assistant.ollama_model,
             "openai": params.assistant.openai_model,
+            "gemini": params.assistant.gemini_model,
         },
         "results": {},
     }

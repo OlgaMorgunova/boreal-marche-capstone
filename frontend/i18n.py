@@ -86,6 +86,56 @@ STRINGS: dict[str, dict[str, str]] = {
     "because": {"en": "Because you added", "fr": "Parce que vous avez ajouté"},
     "popular": {"en": "Popular with our customers", "fr": "Populaire auprès de nos clients"},
     "strategy": {"en": "Strategy that fired", "fr": "Stratégie utilisée"},
+    "basket_intro": {
+        "en": "Association rules mined offline from past orders (FP-Growth): add products and "
+        'the rules whose "if" part is in your basket suggest what to add next.',
+        "fr": "Règles d'association extraites des commandes passées (FP-Growth) : ajoutez des "
+        "produits et les règles dont la partie « si » est dans votre panier proposent la suite.",
+    },
+    "build_basket": {"en": "Build your basket", "fr": "Composez votre panier"},
+    "category": {"en": "Filter products by category", "fr": "Filtrer les produits par catégorie"},
+    "all_categories": {"en": "All categories", "fr": "Toutes les catégories"},
+    "pick_items": {
+        "en": "Select products to add to your basket",
+        "fr": "Choisissez les produits à ajouter au panier",
+    },
+    "pick_help": {
+        "en": "Only products that can trigger at least one rule are listed; the search below "
+        "covers the whole catalogue.",
+        "fr": "Seuls les produits qui déclenchent au moins une règle sont listés; la recherche "
+        "ci-dessous couvre tout le catalogue.",
+    },
+    "search_all": {"en": "Search the whole catalogue", "fr": "Chercher dans tout le catalogue"},
+    "pick_first": {
+        "en": "Pick at least one product on the left to trigger the rules.",
+        "fr": "Choisissez au moins un produit à gauche pour déclencher les règles.",
+    },
+    "found_rules": {
+        "en": "Found {n} cross-selling suggestion(s) from matching rules:",
+        "fr": "{n} suggestion(s) tirée(s) des règles déclenchées :",
+    },
+    "no_rule": {
+        "en": "No rule fires for this combination of products.",
+        "fr": "Aucune règle ne se déclenche pour cette combinaison de produits.",
+    },
+    "col_rank": {"en": "Rank", "fr": "Rang"},
+    "col_item": {"en": "Recommended product", "fr": "Produit recommandé"},
+    "col_trigger": {"en": "Triggered by", "fr": "Déclenché par"},
+    "col_conf": {"en": "Confidence", "fr": "Confiance"},
+    "col_lift": {"en": "Lift", "fr": "Lift"},
+    "col_support": {"en": "Support", "fr": "Support"},
+    "insight": {
+        "en": "**Top suggestion:** customers who buy {a} are strongly associated with **{b}** "
+        "(lift {lift:.1f}: {lift:.1f}× more often than by chance).",
+        "fr": "**Meilleure suggestion :** les clients qui achètent {a} achètent aussi **{b}** "
+        "(lift {lift:.1f} : {lift:.1f} fois plus souvent que le hasard).",
+    },
+    "add_suggestion": {"en": "Add a suggestion to the basket", "fr": "Ajouter une suggestion"},
+    "rules_metrics": {"en": "Mined rule set", "fr": "Règles extraites"},
+    "m_rules": {"en": "Rules served", "fr": "Règles servies"},
+    "m_baskets": {"en": "Baskets mined", "fr": "Paniers analysés"},
+    "m_support": {"en": "Minimum support", "fr": "Support minimal"},
+    "m_conf": {"en": "Minimum confidence", "fr": "Confiance minimale"},
     "provider": {"en": "Provider", "fr": "Fournisseur"},
     "ask": {
         "en": "Ask about delivery, returns, allergens, loyalty, privacy, products…",

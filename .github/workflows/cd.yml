@@ -84,10 +84,13 @@ jobs:
           echo "API_IMAGE=$API_IMAGE" >> "$GITHUB_ENV"
 
       - name: Deploy API to App Runner
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python3 scripts/apprunner_deploy.py --service-arn "${{ vars.APPRUNNER_API_ARN }}" \
             --image "$API_IMAGE" --port 8000 --access-role-arn "${{ vars.APPRUNNER_ECR_ROLE_ARN }}" \
-            --env GIT_SHA=$GITHUB_SHA --env IMAGE_TAG=$GITHUB_SHA --env BOREAL_API_URL=http://127.0.0.1:8000
+            --env GIT_SHA=$GITHUB_SHA --env IMAGE_TAG=$GITHUB_SHA --env BOREAL_API_URL=http://127.0.0.1:8000 \
+            --env "GEMINI_API_KEY=$GEMINI_API_KEY"
 
       - name: Post-deploy smoke test (deployed version must equal this commit)
         run: |

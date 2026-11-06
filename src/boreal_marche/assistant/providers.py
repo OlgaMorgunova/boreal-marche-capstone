@@ -44,6 +44,9 @@ class Decision:
     flags: list[str] = field(default_factory=list)
 
 
+GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai"
+
+
 class ProviderError(RuntimeError):
     pass
 
@@ -258,6 +261,8 @@ class OpenAICompatProvider(Provider):
         status: tuple[bool, str]
         if self.name == "openai" and not self.api_key:
             status = (False, "OPENAI_API_KEY not set")
+        elif self.name == "gemini" and not self.api_key:
+            status = (False, "GEMINI_API_KEY not set")
         elif self.health_url:
             try:
                 tags = httpx.get(self.health_url, timeout=2).json()
@@ -364,7 +369,12 @@ class OpenAICompatProvider(Provider):
             raise ProviderError(f"{self.name}: {type(exc).__name__}: {exc}") from exc
 
 
-def build_providers(ollama_model: str, openai_model: str, timeout: float) -> dict[str, Provider]:
+def build_providers(
+    ollama_model: str,
+    openai_model: str,
+    timeout: float,
+    gemini_model: str = "gemini-flash-lite-latest",
+) -> dict[str, Provider]:
     ollama = os.environ.get("OLLAMA_BASE_URL", "http://127.0.0.1:11434").rstrip("/")
     return {
         "rule": RuleProvider(),
@@ -381,6 +391,13 @@ def build_providers(ollama_model: str, openai_model: str, timeout: float) -> dic
             os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1"),
             openai_model,
             os.environ.get("OPENAI_API_KEY") or None,
+            timeout,
+        ),
+        "gemini": OpenAICompatProvider(
+            "gemini",
+            os.environ.get("GEMINI_BASE_URL", GEMINI_BASE_URL),
+            os.environ.get("GEMINI_MODEL", gemini_model),
+            os.environ.get("GEMINI_API_KEY") or None,
             timeout,
         ),
     }
