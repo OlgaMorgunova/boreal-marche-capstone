@@ -139,6 +139,7 @@ class AssistantParams(_Frozen):
     ollama_model: str
     openai_model: str
     openai_price_per_mtok: TokenPrice
+    gemini_model: str = "gemini-flash-lite-latest"
     request_timeout_seconds: int
 
 

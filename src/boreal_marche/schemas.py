@@ -142,6 +142,7 @@ class RecommendedItem(BaseModel):
     because: list[str] | None = Field(description="Antecedent of the firing rule")
     confidence: float | None
     lift: float | None
+    support: float | None = None
 
 
 class RecommendResponse(BaseModel):
@@ -149,6 +150,20 @@ class RecommendResponse(BaseModel):
     recommendations: list[RecommendedItem]
     unknown_items: list[str]
     rules_mined_at: str | None
+
+
+class RulesSummary(BaseModel):
+    algorithm: str | None
+    mined_at: str | None
+    rule_count: int
+    n_baskets: int | None
+    n_items: int | None
+    n_antecedent_items: int = Field(description="Products that fire at least one rule on their own")
+    min_support: float | None
+    min_confidence: float | None
+    min_lift: float
+    max_len: int | None
+    categories: list[str]
 
 
 class VersionResponse(BaseModel):
@@ -202,7 +217,7 @@ class ProductList(BaseModel):
 
 # ------------------------------------------------------------------------ assistant (Head C) ---
 
-ProviderName = Literal["rule", "ollama", "openai"]
+ProviderName = Literal["rule", "ollama", "openai", "gemini"]
 
 
 class ChatRequest(Strict):
